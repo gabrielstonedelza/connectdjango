@@ -1,0 +1,97 @@
+@import "./variables";
+
+.new_to_django {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+    .explore-box {
+      width: 300px;
+      height: 300px;
+      .card-body {
+        a {
+          @include setFlex(column);
+          img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+          }
+          .userdetails {
+            h5 {
+              font-weight: bold;
+              text-transform: capitalize;
+              color: black;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.upostcodesmodes {
+  a {
+    .likecomment {
+      display: none;
+      color: white;
+      font-weight: bold;
+      position: absolute;
+      z-index: 1;
+      margin-top: 130px;
+      margin-left: 90px;
+      .fa-heart,
+      .fa-eye {
+        color: white;
+        font-size: 20px;
+      }
+    }
+    .upost-img-holder {
+      width: 256px;
+      height: 256px;
+
+      .upost-img {
+        img {
+          position: relative;
+          padding: 10px;
+          width: 256px;
+          height: 256px;
+        }
+      }
+    }
+    &:hover {
+      .image-overlay {
+        width: 256px;
+        height: 256px;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1;
+      }
+      .likecomment {
+        display: block;
+      }
+    }
+  }
+}
+
+.newuser-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  a {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+}

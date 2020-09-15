@@ -1,0 +1,43 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ question.question }}
+{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container mt-4 mb-4">
+    <h3 class="text-center mb-4">
+        <span class="mr-2"><img style="width: 40px;height: 40px;border-radius: 20px;" src="{{ question.question_author.profile.profile_pic.url}}" alt=""></span>{{ question.question }}</h3>
+    <div class="text-center">
+        <a class="butt text-white" data-toggle="modal" data-target="#q_descriptionModal" >Read Description</a>
+    </div>
+    <br>
+    <div class="main-answer-section mb-3">
+        <br>
+        {% include "blog/answer_form.html" %}
+    </div>
+    <br>
+</div>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="q_descriptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Question Description</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="question_description_container">
+          {{ question.q_description|safe }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+<!-- Button trigger modal -->
+
+

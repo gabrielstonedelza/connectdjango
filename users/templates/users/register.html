@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+{% block title %}
+Create new account
+{% endblock %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container mt-3">
+    <div class="row text-center home-main-container">
+        <div class="col-xs-6 col-sm-6 col-md-6 mr-auto  mb-3">
+            <h3 class="text-center">Connect django</h3>
+            <p class="animated bounce">Where we talk django</p>
+            <div class="connect-img">
+              <img src="{% static 'blog/images/connection.gif' %}" alt="connection gif">
+          </div>
+            <p>Connect and let's keep on djangoing <span>
+            <img src="{% static 'blog/images/11.png' %}" alt="" style="width:30px;height:30px;">
+        </span></p>
+        </div> 
+        <div class="col-xs-6 col-sm-6 col-md-5  ml-auto mb-3">
+            <div class="form-box1 z-depth-1-half">
+              <form method="post" >
+                {% csrf_token %}
+                <div class="form-group">
+                  {{ form|crispy }}
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="butt">Register</button>
+                </div>
+                <hr class="my-4">
+                <small>Already have an account?<a class="ml-2 butt" href="{% url 'login' %}">Login</a>
+                </small>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

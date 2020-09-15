@@ -1,0 +1,243 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ deuser.username }}
+{% endblock %}
+{% load static %}
+{% block content %}
+<div class="container mt-3">
+    <div class="row just-user-profile mb-3 d-flex justify-content-center">
+        <br>
+        <div class="col-xs-6 col-sm-6 col-md-4  mb-3 mt-4 ">
+            <div class="container ml-5">
+                <div class="user-profile-photo ml-4">
+                    <img alt="" class="z-depth-1-half" src="{{ deuser.profile.profile_pic.url }}">
+                </div>
+            </div>
+        </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-6 mb-3 mt-4">
+        <div class="user-profile-details  mr-5">
+            <div class="d-flex">
+                <h4 class="mb-1">{{ deuser.username }}</h4>
+                <span class="ml-2" id="connection_section">
+                        {% include "users/user_connection.html" %}
+                </span>
+            </div>
+            <br>
+            <div class="d-flex mb-1">
+                <p class="mr-3"><strong class="mr-2">{{question_count}}</strong>questions</p>
+                <p class="mr-3"><strong class="mr-2">{{tutorial_count}}</strong>tutorials</p>
+                <a class="mr-3" data-target="#userprofile-followers-modal" data-toggle="modal"><strong class="mr-2">{{ defollowers.count}}</strong>followers</a>
+                <a class="mr-3" data-target="#userprofile-following-modal" data-toggle="modal"><strong class="mr-2">{{ defollowing.count}}</strong>following</a>
+            </div>
+            <div>
+                <h5 class="mb-3">{{ deuser.profile.name }}</h5>
+                <p>{{ deuser.profile.bio }}</p>
+                <div class="user-social">
+                    {% if deuser.profile.your_facebook %}
+                    <a target="_blank" href="{{ deuser.profile.your_facebook }}">
+                      <img src="{% static 'blog/images/facebook.png' %}" alt="user's facebook">
+                    </a>
+                  {% endif %}
+                  {% if deuser.profile.your_instagram %}
+                    <a target="_blank" href="{{ deuser.profile.your_instagram }}">
+                      <img src="{% static 'blog/images/instagram.png' %}" alt="user's instagram">
+                    </a>
+                  {% endif %}
+                  {% if deuser.profile.your_twitter %}
+                    <a target="_blank" href="{{ deuser.profile.your_twitter }}">
+                      <img src="{% static 'blog/images/twitter.png' %}" alt="">
+                    </a>
+                  {% endif %}
+                  {% if deuser.profile.your_youtube %}
+                    <a target="_blank" href="{{ deuser.profile.your_youtube }}">
+                      <img src="{% static 'blog/images/youtube.png' %}" alt="">
+                    </a>
+                  {% endif %}
+                  {% if deuser.profile.your_medium %}
+                    <a target="_blank" href="{{ deuser.profile.your_medium }}">
+                        <img src="{% static 'blog/images/medium.png' %}" alt="">
+                    </a>
+                    {% endif %}
+                    {% if deuser.profile.your_linkedin %}
+                    <a target="_blank" href="{{ deuser.profile.your_linkedin }}">
+                    <img src="{% static 'blog/images/linkedin.png' %}" alt="">
+                    </a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<hr class="my-4">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a aria-controls="questions" aria-selected="false" class="nav-link active" data-toggle="tab" href="#questions"
+           id="questions-tab"
+           role="tab"><i class="fas fa-question mr-2"></i>Questions</a>
+    </li>
+    <li class="nav-item">
+        <a aria-controls="tutorials" aria-selected="false" class="nav-link" data-toggle="tab" href="#tutorials" id="tutorials-tab"
+           role="tab"><i class="fas fa-chalkboard-teacher mr-2"></i>Tutorials</a>
+    </li>
+</ul>
+
+<div class="tab-content userprofile-tabs" id="myTabContent">
+    <div aria-labelledby="questions-tab" class="tab-pane fade show active" id="questions" role="tabpanel">
+        <br>
+        <div class="container">
+            <div class="row mb-3 for-userprofile-questions">
+                <div class="col-xs-6 col-sm-6 col-md-8 ml-auto mr-auto mb-3">
+                    <ul class="list-group z-depth-1-half">
+                        {% for que in upost_questions %}
+                        <li class="list-group-item d-flex">
+                            <a class=" text-muted" href="{{ que.get_absolute_url }}">
+                                <span class="mr-2 text-muted">{{ forloop.counter }}.</span>
+                                {{ que.question }}
+                            </a>
+                            <span class="text-muted ml-4">
+                                <i class="fas fa-eye mr-2" title="views"></i>{{ que.views }}
+                            </span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center">No questions yet</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div aria-labelledby="tutorials-tab" class="tab-pane fade" id="tutorials" role="tabpanel">
+        <br>
+        <div class="container">
+            <div class="row mb-3 for-userprofile-tutorial">
+                <div class="col-xs-6 col-sm-6 col-md-8 ml-auto mr-auto mb-3">
+                    <ul class="list-group z-depth-1-half">
+                        {% for tuto in upost_tutorials %}
+                        {% if tuto.make_private %}
+                            {% if tuto.tutorial_author == request.user %}
+                            <li class="list-group-item">
+                                <a href="{{ tuto.get_absolute_tutorial_url }}">{{ tuto.title }}</a><br>
+                                <span class="text-muted"><i class="fas fa-eye mr-2"></i>{{ tuto.views }}</span>
+                                <span class="text-muted ml-3">{{ tuto.date_posted|date:"M D Y" }}</span>
+                            </li>
+                            {% else %}
+                            <li class="list-group-item">
+                                <p title="Sorry this tutorial is locked">{{ tuto.title }}</p>
+                                <span class="text-muted mr-3">{{ tuto.date_posted|date:"M D Y" }}</span>
+                                <span><i class="fas fa-lock"></i></span>
+                            </li>
+                            {% endif %}
+                        {% else %}
+                        <li class="list-group-item d-flex">
+                            <a class="text-muted" href="{{ tuto.get_absolute_tutorial_url }}">
+                                <span class="mr-2">{{ forloop.counter }}.</span>
+                                {{ tuto.title }}
+                            </a>
+                            <span class="text-muted ml-4">
+                                <i class="fas fa-eye mr-1" title="views"></i>{{ tuto.views }}
+                                <i class="fas fa-heart mr-1 ml-3" title="likes"></i>{{ tuto.likes.count }}
+                            </span>
+                        </li>
+                        {% endif %}
+    
+                        {% empty %}
+                        <li class="list-group-item text-center">No tutorials yet</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+ <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="userprofile-following-modal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Following</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="userprofile_connection_section">
+
+                    <ul>
+                        {% for user in defollowing.all %}
+                            {% if user == request.user %}
+                            <div class="d-flex">
+                                <img class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="user profile pic" style="width: 40px;height: 40px;border-radius: 50%;">
+                                <div>
+                                    <a style="color: black;font-weight: bold;" href="{% url 'profile' user.username %}">{{ user.username }}</a><br>
+                                    <small class="text-muted">{{ user.profile.name }}</small>
+                                </div>
+                            </div>
+                            {% else %}
+                                <li class="d-flex">
+                                    <div class="d-flex">
+                                        <img class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="user profile pic" style="width: 40px;height: 40px;border-radius: 50%;">
+                                        <div>
+                                            <a style="color: black;font-weight: bold;" href="{% url 'userprofilepost' user.username %}">{{ user.username }}</a><br>
+                                            <small class="text-muted">{{ user.profile.name }}</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            <hr class="my-4">
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="userprofile-followers-modal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Followers</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="userprofile_followers_section">
+                    <ul>
+                        {% for user in defollowers %}
+                            {% if user == request.user %}
+                                <div class="d-flex">
+                                    <img class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="user profile pic" style="width: 40px;height: 40px;border-radius: 50%;">
+                                    <div>
+                                        <a style="color: black;font-weight: bold;" href="{% url 'profile' request.user.username %}">{{ user.username }}</a><br>
+                                        <small class="text-muted">{{ user.profile.name }}</small>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <li class="d-flex">
+                                    <div class="d-flex">
+                                        <img class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="user profile pic" style="width: 40px;height: 40px;border-radius: 50%;">
+                                        <div>
+                                            <a style="color: black;font-weight: bold;" href="{% url 'userprofilepost' user.username %}">{{ user.username }}</a><br>
+                                            <small class="text-muted">{{ user.profile.name }}</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            <hr class="my-4">
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

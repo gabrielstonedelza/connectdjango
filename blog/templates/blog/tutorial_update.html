@@ -1,0 +1,36 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Update Tutorial
+{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 mr-auto ml-auto">
+      <form method="post" id="theform" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          {{ form|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button id="tutorial_update_form_but" type="submit" class="butt">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <br>
+</div>
+<br>
+<script>
+  CKEDITOR.replace( 'mytutorialform',
+    {
+      entities: false,
+      basicEntities: false,
+      entities_greek: false,
+      entities_latin: false,
+      htmlDecodeOutput:true,
+    }
+   );
+</script>
+
+{% endblock %}

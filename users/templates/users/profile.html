@@ -1,0 +1,158 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ user.username }}
+{% endblock %}
+{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row just-user-profile mb-3 d-flex justify-content-center">
+    <br>
+    <div class="col-xs-6 col-sm-6 col-md-4 mb-3 mt-4">
+      <div class="container ml-5">
+        <div class="user-profile-photo ml-4">
+          <img class="z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-8 mb-3 mt-4">
+      <div class="user-profile-details">
+        <div class="d-flex">
+          <h4 class="mb-1">{{ user.username }}</h4>
+          <a href="{% url 'editprofile'  user.username %}" class="butt ml-3">Edit Profile</a>
+          <a class="butt ml-3" href="{% url 'logout' %}">Logout</a>
+        </div>
+        <br>
+        <div class="d-flex mb-1">
+          <p class="mr-3"><strong  class="mr-2">{{myques.count}}</strong>questions</p>
+          <p  class="mr-3"><strong class="mr-2">{{mytutos.count}}</strong>tutorials</p>
+          <p  class="mr-3" id="followerscount"><strong class="mr-2">{{ followers_count }}</strong>followers</p>
+          <p class="mr-3" id="followingcount"><strong class="mr-2">{{ following_count }}</strong>following</p>
+        </div>
+        <div>
+          <h5 class="mb-3">{{ user.profile.name }}</h5>
+          <p>{{ user.profile.bio }}</p>
+        </div>
+        <span class="user-social">
+          {% if user.profile.your_facebook %}
+            <a target="_blank" href="{{ user.profile.your_facebook }}">
+              <img src="{% static 'blog/images/facebook.png' %}" alt="user's facebook">
+            </a>
+          {% endif %}
+          {% if user.profile.your_instagram %}
+            <a target="_blank" href="{{ user.profile.your_instagram }}">
+              <img src="{% static 'blog/images/instagram.png' %}" alt="user's instagram">
+            </a>
+          {% endif %}
+          {% if user.profile.your_twitter %}
+            <a target="_blank" href="{{ user.profile.your_twitter }}">
+              <img src="{% static 'blog/images/twitter.png' %}" alt="">
+            </a>
+          {% endif %}
+          {% if user.profile.your_youtube %}
+            <a target="_blank" href="{{ user.profile.your_youtube }}">
+              <img src="{% static 'blog/images/youtube.png' %}" alt="">
+            </a>
+          {% endif %}
+          {% if user.profile.your_medium %}
+          <a target="_blank" href="{{ user.profile.your_medium }}">
+            <img src="{% static 'blog/images/medium.png' %}" alt="">
+          </a>
+        {% endif %}
+        {% if user.profile.your_linkedin %}
+        <a target="_blank" href="{{ user.profile.your_linkedin }}">
+          <img src="{% static 'blog/images/linkedin.png' %}" alt="">
+        </a>
+      {% endif %}
+      </span>
+      </div>
+    </div>
+  </div>
+  <br>
+  <hr class="my-4">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+  <li class="nav-item">
+    <a class="nav-link active" id="questions-tab" data-toggle="tab" href="#questions" role="tab" aria-controls="questions"
+      aria-selected="false"><i class="fas fa-question mr-2"></i>Questions</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="tutorials-tab" data-toggle="tab" href="#tutorials" role="tab" aria-controls="tutorials"
+      aria-selected="false"><i class="fas fa-chalkboard-teacher mr-2"></i>Tutorials</a>
+  </li>
+      <li class="nav-item">
+    <a class="nav-link" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following"
+      aria-selected="false"><i class="fas fa-users mr-2"></i>Following</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers"
+      aria-selected="false"><i class="fas fa-users mr-2"></i>Followers</a>
+  </li>
+</ul>
+<div class="tab-content profile-tabs" id="myTabContent">
+  <div class="tab-pane fade show active" id="questions" role="tabpanel" aria-labelledby="questions-tab">
+    <br>
+    <div class="container">
+      <div class="row mb-3 for-profile-questions">
+        <div class="col-xs-6 col-sm-6 col-md-8 ml-auto mr-auto mb-3">
+          <ul class="list-group z-depth-1-half">
+            {% for que in myques %}
+            <li class="list-group-item">
+              <a class="text-muted" href="{{ que.get_absolute_url }}">
+                 <span class="mr-2 text-muted">{{ forloop.counter }}.</span>
+                 {{ que.question }}
+                </a>
+                <span class="text-muted ml-4"><i class="fas fa-eye mr-1" title="views"></i>{{ que.views }}</span>
+            </li>
+            {% empty %}
+            <li  class="list-group-item text-center">No questions yet</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="tutorials" role="tabpanel" aria-labelledby="tutorials-tab">
+    <br>
+    <div class="container">
+      <div class="row mb-3 for-profile-tutorial">
+        <div class="col-xs-6 col-sm-6 col-md-8 ml-auto mr-auto mb-3">
+          <ul class="list-group z-depth-1-half">
+            {% for tuto in mytutos %}
+            <li class="list-group-item d-flex">
+              <a class="text-muted" href="{{ tuto.get_absolute_tutorial_url }}">
+                 <span class="mr-2 text-muted">{{ forloop.counter }}.</span>
+                {{ tuto.title  }}
+              </a>
+                <span class="text-muted ml-4">
+                  <i class="fas fa-eye mr-1" title="views"></i>{{ tuto.views }}
+                  <i class="fas fa-heart mr-1 ml-3" title="likes"></i>{{ tuto.likes.count }}
+                </span>
+            </li>
+            {% empty %}
+            <li class="list-group-item text-center">No tutorials yet</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--    following-->
+    <div class="tab-pane fade profile-following-tab" id="following" role="tabpanel" aria-labelledby="following-tab">
+    <br>
+    <div id="profile_connection_section">
+      {% include "users/profile_connection.html" %}
+    </div>
+  </div>
+<!--    followers-->
+      <div class="tab-pane fade profile-followers-tab" id="followers" role="tabpanel" aria-labelledby="followers-tab">
+    <br>
+    <div id="profile_connection_followers_section">
+      {% include "users/profile_connection_followers.html" %}
+    </div>
+  </div>
+
+</div>
+</div>
+<br>
+<br>
+{% endblock %}

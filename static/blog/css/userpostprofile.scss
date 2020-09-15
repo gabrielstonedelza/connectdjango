@@ -1,0 +1,153 @@
+@import "./variables";
+
+.user-profile-photo {
+  img {
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    border: solid #0c4b33 2px;
+  }
+}
+
+
+.nav-tabs {
+  border-bottom: none;
+  justify-content: center;
+  li {
+    a {
+      color: black;
+    }
+  }
+}
+
+
+.userprofile-tabs{
+  .for-postdetails{
+    a {
+      .likecomment{
+          display: none;
+          color: white;
+          font-weight: bold;
+          position: absolute;
+          z-index: 1;
+          margin-top: 110px;
+          margin-left: 80px;
+          .fa-heart,.fa-eye{
+              color: white;
+              // font-size: 20px;
+          }
+      }
+      .upost-img-holder {
+        width: 256px;
+        height: 256px;
+        
+        .upost-img {
+          img {
+            position: relative;
+            // padding: 10px;
+            width: 256px;
+            height: 256px;
+          }
+          
+        }
+      }
+      &:hover {
+          .image-overlay {
+            width: 256px;
+            height: 256px;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+          }
+          .likecomment{
+              display: block;
+          }
+        }
+    }
+  }
+
+  .for-userprofile-questions,.for-userprofile-tutorial{
+      ul{
+        list-style-type: none;
+      }
+  }
+}
+
+.profile-tabs{
+  .for-profilepost{
+    a {
+      .likecomment{
+          display: none;
+          color: white;
+          font-weight: bold;
+          position: absolute;
+          z-index: 1;
+          margin-top: 125px;
+          margin-left: 75px;
+          .fa-heart,.fa-eye{
+              color: white;
+              // font-size: 20px;
+          }
+      }
+      .upost-img-holder {
+        width: 256px;
+        height: 256px;
+        
+        .upost-img {
+          img {
+            position: relative;
+            // padding: 10px;
+            width: 256px;
+            height: 256px;
+          }
+          
+        }
+      }
+      &:hover {
+          .image-overlay {
+            width: 256px;
+            height: 256px;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+          }
+          .likecomment{
+              display: block;
+          }
+        }
+    }
+  }
+  .for-profile-questions,.for-profile-tutorial{
+    ul{
+      list-style-type: none;
+    }
+}
+}
+
+#userprofile-followers-modal,#userprofile-following-modal{
+  .modal-header{
+    justify-content: space-evenly;
+  }
+  .modal-body{
+    overflow: hidden;
+    ul{
+      padding: 10px;
+      height: 370px;
+      overflow:scroll;
+      overflow-x: hidden;
+      li{
+        display: flex;
+        justify-content: space-between;
+        a{
+          color: black;
+          img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: solid 2px $primary_color;
+          }
+        }
+      }
+    }
+  }
+}

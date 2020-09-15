@@ -1,0 +1,17 @@
+<div class="d-flex">
+    {% if request.user.is_authenticated %}
+    <form action="{% url 'like_gpost' post.id %}" method="post" class="mr-2" id="group_post_form">
+        {% csrf_token %}
+        {% if has_liked %}
+            <button type="submit" id="post_like" value="{{ post.id }}" name="post_id" class="butt">
+                <i class="fas fa-heart"></i>
+            </button>
+        {% else %}
+            <button type="submit" id="post_like" value="{{ post.id }}" name="post_id" class="butt">
+                <i class="far fa-heart"></i>
+            </button>
+        {% endif %}
+    </form>
+    {% endif %}
+    <span class="ml-2 font-bold">{{ likes_count }}</span>
+</div>

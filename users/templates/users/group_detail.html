@@ -1,0 +1,241 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ group.group_name }}
+{% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content%}
+<div class="container mt-4">
+    <br>
+    <h3 class="text-center mb-2 font-weight-bold">{{ group.group_name }}</h3>
+    <br>
+    <div class="row mb-3">
+        <!-- group logo -->
+        <div class="col-xs-6 col-sm-6 col-md-4 mb-3 gdetails">
+            <div class="grouplogo">
+                <img class="z-depth-1-half mr-3 mb-3" src="{{ group.logo.url }}" alt="group-logo">
+                <br>
+                {% if request.user == group.group_leader %}
+                    <a href="{% url 'group_update'  %}" class="butt">Edit</a>
+                {% else %}
+                    <div id="join_group_section">
+                     {% include "users/join_group.html" %}
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 mb-3">
+            <div class="gd">
+                    {% if group.group_leader == request.user %}
+                    <a href="{% url 'profile' request.user.username %}" class="butt">{{ group.group_leader }}</a>
+                    {% else %}
+                    <a href="{% url 'userprofilepost' group.group_leader.username %}" class="butt">{{ group.group_leader }}</a>
+                    {% endif %}
+                    <small class="text-muted mb-3">Admin</small>
+                    <h5 class="font-weight-bold mt-3">What this group is about.</h5>
+                    <p class="">{{ group.group_description|slice:":60" }}.....</p>
+                    <br>
+                    <span class="members" title="{% for t in somemembers.keys %} {{ t }},{% empty %}No members yet {% endfor %}">
+                        <i class="fas fa-users mr-2 fa-3x"></i><span class="badge badge-info">{{ mygroup.members.count }}</span>
+                    </span>
+                    {% if request.user in mymembers or request.user == group.group_leader %}
+                        <a href="" data-toggle="modal" data-target="#grouppostformModal" class="butt ml-4">Add new post</a>
+                    {% endif %}
+                    {% if request.user == group.group_leader %}
+                        <a href="" data-toggle="modal" data-target="#adminNotesFormModal" class="butt">Send notes to members</a>
+                    {% else %}
+                        <a href="" data-toggle="modal" data-target="#adminMessagesModal" class="butt">Admin Messages</a>
+                    {% endif %}
+                </div>
+        </div>
+
+        </div>
+    </div>
+    <hr class="my-4">
+    <div class="container mytab_item">
+        <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about"
+                aria-selected="true">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members"
+                aria-selected="true">Members</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts"
+                aria-selected="true">Posts</a>
+            </li>
+          </ul>
+    </div>
+      <div class="tab-content groupdetail-tabs" id="myTabContent">
+        <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+            <div class="container">
+                <div class="row mb-3 for-posts">
+                    <div class="col-xs-6 col-sm-6 col-md-8 mr-auto  mb-3 ml-auto">
+                        <h3 class="text-center">About Group</h3>
+                        <br>
+                        <p class="full-group-description">
+                            {{ group.group_description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </div>
+          <div class="tab-pane fade show" id="members" role="tabpanel" aria-labelledby="members-tab">
+            <div class="container">
+                <div class="row mb-3 for-members">
+                    <div class="col-xs-6 col-sm-6 col-md-8 mr-auto  mb-3 ml-auto">
+                        <h3 class="text-center">Our Members</h3>
+                        <br>
+                        <ul class="list-group z-depth-1-half" style="border-radius: 20px;">
+                            {% for member in mymembers %}
+                            <li class="list-group-item">
+                                <div class="group_member_photo">
+                                    <img class="mr-2 z-depth-1-half" src="{{ member.profile.profile_pic.url }}" alt="">
+                                </div>
+                                <div class="member-details">
+                                    <a class="text-muted" href="{% url 'userprofilepost' member.username %}">{{ member.profile.name }}</a>
+                                    <br>
+                                    <small>{{ member.profile.bio }}</small>
+                                </div>
+                            </li>
+                            <br>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </div>
+          <div class="tab-pane fade show" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+            <div class="container">
+                <div class="row mb-3 for-posts">
+                    <div class="col-xs-6 col-sm-6 col-md-8 mr-auto ml-auto mb-3">
+                        <ul class="list-group z-depth-1-half">
+                              {% for post in my_group_posts %}
+                              <li class="list-group-item">
+                                <a class="d-flex text-muted" href="{{ post.get_absolute_group_post_url }}">
+                                    <span class="mr-2 text-muted">{{ forloop.counter }}.</span>
+                                    {{  post.title }}
+                                </a>
+                                <span class="text-muted ml-4">
+                                    <i class="fas fa-eye mr-2" title="views"></i>{{ post.views }}
+                                    <i class="fas fa-heart mr-2 ml-2"></i>{{ post.likes.count }}
+                                </span>
+                              </li>
+                              {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </div>
+      </div>
+</div>
+
+<div class="modal fade" id="grouppostformModal" tabindex="-1" role="dialog" aria-labelledby="grouppostformModal"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="create-new-group-post-form">
+          <form method="POST" enctype="multipart/form-data" class="z-depth-1-half">
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ form|crispy }}
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="butt">Save</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="adminMessagesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Admin Messages</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group z-depth-1-half" style="padding: 20px; border-radius: 10px;">
+            {% for message in admin_notes_all %}
+            <li class="list-group-item">
+                {{ message.message|safe }}
+                <small class="text-muted">{{ message.date_sent }}</small>
+            </li>
+            <hr class="my-4">
+            {% empty %}
+                <li>No new messages from admin</li>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="adminNotesFormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send notes to all members</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="note-to-all-members">
+          <form method="post" enctype="multipart/form-data" class="z-depth-1-half">
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ ad_form|crispy }}
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="butt">Send</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  CKEDITOR.replace( 'grouppostform',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+   CKEDITOR.replace( 'id_message',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+</script>
+{% endblock %}

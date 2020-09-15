@@ -1,0 +1,57 @@
+{% extends "blog/base_with_nav.html"%}
+{% load static %}
+{% block content%}
+<div class="container mt-3">
+    <br>
+    <div class="row explore-detail-box">
+        <div class="col-xs-6 col-sm-6 col-md-5 explore-detail-container">
+            <!--explore detail image -->
+            <div class="detailImg">
+                <img src="{{ explore_item.image.url }}" alt="">
+                <a class="butt" title="view more" href="{% url 'userprofilepost' explore_item.codingmode_user.username %}">More</a>
+                {% if explore_item.caption %}
+                <small title="image caption" class="text-muted">{{explore_item.caption }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-4">
+            <!--other relevant contents -->
+            <div class="econtents">
+                <!--explore detail user details  -->
+                <div class="top-details">
+                    <img class="ml-2 mt-2" src="{{ explore_item.codingmode_user.profile.profile_pic.url }}" alt="">
+                    <a class="ml-2 mt-3" href="{% url 'userprofilepost' explore_item.codingmode_user.username %}">{{explore_item.codingmode_user.username }}</a>
+                </div>
+                <hr class="my-4">
+                <div class="comments-container">
+                    <table class="table table-borderless">
+                        {% for comments in mycodemode_comment %}
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <img src="{{ comments.user.profile.profile_pic.url }}" alt="">
+                                </th>
+                                <td>
+                                    <a href="{% url 'userprofilepost' comments.user %}">{{ comments.user }}</a>
+                                </td>
+                                <td>{{ comments.comment }}</td>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                      </table>
+
+                </div>
+                <hr class="my-4">
+                <div class="like-image-section">
+
+                </div>
+                <hr class="my-4">
+                <div class="comment-form">
+                    <input type="text" name="" id="" placeholder="Add comments..">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

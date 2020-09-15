@@ -1,0 +1,193 @@
+{% extends "blog/base_with_nav.html"%}
+{% load static %}
+{% block title %}
+Latest Questions
+{% endblock %}
+{% block content%}
+{% url 'latest_questions' as latest %}
+{% url 'most_answered_questions' as most %}
+{% url 'unanswered_questions' as una %}
+
+<div class="container">
+  <br/><br>
+  <div class="row mb-3 main-qs-tu-tabs">
+    <div class="col-xs-5 col-sm-6 col-md-6  mr-auto ml-auto mb-3 my-qs-tu-tabs">
+      <a href="{% url 'latest_questions' %}" class="butt mr-3">Questions</a><a href="{% url 'latest_tutorials' %}" class="butt ml-3">Tutorials</a>
+    </div>
+  </div>
+  <br>
+  <div class="row mb-3">
+    <div class="col-xs-6 col-sm-6 col-md-8 mb-3">
+      <div class="my-qs-links mb-3">
+        <a {% if request.path == latest %} id="is_active"{% endif %}  class="butt mr-3" href="{% url 'latest_questions' %}">Latest</a>
+        <a {% if request.path == most %} id="is_active"{% endif %}  class="butt mr-3" href="{% url 'most_answered_questions' %}">Answered</a>
+        <a {% if request.path == una %} id="is_active"{% endif %}  class="butt" href="{% url 'unanswered_questions' %}">Unanswered</a>
+    </div>
+        <br>
+        <div class="latest-questions-section">
+          <ul class="list-group z-depth-1-half">
+            {% for lq in latest_questions %}
+            <li class="list-group-item">
+              <div class="d-flex qt-items">
+                {% if lq.question_author == request.user %}
+                <a title="{{ lq.question_author.username }}" href="{% url 'profile' lq.question_author.username %}"
+                  ><img class="mr-3 z-depth-1-half" src="{{ lq.question_author.profile.profile_pic.url}}" alt=""></a
+                >
+                {% else %}
+                <a title="{{ lq.question_author.username }}" href="{% url 'userprofilepost'  lq.question_author.username %}"
+                  ><img class="mr-3 z-depth-1-half" src="{{ lq.question_author.profile.profile_pic.url}}" alt=""></a
+                >
+                {% endif %}
+                
+                <div class="qdetails">
+                  <a href="{{ lq.get_absolute_url }}">{{ lq.question }}</a>
+                  <p>{{ lq.q_description|slice:"200"|safe }}</p>
+                  <br>
+                  <small class="text-muted"><i class="fas fa-eye mr-2"></i>{{ lq.views }}</small>
+                  <small class="text-muted ml-3">{{ lq.date_posted|date:"M d Y" }}</small>
+                </div>
+              </div>
+            </li>
+            <br>
+            {% endfor %}
+          </ul>
+          <br>
+          
+          <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-circle pg-blue pt-3">
+              {% if latest_questions.has_previous %}
+                <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
+                <li class="page-item ">
+                  <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+              {% endif %}
+          
+              {% for c in latest_questions.paginator.page_range %}
+                {% if latest_questions.number == c %}
+                  <li class="page-item active">
+                    <a href="?page={{ c }}" class="page-link">{{ c }}</a>
+                  </li>
+                {% elif c > latest_questions.number|add:"-3" and c < latest_questions.number|add:"-3" %}
+                  {{ c }}
+                {% else %}
+                  <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
+              {% endif %}
+            {% endfor %}
+          
+            {% if latest_questions.has_next %}
+              <li class="page-item">
+                  <a href="?page={{ latest_questions.next_page_number }}" class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+                <li class="page-item"><a href="?page={{ latest_questions.paginator.num_pages }}" class="page-link">Last</a></li>
+            {% endif %}
+            </ul>
+          </nav>
+        </div>
+
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-4 mb-3 want_to_learn_django">
+       <h3 class="mb-2 text-center">Want to learn Django?</h3>
+      <br>
+      <ul class="list-group django-teachers z-depth-1-half">
+        <li class="list-group-item">
+          <img class="mr-3" src="{% static 'blog/images/corey.jpg' %}" alt="" />
+          <a class="text-muted" href="https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p" target="_blank">Corey Schafer</a>
+          <i
+            style="
+              background-color: green;
+              color: white;
+              border-radius: 50%;
+              padding: 5px;
+              font-weight: bold;
+              font-size: 20px;
+            "
+            class="fas fa-check"
+          ></i>
+        </li>
+        <li class="list-group-item">
+          <img class="mr-3" src="{% static 'blog/images/pp.jpg' %}" alt="" />
+          <a class="text-muted" href="https://www.youtube.com/playlist?list=PLXmMXHVSvS-DQfOsQdXkzEZyD0Vei7PKf" target="_blank">Prettt Printed</a>
+          <i
+            style="
+              background-color: green;
+              color: white;
+              border-radius: 50%;
+              padding: 5px;
+              font-weight: bold;
+              font-size: 20px;
+            "
+            class="fas fa-check"
+          ></i>
+        </li>
+        <li class="list-group-item">
+          <img class="mr-3" src="{% static 'blog/images/justdjango.jpg' %}" alt="" />
+          <a class="text-muted" href="https://www.youtube.com/playlist?list=PLLRM7ROnmA9HEta6gV4j4h2WfmIOC23EH" target="_blank">Just Django</a>
+          <i
+            style="
+              background-color: green;
+              color: white;
+              border-radius: 50%;
+              padding: 5px;
+              font-weight: bold;
+              font-size: 20px;
+            "
+            class="fas fa-check"
+          ></i>
+        </li>
+        <li class="list-group-item">
+          <img class="mr-3" src="{% static 'blog/images/coding.jpg' %}" alt="" />
+          <a
+            href="https://www.youtube.com/playlist?list=PLEsfXFp6DpzTD1BD1aWNxS2Ep06vIkaeW"
+            target="_blank" class="text-muted"
+            >CodingEntrepreneurs</a
+          >
+          <i
+            style="
+              background-color: green;
+              color: white;
+              border-radius: 50%;
+              padding: 5px;
+              font-weight: bold;
+              font-size: 20px;
+            "
+            class="fas fa-check"
+          ></i>
+        </li>
+        <li class="list-group-item">
+          <img class="mr-3" src="{% static 'blog/images/abi.jpg' %}" alt="" />
+          <a
+            href="https://www.youtube.com/playlist?list=PLKILtxhEt4-RT-GkrDkJDLuRPQfSK-6Yi"
+            target="_blank" class="text-muted"
+            >Abhishek Verma</a
+          >
+          <i
+            style="
+              background-color: green;
+              color: white;
+              border-radius: 50%;
+              padding: 5px;
+              font-weight: bold;
+              font-size: 20px;
+            "
+            class="fas fa-check"
+          ></i>
+        </li>
+      </ul>
+      <br>
+      <hr class="my-4">
+      {% include "blog/groups_to_join.html" %}
+    </div>
+
+  </div>
+
+<div id="results_section">
+  {% include "blog/search_list.html" %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Delete Tutorial
+{% endblock %}
+ {% load static %} 
+ {% block content%}
+<div class="container">
+    <div class="row pt-4">
+      <div class="col-md-6 ml-auto mr-auto pt-4">
+          <form method="post" id="theform" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-3 pb-4">Delete Tutorial</legend>
+            <h3 class="animated bounce">Are you sure you want to delete your tutorial <strong>"{{ object.title }}"?</strong></h3>
+            <div class="foremoji">
+              <img src="{% static 'blog/images/cry.gif' %}" alt="" style="width:200px;height:200px">
+            </div>
+            </fieldset>
+            <div class="form-group">
+              <button class="butt" type="submit">Yes</button>
+                <a class="butt ml-3" href="{{ tutorial.get_absolute_tutorial_url }}" style="background-color:red;">Cancel</a>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
+<br>
+{% endblock %}

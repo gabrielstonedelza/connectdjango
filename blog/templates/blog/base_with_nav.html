@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="{% static 'blog/images/31863.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/mdb.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/swiper.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/feedback_contact.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/djhome.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/profile.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/chat-message.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/explore.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/explore_detail.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/groups.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/userpostprofile.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/all.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/lightbox.min.css'%}" type="text/css">
+  <link rel="stylesheet" href="{% static 'blog/css/animate.css'%}" type="text/css">
+  <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+  <title>
+    {% block title %}  {% endblock %}
+  </title>
+</head>
+<body>
+{% include "blog/navbar.html" %}
+{% include "blog/unotification-all.html" %}
+
+<div class="container">
+  <div class="row text-center">
+    <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="animated bounce alert alert-{{ message.tags }}" style="font-weight: bold; padding: 20px;">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% block content %}
+
+
+{% endblock %}
+<!-- <script src="https://unpkg.com/@popperjs/core@2"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+<script src="{% static 'blog/js/jquery-3.4.1.min.js'%}"></script>
+<script src="{% static 'blog/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'blog/js/mdb.min.js'%}"></script>
+<script src="{% static 'blog/js/popper.min.js'%}"></script>
+<script src="{% static 'blog/js/swiper.min.js'%}"></script>
+<script src="{% static 'blog/js/ajax.js'%}"></script>
+<script src="{% static 'blog/js/notifications.js'%}"></script>
+<script src="{% static 'blog/js/feedback_contact.js'%}"></script>
+<script src="{% static 'blog/js/dtimejs.js'%}"></script>
+<script src="{% static 'blog/js/jscode.js'%}"></script>
+<script src="{% static 'blog/js/group_member.js'%}"></script>
+<script src="{% static 'blog/js/relationships.js'%}"></script>
+<script src="{% static 'blog/js/qanswer.js'%}"></script>
+<script src="{% static 'blog/js/all.min.js'%}"></script>
+<script src="{% static 'blog/js/lightbox-plus-jquery.min.js'%}"></script>
+</body>
+</html>

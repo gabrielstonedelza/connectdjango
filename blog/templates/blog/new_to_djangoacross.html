@@ -1,0 +1,24 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+New to Connectdjango
+{% endblock %}
+{% load static %}
+{% block content%}
+<div class="container mt-3">
+    <br>
+    <h3 class="mb-3 text-muted">New to Connectdjango</h3>
+    <br>
+    <div class="row mb-3">
+        {% for user in not_following %}
+            <div class="col-xs-6 col-sm-6 col-md-3 mb-3">
+                <div class="newuser-container">
+                    <img class="z-depth-1-half mb-2" src="{{ user.profile.profile_pic.url }}" alt="user photo">
+                    <a class="text-muted" href="{% url 'userprofilepost' user.username %}">{{ user.username }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<br>
+
+{% endblock %}

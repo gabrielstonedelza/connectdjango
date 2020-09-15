@@ -1,0 +1,97 @@
+{% load static %}
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0C4B33;">
+    <div class="container">
+    <!-- Navbar brand -->
+    <a id="mynav_bar_container" title="Home" style="font-style: italic;font-weight: bold;" class="navbar-brand ml-5 mr-5" href="{% url 'latest_questions' %}">Connect Django <img src="{% static 'blog/images/connectdjangohome.png' %}" style="width: 20px;height: 20px;"></a>
+  
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav">
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+
+      </ul>
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item dropdown ml-3 mr-3 is_active">
+            <a title="Post a question or tutorial" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
+            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'question-create' %}">Ask Question</a>
+              <a class="dropdown-item" href="{% url 'tutorial-create' %}">Post Tutorial</a>
+            </div>
+          </li>
+
+        <li class="nav-item ml-3 mr-3" >
+          <a href="#" data-toggle="modal" data-target="#notification_listModal" title="Notifications" class="nav-link" >
+            <i class="far fa-bell"></i>
+            {% if has_new_notification %}
+              <sup class="badge badge-danger animated jello infinite">{{ u_notify_count }}</sup>
+            {% endif %}
+          </a>
+        </li>
+        <li class="nav-item ml-3 mr-3">
+          <a title="Search" class="nav-link" href="#" data-toggle="modal" data-target="#basicExampleModal"><i class="fas fa-search"></i></a>
+        </li>
+       
+        <li class="nav-item ml-3 mr-3 ">
+          <a title="Explore new" class="nav-link" href="{% url 'explore' %}"><i class="fas fa-compass"></i></a>
+        </li>
+
+        <li class="nav-item ml-3 mr-3 ">
+          <a title="All group posts" class="nav-link" href="{% url 'group_posts' %}"><i class="fas fa-users"></i></a>
+        </li>
+        <li class="nav-item dropdown ml-3 mr-3 is_active">
+            <a title="Post a question or tutorial" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><i class="fas fa-info-circle"></i></a>
+            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'feedbacks' %}">Feedbacks</a>
+              <a class="dropdown-item" href="{% url 'contact-us' %}">Contact Us</a>
+              <a class="dropdown-item" href="{% url 'about-us' %}" title="About Connect Django">About CD</a>
+            </div>
+          </li>
+
+        <li class="nav-item ml-3 mr-3">
+          <a  href="{% url 'profile' request.user.username  %}" title="Profile" class="nav-link" href="#">
+            <img style="width: 25px;height: 25px;border-radius: 50%;" class="z-depth-1-half" src="{{ request.user.profile.profile_pic.url }}" alt="">
+          </a>
+        </li>
+
+    </ul>
+    </div>
+    <!-- Collapsible content -->
+</div>
+  </nav>
+  <!--/.Navbar-->
+  <!-- Modal -->
+  <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            <form method="GET" class="form-inline my-2 my-lg-0 ml-auto mr-auto" data-url="{% url 'search' %}" id="search-form">
+            {% csrf_token %}
+            <input id="mysearch" class="form-control" type="search" placeholder="Search" aria-label="Search"
+              name="q">
+          </form>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="results_section">
+            {% include "blog/search_list.html" %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Full Height Modal Right -->

@@ -1,0 +1,58 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Edit Group
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content%}
+<div class="container mt-4">
+    <br>
+    <h3 class="text-center mb-3">Update your group</h3>
+    <br>
+    <div class="row mb-3">
+        <div class="col-xs-6 col-sm-6 col-md-5 mb-3 mr-auto">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form|crispy }}
+                </div>
+                <div class="form-group">
+                    <button class="butt" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-7 ml-auto mb-3 mytab_item">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a aria-controls="members" aria-selected="true" class="nav-link active" data-toggle="tab" href="#members"
+                       id="members-tab"
+                       role="tab">Members</a>
+                </li>
+                <li class="nav-item">
+                    <a aria-controls="wants-to-join" aria-selected="false" class="nav-link" data-toggle="tab" href="#wants-to-join"
+                       id="wants-to-join-tab"
+                       role="tab">Wants to join</a>
+                </li>
+            </ul>
+            <br>
+            <div class="tab-content" id="myTabContent">
+                <div aria-labelledby="members-tab" class="tab-pane fade show active" id="members" role="tabpanel">
+                    <br>
+                    <div id="remove_members_section">
+                        {% include "users/remove_member.html" %}
+                    </div>
+                </div>
+                <div aria-labelledby="wants-to-join-tab" class="tab-pane fade" id="wants-to-join" role="tabpanel">
+                    <br>
+                    <div id="add_pending_members_section">
+                        {% include "users/add_pending_members.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="my-4">
+    <br>
+</div>
+<br>
+<br>
+{% endblock %}

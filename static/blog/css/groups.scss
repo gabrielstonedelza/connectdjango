@@ -1,0 +1,319 @@
+@import "./variables";
+
+.group-swipe-container{
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 400px;
+    .group-details-container {
+        width: 300px;
+        height: 400px;
+        .view {
+          img {
+            width: 300px;
+            height: 250px;
+          }
+        }
+      
+    }
+  }
+}
+
+.gdetails {
+  display: flex;
+  flex-wrap: wrap;
+  .grouplogo {
+    padding: 10px;
+    text-align: center;
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: solid 2px $primary_color;
+    }
+  }
+  .gd {
+    padding: 10px;
+    font-size: 20px;
+  }
+}
+
+
+
+// tab in group update view
+.mytab_item {
+  .nav-tabs {
+    border-bottom: none;
+    justify-content: center;
+    li {
+      a {
+        color: black;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.addmembers-section, .pendingmembers-section{
+  ul {
+    padding: 20px;
+    border-radius: 10px;
+    list-style-type: none;
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      a {
+        color: black;
+        img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+.removemembers-section{
+  ul{
+    list-style-type: none;
+    padding: 20px;
+    li{
+      display: flex;
+      justify-content: space-between;
+      a{
+        img{
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+      }
+      form{
+        .form-control{
+          border: none;
+        }
+      }
+    }
+  }
+}
+.for-members{
+  ul{
+    list-style-type: none;
+    padding: 20px;
+    li{
+      display: flex;
+      .group_member_photo{
+        img{
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+      }
+      .member-details{
+        a{
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.groupdetail-tabs{
+  .for-posts{
+    ul{
+      list-style-type: none;
+      li{
+        display: flex;
+        justify-content: space-evenly;
+      }
+    }
+  }
+
+  .for-photos{
+    .photodetails {
+      a {
+        .likecomment{
+            display: none;
+            color: white;
+            font-weight: bold;
+            position: absolute;
+            z-index: 1;
+            margin-top: 130px;
+            margin-left: 70px;
+            .fa-heart,.fa-eye{
+                color: white;
+                // font-size: 20px;
+            }
+        }
+        .upost-img-holder {
+          width: 256px;
+          height: 256px;
+          
+          .upost-img {
+            img {
+              position: relative;
+              // padding: 10px;
+              width: 256px;
+              height: 256px;
+            }
+            
+          }
+        }
+        &:hover {
+            .image-overlay {
+              width: 256px;
+              height: 256px;
+              position: absolute;
+              background-color: rgba(0, 0, 0, 0.8);
+              z-index: 1;
+            }
+            .likecomment{
+                display: block;
+            }
+          }
+      }
+    }
+  }
+}
+
+// group post detail
+.gmember-post-title{
+  display: flex;
+  img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+.gpost-detail-main{
+  .post-content{
+    a{
+      img{
+        width: 400px;
+        border-radius: 20px;
+      }
+    }
+  }
+}
+form{
+  #group_post_comment_form{
+    resize: none;
+  }
+  #answerform{
+    resize: none;
+  }
+}
+.answers-section{
+  .userpicandname{
+    display: flex;
+    img{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .who-answered{
+      padding: 10px;
+      background: rgba(94, 92, 92, 0.37);
+      border-radius: 20px;  
+    }
+  }
+}
+.question_description_container{
+  padding: 15px;
+  background: rgba(94, 92, 92, 0.37);
+  border-radius: 20px;
+}
+// group photo detail
+.group-photo-detail{
+  padding: 20px;
+  .gphotodetails{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    width: 900px;
+    height: 550px;
+    .group-photos{
+      img{
+        width: 450px;
+        height: 550px;
+        position: absolute;
+        z-index: -1;
+      }
+      span{
+        position: absolute;
+        padding: 10px;
+        margin-top: 490px;
+        border: solid 2px silver;
+        color: white;
+        background-color: $primary_color;
+        border-radius: 10px;
+        &:hover{
+          background-color: $secondary_color;
+          color: black;
+          transition: ease 1s;
+        }
+      }
+    }
+    .gphotodetail-likes-likees{
+      // background-color: red;
+      width: 300px;
+      height: 550px;
+      .hold-group-info{
+        height: 50px;
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        img{
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+      }
+      .display-all-likess{
+        height: 400px;
+        padding: 10px;
+        overflow: scroll;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        ul{
+          list-style-type: none;
+          li{
+            display: flex;
+            justify-content: space-between;
+            img{
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+            }
+
+          }
+        }
+      }
+
+    }
+  }
+}
+// group post 
+.gpost-container{
+  padding: 20px;
+  .group-poster-user-name{
+    display: flex;
+    .group-name{
+      font-weight: bold;
+    }
+  }
+  .group-posts-contents{
+    padding: 20px;
+    .for-group-post-img{
+      img{
+        width: 620px;
+        height: 400px;
+      }
+    }
+  }
+}

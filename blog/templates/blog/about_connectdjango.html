@@ -1,0 +1,45 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+About Us
+{% endblock %}
+{% load static %}
+{% block content %}
+<div class="container mt-3">
+    <br>
+    <div class="jumbotron">
+        <div class="row mb-3">
+            <div class="col-xs-6 col-sm-6 col-md-4 mb-3 mr-auto">
+                <img class="z-depth-1-half" src="{% static 'blog/images/gabby.jpg' %}" alt="gabby's photo" style="width: 200px;height: 200px;border-radius: 50%;">
+            </div>
+        <div class="col-xs-6 col-sm-6 col-md-8 mr-auto mb-3">
+                <h3 class="font-weight-bold">Connect Django</h3>
+                <p>It's been wonderful working with django.Connecting with others developers in order to learn and share ideas is all that this platform is about,so let's all connect and keep on <mark class="font-weight-bold z-depth-1-half">djangoing</mark>.</p>
+                <small class="text-muted mb-3">Connect with Gabriel</small>
+                
+                <div class="user-social">
+                    <a target="_blank" href="https://www.facebook.com/gabriel.stone.14606/">
+                      <img src="{% static 'blog/images/facebook.png' %}" alt="user's facebook">
+                    </a>
+                    <a target="_blank" href="https://www.instagram.com/gabriel_stonedelza/">
+                      <img src="{% static 'blog/images/instagram.png' %}" alt="user's instagram">
+                    </a>
+                    <a target="_blank" href="https://twitter.com/gabriel_stone_">
+                      <img src="{% static 'blog/images/twitter.png' %}" alt="">
+                    </a>
+                    <a target="_blank" href="https://medium.com/@gabrielstonedelza">
+                        <img src="{% static 'blog/images/medium.png' %}" alt="">
+                    </a>
+                    <a target="_blank" href="https://www.linkedin.com/in/gabriel-stone-2367021a6/">
+                    <img src="{% static 'blog/images/linkedin.png' %}" alt="">
+                    </a>
+                </div>
+                <br>
+                <p class="coming-soon animated bounce font-weight-bold">
+                    Teams coming soon!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

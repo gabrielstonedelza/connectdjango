@@ -1,0 +1,42 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ post.title }}
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content%}
+<div class="container mt-3">
+    <br>
+    <div class="gmember-post-title">
+        <a href="{% url 'userprofilepost' post.gmember.username %}">
+            <img src="{{ post.gmember.profile.profile_pic.url }}" alt="">
+        </a>
+        <h3 class="mb-3 text-center ml-2">{{ post.title }}</h3>
+    </div>
+    <br>
+    <div class="row mb-3 gpost-detail-main">
+        <div class="col-xs-6 col-sm-6 col-md-6 mr-auto mb-4">
+            <div class="post-content">
+                {% if post.photo %}
+                <a href="{{post.photo.url }}" data-lightbox="gallery" >
+
+                    <img src="{{ post.photo.url }}" alt="post photo" class="z-depth-1-half">
+                </a>
+                {% endif %}
+            </div>
+            <br>
+            <hr class="my-4">
+            <br>
+                {% if post.content %}
+                <p>{{ post.content|safe }}</p>
+                {% endif %}
+            <div id="group_post_like_section">
+                {% include "users/like_group_post.html" %}
+            </div>
+        </div>
+    <div id="group_comments_section">
+        {% include "users/group_post_comment_form.html" %}
+        </div>
+    </div>
+</div>
+<br><br>
+{% endblock %}

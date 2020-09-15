@@ -1,0 +1,23 @@
+<ul class="group-item" >
+    {% for user in gmembers %}
+        <li class="list-group-item d-flex justify-content-between" >
+            <a href="{% url 'userprofilepost' user %}">
+                <div class="member-image-detail">
+                    <img style="width:30px;height:30px;border-radius:50%;" class="mr-2" src="{{ user.profile.profile_pic.url }}" alt="">
+                    <span class="mt-2 text-muted">
+                        {{ user }}
+                    </span>
+                </div>
+            </a>
+            <form action="{% url 'remove_member' id=user.id %}" id="remove_member_form" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <button class="butt" id="remove_member_button" type="submit" value="{{ user.id }}">Remove
+                    </button>
+                </div>
+            </form>
+        </li>
+    {% empty %}
+        <li class="list-group-item text-center">No members now</li>
+    {% endfor %}
+</ul>

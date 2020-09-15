@@ -1,0 +1,12 @@
+{% load crispy_forms_tags %}
+<form action="{% url 'connection' id=deuser.id %}" method="POST" id="connection_form">
+    {% csrf_token %}
+    {% if deuser in following.all %}
+        <button title="Unfollow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Following</button>
+    {% elif deuser in followers.all and not request.user in deuser.defollwers.all %}
+        <button title="Unfollow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow Back</button>
+    {% else %}
+        <button title="Follow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow</button>
+    {% endif %}
+</form>
+
