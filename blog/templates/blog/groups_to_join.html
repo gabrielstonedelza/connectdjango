@@ -11,7 +11,11 @@
         <a href="{{ group.get_absolute_group_url }}" class="text-muted">{{ group.group_name }}</a>
           <br>
           <small class="ml-3 text-muted">By
+            {% if request.user == group.group_leader %}
+              <a href="{% url 'profile' group.group_leader.username %}" title="{{ group.group_leader }}">
+            {% else%}
               <a href="{% url 'userprofilepost' group.group_leader.username %}" title="{{ group.group_leader }}">
+            {% endif %}
               <img class="ml-1" src="{{ group.group_leader.profile.profile_pic.url }}" alt="creator of group" style="width:20px;height:20px;border-radius:50%;">
               </a>
           </small>
