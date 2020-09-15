@@ -17,7 +17,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['68.183.30.214']
+ALLOWED_HOSTS = ['localhost','68.183.30.214','www.connectdjango.com','connectdjango.com']
 
 
 # Application definition
