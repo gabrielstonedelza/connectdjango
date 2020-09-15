@@ -1,4 +1,5 @@
 {% extends "blog/base_with_nav.html"%}
+{% load static %}
 {% block title %}
 Contact Us
 {% endblock %}
@@ -16,6 +17,22 @@ Contact Us
         </div>
         <div class="col-xs-6 col-sm-8 col-md-6 mb-3 ml-auto">
             <!--  for social media links and addresses-->
+            <div class="mysocial d-flex" style="padding: 20px;">
+                <div class="for_our_facebook mr-4 mt-4">
+                    <a title="Connect with us on facebook" class="text-muted" href="https://www.facebook.com/connect.django" target="_blank">
+                        <img class="mb-3" src="{% static 'blog/images/facebook.png' %}" alt="" style="width: 100px;height: 100px;">
+                    <br>
+                        Connect with us
+                    </a>
+                </div>
+                <div class="for_our_instagram ml-4 mt-4">
+                    <a title="Connect with us on instagram" class="text-muted" href="https://www.instagram.com/connectdjango/" target="_blank">
+                        <img class="mb-3" src="{% static 'blog/images/instagram.png' %}" alt="" style="width: 100px;height: 100px;">
+                        <br>
+                        Connect with us
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

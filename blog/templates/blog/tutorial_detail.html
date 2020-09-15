@@ -12,7 +12,16 @@
                 {{ tutorial.title }}
             </h3>
             <br>
-            <div id="tutocontent" class="z-depth-1-half">{{ tutorial.tutorial_content|safe  }}</div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    {{ tutorial.tutorial_content|safe  }}
+                </li>
+            </ul>
+            <br>
+            {% if tutorial.tutorial_author == request.user %}
+            <a title="update your tutorial" href="{% url 'tutorial_update' tutorial.id %}" class="butt">Update</a>
+            <a title="delete your tutorial" href="{% url 'tutorial_delete' tutorial.id %}" class="butt ml-3" style="background-color:red;">Delete</a>
+            {% endif %}
         </div>
         <br>
         <div class="col-xs-6 col-sm-6 col-md-4 mb-3">
@@ -28,14 +37,13 @@
                 {% endfor %}
             </ul>
         </div>
-        <br>
-        {% if tutorial.tutorial_author == request.user %}
-        <a title="update your tutorial" href="{% url 'tutorial_update' tutorial.id %}" class="butt">Update</a>
-        <a title="delete your tutorial" href="{% url 'tutorial_delete' tutorial.id %}" class="butt ml-3" style="background-color:red;">Delete</a>
-        {% endif %}
+        
     </div>
-    <div id="like-section">
+    <div id="like-section" class="ml-4">
         {% include "blog/like_section.html" %}
     </div>
 </div>
+<br>
+<br>
+<br>
 {% endblock %}

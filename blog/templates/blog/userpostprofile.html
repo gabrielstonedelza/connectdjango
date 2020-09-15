@@ -124,7 +124,7 @@
                             </li>
                             {% else %}
                             <li class="list-group-item">
-                                <p title="Sorry this tutorial is locked">{{ tuto.title }}</p>
+                                <p class="text-muted font-weight-bold" title="Sorry this tutorial is locked">{{ tuto.title }}</p>
                                 <span class="text-muted mr-3">{{ tuto.date_posted|date:"M D Y" }}</span>
                                 <span><i class="fas fa-lock"></i></span>
                             </li>
@@ -136,8 +136,8 @@
                                 {{ tuto.title }}
                             </a>
                             <span class="text-muted ml-4">
-                                <i class="fas fa-eye mr-1" title="views"></i>{{ tuto.views }}
-                                <i class="fas fa-heart mr-1 ml-3" title="likes"></i>{{ tuto.likes.count }}
+                                <i class="fas fa-eye mr-1" title="views"></i>{{ tuto.views }} |
+                                <i class="fas fa-heart mr-1 ml-1" title="likes"></i>{{ tuto.likes.count }}
                             </span>
                         </li>
                         {% endif %}

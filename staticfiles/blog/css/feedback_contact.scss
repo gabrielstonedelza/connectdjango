@@ -1,0 +1,50 @@
+@import "./variables";
+
+.contactform {
+  #contact_form_section {
+    .contact-form-box {
+      padding: 20px;
+      border-radius: 20px;
+    }
+    form {
+      textarea {
+        resize: none;
+      }
+    }
+  }
+}
+
+// feedback
+#feedback_section {
+  .feedback-form-box {
+    padding: 20px;
+    border-radius: 20px;
+  }
+  form {
+    textarea {
+      resize: none;
+    }
+  }
+  .all_feedbacks_setion {
+    ul {
+      list-style-type: none;
+    }
+  }
+}
+
+textarea {
+  resize: none;
+}
+.all_tutorials {
+  ul {
+    li {
+      .userimg-name {
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}

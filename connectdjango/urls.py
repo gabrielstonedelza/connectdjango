@@ -8,7 +8,6 @@ from users import views as user_views
 urlpatterns = [
       path('admin/', admin.site.urls),
       path('', include("blog.urls")),
-      path('oauth/', include('social_django.urls', namespace='social')),
       path('profile/<str:username>/', user_views.profile, name='profile'),
       path('connection/<int:id>/', user_views.user_connection, name='connection'),
       path('profile_following/<int:id>/', user_views.profile_following, name='profile_following'),

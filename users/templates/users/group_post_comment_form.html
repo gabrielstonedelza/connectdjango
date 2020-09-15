@@ -14,6 +14,19 @@ Comments <span class="ml-2 badge badge-info">{{ comments_count }}</span>
 </h4>
 <br />
 <div class="answers-section">
+    <ul class="list-group">
+        {% for comment in comments %}
+        <li class="list-group-item d-flex">
+            <img src="{{ comment.user.profile.profile_pic.url }}" alt="user-profile-picture" />
+            <div>
+                <a class="text-muted ml-2 mt-2" href="{% url 'userprofilepost' comment.user.username %}">{{ comment.user }}</a>
+                <br>
+                <p class="ml-2">{{ comment.comments }}</p>
+                <sup style="float: right;"><small>{{ comment.date_posted }}</small></sup>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 {% for comment in comments %}
 <div class="userpicandname">
 <img src="{{ comment.user.profile.profile_pic.url }}" alt="user-profile-picture" />

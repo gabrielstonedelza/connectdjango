@@ -17,5 +17,7 @@
                 </form>
             </li>
         {% endif %}
+    {% empty %}
+    <li class="list-group-item text-center">No pending members available</li>
     {% endfor %}
 </ul>

@@ -1,0 +1,388 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  line-height: 1.5;
+  background: #f1f1f1;
+}
+
+a.butt {
+  position: relative;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px;
+  background: #0C4B33;
+  border-radius: 5px;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+
+a.butt:hover {
+  background: #C9F0DD;
+  color: #000;
+}
+
+button.butt {
+  position: relative;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px;
+  background: #0C4B33;
+  border-radius: 5px;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+
+button.butt:hover {
+  background: #C9F0DD;
+  color: #000;
+}
+
+.group-swipe-container {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.group-swipe-container .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 400px;
+}
+
+.group-swipe-container .swiper-slide .group-details-container {
+  width: 300px;
+  height: 400px;
+}
+
+.group-swipe-container .swiper-slide .group-details-container .view img {
+  width: 300px;
+  height: 250px;
+}
+
+.gdetails {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.gdetails .grouplogo {
+  padding: 10px;
+  text-align: center;
+}
+
+.gdetails .grouplogo img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: solid 2px #0C4B33;
+}
+
+.gdetails .gd {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.mytab_item .nav-tabs {
+  border-bottom: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.mytab_item .nav-tabs li a {
+  color: black;
+  font-weight: bold;
+}
+
+.addmembers-section ul, .pendingmembers-section ul {
+  padding: 20px;
+  border-radius: 10px;
+  list-style-type: none;
+}
+
+.addmembers-section ul li, .pendingmembers-section ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 20px;
+}
+
+.addmembers-section ul li a, .pendingmembers-section ul li a {
+  color: black;
+}
+
+.addmembers-section ul li a img, .pendingmembers-section ul li a img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.removemembers-section ul {
+  list-style-type: none;
+  padding: 20px;
+}
+
+.removemembers-section ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.removemembers-section ul li a img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.removemembers-section ul li form .form-control {
+  border: none;
+}
+
+.for-members ul {
+  list-style-type: none;
+  padding: 20px;
+}
+
+.for-members ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.for-members ul li .group_member_photo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.for-members ul li .member-details a {
+  font-weight: bold;
+}
+
+.groupdetail-tabs .for-posts ul {
+  list-style-type: none;
+}
+
+.groupdetail-tabs .for-posts ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.groupdetail-tabs .for-photos .photodetails a .likecomment {
+  display: none;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  z-index: 1;
+  margin-top: 130px;
+  margin-left: 70px;
+}
+
+.groupdetail-tabs .for-photos .photodetails a .likecomment .fa-heart, .groupdetail-tabs .for-photos .photodetails a .likecomment .fa-eye {
+  color: white;
+}
+
+.groupdetail-tabs .for-photos .photodetails a .upost-img-holder {
+  width: 256px;
+  height: 256px;
+}
+
+.groupdetail-tabs .for-photos .photodetails a .upost-img-holder .upost-img img {
+  position: relative;
+  width: 256px;
+  height: 256px;
+}
+
+.groupdetail-tabs .for-photos .photodetails a:hover .image-overlay {
+  width: 256px;
+  height: 256px;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
+.groupdetail-tabs .for-photos .photodetails a:hover .likecomment {
+  display: block;
+}
+
+.gmember-post-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.gmember-post-title img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.gpost-detail-main .post-content a img {
+  width: 400px;
+  border-radius: 20px;
+}
+
+form #group_post_comment_form {
+  resize: none;
+}
+
+form #answerform {
+  resize: none;
+}
+
+.answers-section .userpicandname {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.answers-section .userpicandname img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.answers-section .userpicandname .who-answered {
+  padding: 10px;
+  background: rgba(94, 92, 92, 0.37);
+  border-radius: 20px;
+}
+
+.question_description_container {
+  padding: 15px;
+  background: rgba(94, 92, 92, 0.37);
+  border-radius: 20px;
+}
+
+.group-photo-detail {
+  padding: 20px;
+}
+
+.group-photo-detail .gphotodetails {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  width: 900px;
+  height: 550px;
+}
+
+.group-photo-detail .gphotodetails .group-photos img {
+  width: 450px;
+  height: 550px;
+  position: absolute;
+  z-index: -1;
+}
+
+.group-photo-detail .gphotodetails .group-photos span {
+  position: absolute;
+  padding: 10px;
+  margin-top: 490px;
+  border: solid 2px silver;
+  color: white;
+  background-color: #0C4B33;
+  border-radius: 10px;
+}
+
+.group-photo-detail .gphotodetails .group-photos span:hover {
+  background-color: #C9F0DD;
+  color: black;
+  -webkit-transition: ease 1s;
+  transition: ease 1s;
+}
+
+.group-photo-detail .gphotodetails .gphotodetail-likes-likees {
+  width: 300px;
+  height: 550px;
+}
+
+.group-photo-detail .gphotodetails .gphotodetail-likes-likees .hold-group-info {
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.group-photo-detail .gphotodetails .gphotodetail-likes-likees .hold-group-info img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.group-photo-detail .gphotodetails .gphotodetail-likes-likees .display-all-likess {
+  height: 400px;
+  padding: 10px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.group-photo-detail .gphotodetails .gphotodetail-likes-likees .display-all-likess ul {
+  list-style-type: none;
+}
+
+.group-photo-detail .gphotodetails .gphotodetail-likes-likees .display-all-likess ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.group-photo-detail .gphotodetails .gphotodetail-likes-likees .display-all-likess ul li img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.gpost-container {
+  padding: 20px;
+}
+
+.gpost-container .group-poster-user-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.gpost-container .group-poster-user-name .group-name {
+  font-weight: bold;
+}
+
+.gpost-container .group-posts-contents {
+  padding: 20px;
+}
+
+.gpost-container .group-posts-contents .for-group-post-img img {
+  width: 620px;
+  height: 400px;
+}
+/*# sourceMappingURL=groups.css.map */

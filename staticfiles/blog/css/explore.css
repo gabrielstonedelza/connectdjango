@@ -1,0 +1,164 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  line-height: 1.5;
+  background: #f1f1f1;
+}
+
+a.butt {
+  position: relative;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px;
+  background: #0C4B33;
+  border-radius: 5px;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+
+a.butt:hover {
+  background: #C9F0DD;
+  color: #000;
+}
+
+button.butt {
+  position: relative;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px;
+  background: #0C4B33;
+  border-radius: 5px;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+
+button.butt:hover {
+  background: #C9F0DD;
+  color: #000;
+}
+
+.new_to_django {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.new_to_django .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 300px;
+}
+
+.new_to_django .swiper-slide .explore-box {
+  width: 300px;
+  height: 300px;
+}
+
+.new_to_django .swiper-slide .explore-box .card-body a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.new_to_django .swiper-slide .explore-box .card-body a img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.new_to_django .swiper-slide .explore-box .card-body a .userdetails h5 {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: black;
+}
+
+.upostcodesmodes a .likecomment {
+  display: none;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  z-index: 1;
+  margin-top: 130px;
+  margin-left: 90px;
+}
+
+.upostcodesmodes a .likecomment .fa-heart,
+.upostcodesmodes a .likecomment .fa-eye {
+  color: white;
+  font-size: 20px;
+}
+
+.upostcodesmodes a .upost-img-holder {
+  width: 256px;
+  height: 256px;
+}
+
+.upostcodesmodes a .upost-img-holder .upost-img img {
+  position: relative;
+  padding: 10px;
+  width: 256px;
+  height: 256px;
+}
+
+.upostcodesmodes a:hover .image-overlay {
+  width: 256px;
+  height: 256px;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
+.upostcodesmodes a:hover .likecomment {
+  display: block;
+}
+
+.newuser-container {
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.newuser-container img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.newuser-container a {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+/*# sourceMappingURL=explore.css.map */

@@ -25,7 +25,7 @@ Latest Questions
     </div>
         <br>
         <div class="latest-questions-section">
-          <ul class="list-group z-depth-1-half">
+          <ul class="list-group">
             {% for lq in latest_questions %}
             <li class="list-group-item">
               <div class="d-flex qt-items">
@@ -40,11 +40,11 @@ Latest Questions
                 {% endif %}
                 
                 <div class="qdetails">
-                  <a href="{{ lq.get_absolute_url }}">{{ lq.question }}</a>
+                  <a class="text-muted" href="{{ lq.get_absolute_url }}">{{ lq.question }}</a>
                   <p>{{ lq.q_description|slice:"200"|safe }}</p>
                   <br>
-                  <small class="text-muted"><i class="fas fa-eye mr-2"></i>{{ lq.views }}</small>
-                  <small class="text-muted ml-3">{{ lq.date_posted|date:"M d Y" }}</small>
+                  <small class="text-muted"><i class="fas fa-eye mr-2"></i>{{ lq.views }}</small> |
+                  <small class="text-muted ml-1">{{ lq.date_posted|date:"M d Y" }}</small>
                 </div>
               </div>
             </li>

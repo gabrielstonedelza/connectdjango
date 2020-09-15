@@ -76,9 +76,14 @@
                     <div class="col-xs-6 col-sm-6 col-md-8 mr-auto  mb-3 ml-auto">
                         <h3 class="text-center">About Group</h3>
                         <br>
-                        <p class="full-group-description">
+                        <!-- <p class="full-group-description">
                             {{ group.group_description }}
-                        </p>
+                        </p> -->
+                        <ul class="list-group z-depth-1-half">
+                          <li class="list-group-item">
+                            {{ group.group_description }}
+                          </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -90,6 +95,7 @@
                     <div class="col-xs-6 col-sm-6 col-md-8 mr-auto  mb-3 ml-auto">
                         <h3 class="text-center">Our Members</h3>
                         <br>
+                        
                         <ul class="list-group z-depth-1-half" style="border-radius: 20px;">
                             {% for member in mymembers %}
                             <li class="list-group-item">
@@ -102,6 +108,8 @@
                                     <small>{{ member.profile.bio }}</small>
                                 </div>
                             </li>
+                            {% empty %}
+                            <li class="list-group-item text-center">No members yet</li>
                             <br>
                             {% endfor %}
                         </ul>
@@ -126,6 +134,8 @@
                                     <i class="fas fa-heart mr-2 ml-2"></i>{{ post.likes.count }}
                                 </span>
                               </li>
+                              {% empty %}
+                              <li class="list-group-item">No posts yet</li>
                               {% endfor %}
                         </ul>
                     </div>
