@@ -21,7 +21,7 @@ var x = setInterval(function() {
   // mydtimeHolder.innerHTML =  minutes + "m " + seconds + "s ";
   // If the count down is over, write some text 
   if (distance < 0) {
-    window.location.replace("connectdjango.com")
+    window.location.replace("connectdjango.com/logout")
   }
 }, 1000);
 }
