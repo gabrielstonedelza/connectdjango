@@ -7,9 +7,11 @@
 other django developers 
 
 ## connect with connect django:
-<a href="https://www.instagram.com/connectdjango/"> 
-<img src="instagram.png">
+<div style="display:flex;padding:20px;">
+<a href="https://www.instagram.com/connectdjango/" style="padding:20px"> 
+<img src="instagram.png" style="width:50px;height:50px">
 </a>
-<a href="https://www.facebook.com/connect.django"> 
-<img src="facebook.png">
+<a href="https://www.facebook.com/connect.django" style="padding:20px"> 
+<img src="facebook.png" style="width:50px;height:50px">
 </a>
+</div>
