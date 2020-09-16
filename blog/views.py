@@ -597,7 +597,7 @@ def new_to_dja(request):
 
         myprofile = get_object_or_404(Profile, user=request.user)
         following = myprofile.following.all()
-        new_users = User.objects.exclude(id=request.user.id).order_by('-date_joined')[:6]
+        new_users = User.objects.exclude(id=request.user.id).order_by('-date_joined')
         groups = Group.objects.all().order_by('-date_created')
 
         not_following = []
