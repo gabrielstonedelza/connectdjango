@@ -3,7 +3,7 @@ function monitor_dtime(){
 var mydtimeHolder = document.querySelector("#showdtime")
 // Set the date we're counting down to
 var mydate = new Date()
-var next30min = mydate.getMinutes() + 30
+var next30min = mydate.getMinutes() + 5
 mydate.setMinutes(next30min)
 var mydtime = mydate.getTime()
 
