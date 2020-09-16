@@ -3,7 +3,7 @@ function monitor_dtime(){
 var mydtimeHolder = document.querySelector("#showdtime")
 // Set the date we're counting down to
 var mydate = new Date()
-var next30min = mydate.getMinutes() + 5
+var next30min = mydate.getMinutes() + 2
 mydate.setMinutes(next30min)
 var mydtime = mydate.getTime()
 
@@ -21,7 +21,7 @@ var x = setInterval(function() {
   // mydtimeHolder.innerHTML =  minutes + "m " + seconds + "s ";
   // If the count down is over, write some text 
   if (distance < 0) {
-    window.location.replace("connectdjango.com/logout")
+    window.location.replace("https://connectdjango.com/logout/")
   }
 }, 1000);
 }
