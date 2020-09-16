@@ -10,3 +10,5 @@
 ## connect with connect django:
 <a href="https://www.instagram.com/connectdjango/" style="padding:20px"> Instagram </a>
 <a href="https://www.facebook.com/connect.django" style="padding:20px"> Facebook </a>
+
+### Let's keep djangoing
