@@ -69,12 +69,12 @@ class Group(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        img = Image.open(self.logo.path)
+        img = Image.open(self.photo.path)
 
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
-            img.thumbnail = output_size
-            img.save(self.logo.path)
+            img.thumbnail(output_size)
+            img.save(self.photo.path)
 
 
 class GroupPost(models.Model):
@@ -95,6 +95,16 @@ class GroupPost(models.Model):
 
     def likes_count(self):
         return self.likes.count
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.logo.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.logo.path)
 
 
 class Comments(models.Model):
