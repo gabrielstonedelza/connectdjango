@@ -5,45 +5,47 @@ Login-Home
 {% block content %}
 {% load static %}
 {% load crispy_forms_tags %}
-<div class="container mt-3">
-    <div class="row text-center home-main-container">
-        <div class="col-xs-6 col-sm-6 col-md-6 mr-auto  mb-3 with-connect">
-            <h3 class="text-center">Connect django</h3>
-            <p class="animated bounce">Where we talk django</p>
-            <div class="connect-img">
-                <img src="{% static 'blog/images/connection.gif' %}" alt="connection gif">
-            </div>
-            <p>Connect and let's keep on djangoing <span>
-            <img src="{% static 'blog/images/11.png' %}" alt="" style="width:30px;height:30px;">
-        </span></p>
-        </div> 
-        <div class="col-xs-6 col-sm-6 col-md-5  ml-auto mb-3">
-            <h4 class="text-center show_on_small">Connect Django</h4>
-            <div class="form-box1 z-depth-1-half">
-                <form method="post">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                      {{ form|crispy}}
-                    </fieldset>
-                    <div class="form-group">
-                      <button type="submit" class="butt">Login</button>
-                      <small>
-                        <a class="ml-2" href="{% url 'password_reset' %}">Forgot Password?</a>
-                      </small>
-                    </div>
-                    <hr class="my-4">
-                </form>
-                <a class="butt" href="{% url 'register' %}">Create New Account</a>
-                <h4 class="animated bounce mt-3 mb-2 ml-4">OR <i class="far fa-hand-point-down"></i></h4>
-          <div >
-            <a href="{% url 'social:begin' 'google-oauth2'%}" id="google-signin">Google+</a>
-            <a href="{% url 'social:begin' 'facebook'%}" id="facebook-signin">Facebook</a>
-            <a href="{% url 'social:begin' 'github'%}" id="github-signin">Github<i class="fab fa-github"></i></a>
+<div class="container mt">
+  <div class="home-main-container">
+      <div class="with-connect">
+          <h3 class="text-center">Connect django</h3>
+          <p class="animated bounce text-center">Let's keep djangoing </p>
+          <img src="{% static 'blog/images/11.png' %}" alt="" style="width:30px;height:30px;">
+      </div> 
+      <div class="with-connect-form">
+          <div class="z-depth-1-half">
+              <form method="post">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                    {{ form|crispy}}
+                  </fieldset>
+                  <div class="form-group">
+                    <button type="submit" class="butt">Login</button>
+                    <small>
+                      <a class="ml-2" href="{% url 'password_reset' %}">Forgot Password?</a>
+                    </small>
+                  </div>
+                  <hr class="my-4">
+                  <a class="butt" href="{% url 'register' %}">Create New Account</a>
+                  <span class="ml-2">OR <i class="far fa-hand-point-down "></i></span>
+                  <div class="social-logins">
+                    <a href="{% url 'social:begin' 'google-oauth2'%}" class="google-signin">
+                      
+                      <span class="g">G</span>
+                      <span class="o">o</span>
+                      <span class="o1">o</span>
+                      <span class="g1">g</span>
+                      <span class="l">l</span>
+                      <span class="e">e</span>
+                    </a>
+                    <a class="ml-2" href="{% url 'social:begin' 'facebook'%}" class="facebook-signin">Facebook</a>
+                    <a class="ml-2" href="{% url 'social:begin' 'github'%}" class="github-signin" style="color: black;">Github<i class="fab fa-github"></i></a>
+                  </div>
+              </form>
           </div>
-            </div>
-            <br>
-            <small class="text-muted text-center">Connect with other django developers</small>
-        </div>
-    </div>
+          <br>
+      </div>
+  </div>
 </div>
+
 {% endblock %}

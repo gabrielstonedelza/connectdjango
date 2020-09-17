@@ -5,17 +5,22 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="container mt-4 mb-4">
-    <h3 class="text-center mb-4">
-        <span class="mr-2"><img style="width: 40px;height: 40px;border-radius: 20px;" src="{{ question.question_author.profile.profile_pic.url}}" alt=""></span>{{ question.question }}</h3>
-    <div class="text-center">
-        <a class="butt text-white" data-toggle="modal" data-target="#q_descriptionModal" >Read Description</a>
-    </div>
-    <br>
-    <div class="main-answer-section mb-3">
-        <br>
-        {% include "blog/answer_form.html" %}
-    </div>
-    <br>
+  <div class="qdetail-section">
+    <section class="qsection-a">
+      <h5><span class="mr-2"><img style="width: 40px;height: 40px;border-radius: 20px;" src="{{ question.question_author.profile.profile_pic.url}}" alt=""></span>{{ question.question }}</h5>
+      <br>
+      <a class="butt text-white" data-toggle="modal" data-target="#q_descriptionModal" >Read Description</a>
+    </section>
+  
+      <br>
+      <section class="qsection-b">
+        <div class="main-answer-section mb-3">
+            <br>
+            {% include "blog/answer_form.html" %}
+        </div>
+      </section>
+      <br>
+  </div>
 </div>
 <br>
 <!-- Modal -->

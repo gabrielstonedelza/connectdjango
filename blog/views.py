@@ -17,8 +17,6 @@ from .notifications import mynotifications
 
 def latest_qs(request):
     latest_questions = []
-    my_logged_in_user = get_object_or_404(LoginConfirmCode, logged_user=request.user)
-    users_dtime = my_logged_in_user.dtime
     my_notify = mynotifications(request.user)
 
     latest_questions = Question.objects.all().order_by('-date_posted').order_by('-date_posted')
@@ -30,7 +28,6 @@ def latest_qs(request):
 
     context = {
         "latest_questions": latest_questions,
-        "users_dtime": users_dtime,
         "latest_groups": latest_groups,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],

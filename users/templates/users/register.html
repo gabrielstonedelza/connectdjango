@@ -6,19 +6,14 @@ Create new account
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="container mt-3">
-    <div class="row text-center home-main-container">
-        <div class="col-xs-6 col-sm-6 col-md-6 mr-auto  mb-3">
-            <h3 class="text-center">Connect django</h3>
-            <p class="animated bounce">Where we talk django</p>
-            <div class="connect-img">
-              <img src="{% static 'blog/images/connection.gif' %}" alt="connection gif">
-          </div>
-            <p>Connect and let's keep on djangoing <span>
-            <img src="{% static 'blog/images/11.png' %}" alt="" style="width:30px;height:30px;">
-        </span></p>
-        </div> 
-        <div class="col-xs-6 col-sm-6 col-md-5  ml-auto mb-3">
-            <div class="form-box1 z-depth-1-half">
+    <div class="home-main-container">
+      <div class="with-connect">
+        <h3 class="text-center">Connect django</h3>
+        <p class="animated bounce text-center">Let's keep djangoing </p>
+        <img src="{% static 'blog/images/11.png' %}" alt="" style="width:30px;height:30px;">
+      </div> 
+        <div class="with-connect-form">
+            <div class="z-depth-1-half">
               <form method="post" >
                 {% csrf_token %}
                 <div class="form-group">

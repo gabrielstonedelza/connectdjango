@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  line-height: 1.5;
+  background: #f1f1f1;
+}
+
+a.butt {
+  position: relative;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px;
+  background: #0C4B33;
+  border-radius: 5px;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+
+a.butt:hover {
+  background: #C9F0DD;
+  color: #000;
+}
+
+button.butt {
+  position: relative;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px;
+  background: #0C4B33;
+  border-radius: 5px;
+  -webkit-transition: 0.5s ease-in;
+  transition: 0.5s ease-in;
+}
+
+button.butt:hover {
+  background: #C9F0DD;
+  color: #000;
+}
+
+#is_active {
+  background-color: seagreen;
+}
+
+.section-a, .section-b {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 20px;
+}
+
+.section-c {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: minmax(150px, 65%) 1fr;
+      grid-template-columns: minmax(150px, 65%) 1fr;
+  gap: 20px;
+}
+
+.section-c .my-section ul li .qt-items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.section-c .my-section ul li .qt-items a img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.section-c .my-section ul li .qt-items .qdetails p {
+  color: black;
+}
+
+.section-c .django-teachers-section ul li img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 700px) {
+  .section-c {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    gap: 1em;
+  }
+  .section-c .my-section {
+    padding: 20px;
+  }
+  .section-c .my-section ul li .qt-items {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .section-c .my-section ul li .qt-items a img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .section-c .my-section ul li .qt-items .qdetails p {
+    color: black;
+  }
+  .section-c .django-teachers-section {
+    padding: 20px;
+  }
+  .section-c .django-teachers-section h3 {
+    font-size: 20px;
+  }
+}
+
+#notification_listModal {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+#notification_listModal .modal-body #mynotification_container .my_notification_list ul {
+  padding: 10px;
+  list-style-type: none;
+}
+
+#notifications ul {
+  padding: 10px;
+  border-radius: 10px;
+  list-style-type: none;
+  background-color: rgba(0, 0, 0, 0.267);
+}
+
+#notifications ul a {
+  color: #fff !important;
+}
+
+#tutocontent {
+  padding: 10px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.267);
+}
+
+.other-tutorial-list {
+  list-style-type: none;
+  padding: 10px;
+}
+
+.create-group-form form, .create-question-form form, .create-tutorial-form form, .create-new-group-post-form form, .note-to-all-members form {
+  border-radius: 20px;
+  padding: 20px;
+}
+
+p.full-group-description {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.267);
+  border-radius: 20px;
+}
+
+.qdetail-section {
+  display: -ms-grid;
+  display: grid;
+}
+/*# sourceMappingURL=questions_tutorials.css.map */

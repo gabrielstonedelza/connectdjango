@@ -7,7 +7,7 @@ from users import views as uviews
 from users.views import CreateNewGroupView
 
 urlpatterns = [
-
+    path('register/', uviews.register, name='register'),
     path('latest_qs/', views.latest_qs, name='latest_questions'),
 
     path('most_answered_qs/', views.answered_questions, name='most_answered_questions'),
@@ -45,10 +45,11 @@ urlpatterns = [
 
     path('question/new/', views.create_question, name='question-create'),
     path('tutorial/new/', views.create_tutorial, name='tutorial-create'),
+    path('<str:username>/', views.user_post_profile, name="userprofilepost"),
 
     path('search/', views.search_queries, name='search'),
     path('explore/', views.explore_new, name='explore'),
     path('new2dja/', views.new_to_dja, name='new2dja'),
-    path('<str:username>/', views.user_post_profile, name="userprofilepost"),
+    
 
 ]

@@ -1,7 +1,5 @@
 {% load static %}
 {% load crispy_forms_tags %}
-<div class="row mb-3">
-  <div class="col-xs-6 col-sm-6 col-md-6 mr-auto ml-auto">
     <form method="post" class="answer-form" action=".">
       <fieldset class="form-group">
         {% csrf_token %}
@@ -21,11 +19,9 @@
       </div>
       {% endif %}
     </form>
-  </div>
   <br />
   <hr class="my-4" />
   <br />
-  <div class="col-xs-6 col-sm-6 col-md-6 mr-auto ml-auto mb-3">
     <h4 class="mb-3">
       Answers <span class="ml-2 badge badge-info">{{ answers_count }}</span>
     </h4>

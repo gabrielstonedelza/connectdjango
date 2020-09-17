@@ -1,0 +1,156 @@
+@import "./variables";
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+#is_active {
+  background-color: seagreen;
+}
+.section-a, .section-b{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px;
+
+}
+
+.section-c{
+  display: grid;
+  grid-template-columns: minmax(150px, 65%) 1fr;
+  gap:20px;
+  .my-section{
+    ul{
+      li{
+        .qt-items{
+          display: flex;
+          a{
+            img{
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+            }
+          }
+
+          .qdetails{
+            p{
+              color: black;
+            }
+          }
+        }
+      }
+    }
+  }
+  .django-teachers-section{
+    ul{
+      li{
+        img{
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+// media queries
+
+@media only screen and(max-width: 700px){
+ .section-c{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap:1em;
+  .my-section{
+    padding: 20px;
+    ul{
+      li{
+        .qt-items{
+          display: flex;
+          a{
+            img{
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+            }
+          }
+
+          .qdetails{
+            p{
+              color: black;
+            }
+          }
+        }
+      }
+    }
+  }
+  .django-teachers-section{
+    padding: 20px;
+    h3{
+      font-size: 20px;
+    }
+  }
+ }
+}
+
+
+
+// modal-notification-style
+#notification_listModal{
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+
+  .modal-body{
+    #mynotification_container{
+      .my_notification_list {
+        ul{
+          padding: 10px;
+          list-style-type: none;
+          
+        }
+      }
+    }
+  }
+}
+
+// main notification style
+#notifications{
+  ul{
+    padding: 10px;
+    border-radius: 10px;
+    list-style-type: none;
+    background-color: rgba(0, 0, 0, 0.267);
+    a{
+      color: #fff !important;
+    }
+  }
+}
+
+// tutorial detail
+#tutocontent{
+  padding: 10px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.267);
+}
+
+
+.other-tutorial-list{
+    list-style-type: none;
+    padding: 10px;
+  }
+  .create-group-form, .create-question-form, .create-tutorial-form, .create-new-group-post-form, .note-to-all-members{
+    form{
+      border-radius: 20px;
+      padding: 20px;
+    }
+  }
+
+  p.full-group-description{
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.267);
+    border-radius: 20px;
+  }
+
+
+// question detail
+.qdetail-section{
+    display: grid;
+}
