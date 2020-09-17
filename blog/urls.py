@@ -7,19 +7,9 @@ from users import views as uviews
 from users.views import CreateNewGroupView
 
 urlpatterns = [
-    path('', views.login_request, name="login"),
-    path('register/', uviews.register, name='register'),
-    path('password-reset/', auth_views.PasswordResetView.as_view(
-        template_name='users/password_reset.html'), name='password_reset'),
-    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
-        template_name='users/password_reset_done.html'), name='password_reset_done'),
-    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
-        template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
-        template_name='users/password_reset_complete.html'), name='password_reset_complete'),
 
-    path('logout/', uviews.logout_request, name='logout'),
     path('latest_qs/', views.latest_qs, name='latest_questions'),
+
     path('most_answered_qs/', views.answered_questions, name='most_answered_questions'),
     path('unanswered_qs/', views.unanswered_qs, name='unanswered_questions'),
     path('latest_tutos/', views.latest_tutorials, name='latest_tutorials'),

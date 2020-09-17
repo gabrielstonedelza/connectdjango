@@ -1,5 +1,4 @@
 
-
 import os
 import locale
 from decouple import config
@@ -17,7 +16,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['connectdjango.com','localhost','68.183.30.214']
+ALLOWED_HOSTS = ['connectdjango.com' ,'127.0.0.1' ,'68.183.30.214']
 
 
 # Application definition
@@ -32,6 +31,15 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
+    'social_django',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'users.authentication.EmailAuthBackend',
 ]
 
 MIDDLEWARE = [
@@ -42,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'connectdjango.urls'
@@ -57,6 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -128,7 +139,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'django_time'
+LOGIN_REDIRECT_URL = 'latest_questions'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

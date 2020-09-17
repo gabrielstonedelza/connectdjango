@@ -66,16 +66,6 @@ button.butt:hover {
   list-style-type: none;
 }
 
-.latest-questions-section ul li,
-.most-answered_questions-sections ul li,
-.unaswered-questions-section ul li,
-.latest-tutorials-section ul li,
-.most-liked-tutorials-section ul li,
-.most-viewed-tutorials-section ul li,
-.locked-tutorials-section ul li {
-  color: #fff;
-}
-
 .latest-questions-section ul li .qt-items img,
 .most-answered_questions-sections ul li .qt-items img,
 .unaswered-questions-section ul li .qt-items img,
@@ -96,7 +86,6 @@ button.butt:hover {
 .most-viewed-tutorials-section ul li .qt-items .qdetails,
 .locked-tutorials-section ul li .qt-items .qdetails {
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.267);
   padding: 10px;
   border-radius: 10px;
 }
@@ -108,7 +97,6 @@ button.butt:hover {
 .most-liked-tutorials-section ul li .qt-items .qdetails a,
 .most-viewed-tutorials-section ul li .qt-items .qdetails a,
 .locked-tutorials-section ul li .qt-items .qdetails a {
-  color: #fff;
   font-weight: bold;
   font-size: 20px;
 }
