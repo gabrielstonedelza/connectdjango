@@ -63,6 +63,11 @@
           <img src="{% static 'blog/images/linkedin.png' %}" alt="">
         </a>
       {% endif %}
+      {% if user.profile.your_linkedin %}
+      <a target="_blank" href="{{ user.profile.your_linkedin }}">
+          <i class="fab fa-github"></i>
+      </a>
+      {% endif %}
       </span>
       </div>
     </div>
