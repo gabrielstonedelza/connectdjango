@@ -9,9 +9,9 @@
     <br>
     <h3 class="text-center mb-2 font-weight-bold">{{ group.group_name }}</h3>
     <br>
-    <div class="row mb-3">
+    <div class="main-group-details">
         <!-- group logo -->
-        <div class="col-xs-6 col-sm-6 col-md-4 mb-3 gdetails">
+        <div class="gdetails">
             <div class="grouplogo">
                 <img class="z-depth-1-half mr-3 mb-3" src="{{ group.logo.url }}" alt="group-logo">
                 <br>
@@ -25,7 +25,7 @@
 
             </div>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 mb-3">
+        <div class="gdetails2">
             <div class="gd">
                     {% if group.group_leader == request.user %}
                     <a href="{% url 'profile' request.user.username %}" class="butt">{{ group.group_leader }}</a>
@@ -47,9 +47,8 @@
                     {% else %}
                         <a href="" data-toggle="modal" data-target="#adminMessagesModal" class="butt">Admin Messages</a>
                     {% endif %}
-                </div>
+            </div>
         </div>
-
         </div>
     </div>
     <hr class="my-4">
