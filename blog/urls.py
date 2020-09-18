@@ -50,6 +50,4 @@ urlpatterns = [
     path('new2dja/', views.new_to_dja, name='new2dja'),
     path('<str:username>/', views.user_post_profile, name="userprofilepost"),
 
-    
-
 ]

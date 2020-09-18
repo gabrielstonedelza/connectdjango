@@ -1,26 +1,36 @@
 @import "./variables";
 
-.group-swipe-container{
-  width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
-
-  .swiper-slide {
-    background-position: center;
-    background-size: cover;
-    width: 300px;
-    height: 400px;
-    .group-details-container {
-        width: 300px;
-        height: 400px;
-        .view {
-          img {
-            width: 300px;
-            height: 250px;
-          }
-        }
-      
+.allgroups-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 20px;
+  .the-group-box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: solid 2px silver;
+    padding: 10px;
+    background-color: rgba(156, 156, 156, 0.295);
+    .group-poster {
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .allgroups-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 20px;
   }
 }
 
@@ -43,8 +53,6 @@
   }
 }
 
-
-
 // tab in group update view
 .mytab_item {
   .nav-tabs {
@@ -59,7 +67,8 @@
   }
 }
 
-.addmembers-section, .pendingmembers-section{
+.addmembers-section,
+.pendingmembers-section {
   ul {
     padding: 20px;
     border-radius: 10px;
@@ -79,43 +88,43 @@
     }
   }
 }
-.removemembers-section{
-  ul{
+.removemembers-section {
+  ul {
     list-style-type: none;
     padding: 20px;
-    li{
+    li {
       display: flex;
       justify-content: space-between;
-      a{
-        img{
+      a {
+        img {
           width: 60px;
           height: 60px;
           border-radius: 50%;
         }
       }
-      form{
-        .form-control{
+      form {
+        .form-control {
           border: none;
         }
       }
     }
   }
 }
-.for-members{
-  ul{
+.for-members {
+  ul {
     list-style-type: none;
     padding: 20px;
-    li{
+    li {
       display: flex;
-      .group_member_photo{
-        img{
+      .group_member_photo {
+        img {
           width: 40px;
           height: 40px;
           border-radius: 50%;
         }
       }
-      .member-details{
-        a{
+      .member-details {
+        a {
           font-weight: bold;
         }
       }
@@ -123,37 +132,38 @@
   }
 }
 
-.groupdetail-tabs{
-  .for-posts{
-    ul{
+.groupdetail-tabs {
+  .for-posts {
+    ul {
       list-style-type: none;
-      li{
+      li {
         display: flex;
         justify-content: space-evenly;
       }
     }
   }
 
-  .for-photos{
+  .for-photos {
     .photodetails {
       a {
-        .likecomment{
-            display: none;
+        .likecomment {
+          display: none;
+          color: white;
+          font-weight: bold;
+          position: absolute;
+          z-index: 1;
+          margin-top: 130px;
+          margin-left: 70px;
+          .fa-heart,
+          .fa-eye {
             color: white;
-            font-weight: bold;
-            position: absolute;
-            z-index: 1;
-            margin-top: 130px;
-            margin-left: 70px;
-            .fa-heart,.fa-eye{
-                color: white;
-                // font-size: 20px;
-            }
+            // font-size: 20px;
+          }
         }
         .upost-img-holder {
           width: 256px;
           height: 256px;
-          
+
           .upost-img {
             img {
               position: relative;
@@ -161,71 +171,70 @@
               width: 256px;
               height: 256px;
             }
-            
           }
         }
         &:hover {
-            .image-overlay {
-              width: 256px;
-              height: 256px;
-              position: absolute;
-              background-color: rgba(0, 0, 0, 0.8);
-              z-index: 1;
-            }
-            .likecomment{
-                display: block;
-            }
+          .image-overlay {
+            width: 256px;
+            height: 256px;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1;
           }
+          .likecomment {
+            display: block;
+          }
+        }
       }
     }
   }
 }
 
 // group post detail
-.gmember-post-title{
+.gmember-post-title {
   display: flex;
-  img{
+  img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
   }
 }
 
-.gpost-detail-main{
-  .post-content{
-    a{
-      img{
+.gpost-detail-main {
+  .post-content {
+    a {
+      img {
         width: 400px;
         border-radius: 20px;
       }
     }
   }
 }
-form{
-  #group_post_comment_form{
+form {
+  #group_post_comment_form {
     resize: none;
   }
-  #answerform{
+  #answerform {
     resize: none;
   }
 }
 
 // group photo detail
-.group-photo-detail{
+.group-photo-detail {
   padding: 20px;
-  .gphotodetails{
+  .gphotodetails {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     width: 900px;
     height: 550px;
-    .group-photos{
-      img{
+    .group-photos {
+      img {
         width: 450px;
         height: 550px;
         position: absolute;
         z-index: -1;
       }
-      span{
+      span {
         position: absolute;
         padding: 10px;
         margin-top: 490px;
@@ -233,65 +242,63 @@ form{
         color: white;
         background-color: $primary_color;
         border-radius: 10px;
-        &:hover{
+        &:hover {
           background-color: $secondary_color;
           color: black;
           transition: ease 1s;
         }
       }
     }
-    .gphotodetail-likes-likees{
+    .gphotodetail-likes-likees {
       // background-color: red;
       width: 300px;
       height: 550px;
-      .hold-group-info{
+      .hold-group-info {
         height: 50px;
         display: flex;
         padding: 10px;
         justify-content: space-between;
-        img{
+        img {
           width: 30px;
           height: 30px;
           border-radius: 50%;
         }
       }
-      .display-all-likess{
+      .display-all-likess {
         height: 400px;
         padding: 10px;
         overflow: scroll;
         overflow-x: hidden;
         overflow-y: hidden;
-        ul{
+        ul {
           list-style-type: none;
-          li{
+          li {
             display: flex;
             justify-content: space-between;
-            img{
+            img {
               width: 30px;
               height: 30px;
               border-radius: 50%;
             }
-
           }
         }
       }
-
     }
   }
 }
-// group post 
-.gpost-container{
+// group post
+.gpost-container {
   padding: 20px;
-  .group-poster-user-name{
+  .group-poster-user-name {
     display: flex;
-    .group-name{
+    .group-name {
       font-weight: bold;
     }
   }
-  .group-posts-contents{
+  .group-posts-contents {
     padding: 20px;
-    .for-group-post-img{
-      img{
+    .for-group-post-img {
+      img {
         width: 620px;
         height: 400px;
       }

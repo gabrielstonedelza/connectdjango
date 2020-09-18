@@ -7,23 +7,26 @@ Explore New
 <div class="container mt-3">
     <br>
     <h3 class="mb-3 text-muted text-center">Discover People</h3>
+    <br>
     <div class="myexplore-users">
       {% for user in not_following %}
         <div class="explore-user-box">
           <div class="user-profile-picture">
             <img class="" src="{{ user.profile.profile_pic.url }}" alt="">
           </div>
+
           <div class="user-profile-name">
-            <h5 class="text-center">{{ user.username }}</h5>
-            <small class="text-muted">New to Django Across</small>
+            <small class="text-muted">{{ user.username }}</small>
+            <br>
+            <small class="text-muted">New to Connect</small>
           </div>
-          <a href="{% url 'userprofilepost' user.username %}" class="butt">View Profile</a>
+          <a href="{% url 'userprofilepost' user.username %}" class="butt">Profile</a>
         </div>
       {% endfor %}
       <br>
     </div>
     <br>
-    <a href="{% url 'new2dja' %}" class="butt">More</a>
+    <a href="{% url 'new2dja' %}" class="butt ml-2">More</a>
     <br>
     <hr class="my-4">
     <h4 class="text-muted mb-3 text-center">Explore Groups</h4>
@@ -32,20 +35,14 @@ Explore New
       {% for group in groups %}
       <div class="explore-group-box">
         <div class="group-poster">
-          <img class="z-depth-1-half" src="{{ group.logo.url }}"
+          <img  src="{{ group.logo.url }}"
 alt="group logo">
         </div>
-        <div class="group-leader">
-          {% if group.group_leader == request.user %}
-            <a href="{% url 'profile' request.user.username %}" class="butt mb-2">{{ group.group_leader }}</a>
-            <span class="text-muted ml-2">Admin</span>
-          {% else %}
-        <a href="{% url 'userprofilepost' group.group_leader.username %}" class="butt mb-2">{{ group.group_leader }}</a><span class="text-muted ml-2">Group Admin</span>
-          {% endif %}
-        </div>
+        <br>
         <div class="group-name">
-          <a href="{{ group.get_absolute_group_url }}" class="card-title mt-3" style="color: white;">{{ group.group_name }}</a>
+          <a href="{{ group.get_absolute_group_url }}" class="butt mt-3" style="color: white;">{{ group.group_name }}</a>
         </div>
+        <br>
         <div class="group-members-views">
           <span class="ml-3 mt-1" title="total member in group">
             <i class="fas fa-users mr-2"></i> {{ group.members.count }}
@@ -57,8 +54,9 @@ alt="group logo">
       </div>
       {% endfor %}
       <br>
-      <a href="{% url 'groups' %}" class="butt">More</a>
     </div>
+    <br>
+    <a href="{% url 'groups' %}" class="butt ml-2">More</a>
     
 </div>
 <br>
