@@ -12,7 +12,7 @@ class QuestionForm(forms.ModelForm):
 
 class AnswerForm(forms.ModelForm):
     answer = forms.CharField(label='', widget=forms.Textarea(
-        attrs={'placeholder': 'Answer goes here....', 'rows': '2', 'cols': '35', 'id': 'answerform',
+        attrs={'placeholder': 'Answer goes here....', 'rows': '3', 'cols': '35', 'id': 'answerform',
                'name': 'answerform'}))
 
     class Meta:

@@ -5,43 +5,45 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="container mt-4 mb-4">
+  <br>
   <div class="qdetail-section">
-    <section class="qsection-a">
-      <h5><span class="mr-2"><img style="width: 40px;height: 40px;border-radius: 20px;" src="{{ question.question_author.profile.profile_pic.url}}" alt=""></span>{{ question.question }}</h5>
-      <br>
-      <a class="butt text-white" data-toggle="modal" data-target="#q_descriptionModal" >Read Description</a>
-    </section>
-  
-      <br>
-      <section class="qsection-b">
+    <div class="qsection-a">
+      <div class="question-header-with-image">
+        <span class="mr-2">
+          <h4>{{ question.question }}</h4>
+          <div class="d-flex">
+            <span class="text-muted">views {{ question.views }}</span>
+            <span class="text-muted ml-3">Asked on {{ question.date_posted|date:"M D Y" }}</span>
+          </div>
+        </span>
+      </div>
+      <hr class="my-4">
+      <p>{{ question.q_description|safe }}</p>
+      <a href="" title="share">
+        <span class="text-muted"><i class="fas fa-share"></i></span>
+      </a>
         <div class="main-answer-section mb-3">
             <br>
             {% include "blog/answer_form.html" %}
         </div>
-      </section>
       <br>
-  </div>
-</div>
-<br>
-<!-- Modal -->
-<div class="modal fade" id="q_descriptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Question Description</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="question_description_container">
-          {{ question.q_description|safe }}
-        </div>
-      </div>
+    </div>
+    <div class="other-questions">
+      <br>
+      <h4 class="">Other Questions</h4>
+      <br>
+      <ul class="list-group">
+        {% for oq in other_questions %}
+          <li class="list-group-item">
+            <a class="text-muted" href="{{ oq.get_absolute_url }}">{{oq.question}}</a>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
 </div>
+<br>
+
 {% endblock %}
 <!-- Button trigger modal -->
 

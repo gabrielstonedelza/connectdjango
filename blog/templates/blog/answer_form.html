@@ -1,139 +1,140 @@
 {% load static %}
 {% load crispy_forms_tags %}
-    <form method="post" class="answer-form" action=".">
-      <fieldset class="form-group">
-        {% csrf_token %}
-        {{ form|crispy }}
-      </fieldset>
-      {% if user.is_authenticated %}
-      <div class="form-group">
-        <button class="butt" type="submit">
-          Submit
-        </button>
-      </div>
-      {% else %}
-      <div class="form-group">
-        <button class="butt" type="submit" disabled>
-          Submit
-        </button>
-      </div>
-      {% endif %}
-    </form>
+  
+<hr class="my-4" />
+<br />
+  <h4 class="mb-3">
+  <span class="mr-2">{{ answers_count }} Answers</span>
+  </h4>
   <br />
-  <hr class="my-4" />
-  <br />
-    <h4 class="mb-3">
-      Answers <span class="ml-2 badge badge-info">{{ answers_count }}</span>
-    </h4>
-    <br />
-    <div class="answers-section">
-      {% for answer in answers %}
-      <div class="userpicandname">
-        <img src="{{ answer.user.profile.profile_pic.url }}" alt="user-profile-picture"
-          style="width: 50px;height: 50px;border-radius: 25px;" />
-          <div class="ml-2 who-answered">
-            <a class="text-muted" href="{% url 'userprofilepost' answer.user.username %}">{{ answer.user }}</a>
-            <p>{{ answer.answer | safe }}</p>
-            <sup style="float: right;"><small>{{ answer.date_posted }}</small></sup>
-          </div>
-      </div>
-      <br>
-      <div class="usersanswer mb-3">
-        <button title="reply or view all other replies" class="reply-butt butt" class="text-muted mr-2">
-            <i class="fas fa-people-arrows"></i>
-        </button>
-        <span class="ml-2">
-          {{ answer.replies.count }}
-          {% if answer.replies.count > 1 %}
-            replies
-          {% elif answer.replies.count == 0 %}
-            replies
-          {% else %}
-            reply
-          {% endif %}
-        </span>
-        <hr class="my-2" />
-        <br />
-      </div>
-      <div class="replied-answers container mt-2 mb-2 ml-4" style="display: none;">
-        {% for reply in answer.replies.all %}
-        <div class="container">
-          <small class="d-flex">
-            <img src="{{ reply.user.profile.profile_pic.url }}" alt=""
-              style="width: 40px;height: 40px;border-radius: 20px;" />
-              <div class="ml-3">
-
-                <a class="text-muted" href="{% url 'userprofilepost' reply.user.username %}">{{ reply.user }}</a>
-                <p>{{ reply.answer }}</p>
-              </div>
-          </small>
+  <div class="answers-section">
+    {% for answer in answers %}
+    <div class="userpicandname">
+      <img src="{{ answer.user.profile.profile_pic.url }}" alt="user-profile-picture"
+/>
+        <div class="ml-2 who-answered">
+          <a class="text-muted" href="{% url 'userprofilepost' answer.user.username %}">{{ answer.user }}</a>
+          <p>{{ answer.answer | safe }}</p>
+          <br>
+          <sup style="float: right;"><small>{{ answer.date_posted }}</small></sup>
         </div>
-        {% empty %}
-        <p>Sorry,no replies yet.</p>
-        {% endfor %}
-        <div class="form-group row">
-          <form method="post" class="reply-form" action=".">
-            <fieldset class="form-group">
-              {% csrf_token %}
-              <input type="hidden" name="answer_id" value="{{ answer.id }}" />
-              {{ form|crispy }}
-            </fieldset>
-            {% if user.is_authenticated %}
-            <div class="form-group">
-              <button class="butt" type="submit">
-                Submit
-              </button>
-            </div>
-            {% else %}
-            <div class="form-group">
-              <button class="butt" type="submit" disabled>
-                Submit
-              </button>
-            </div>
-            {% endif %}
-          </form>
-        </div>
-      </div>
-      {% endfor %}
     </div>
-<!--    pagination-->
-    <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-circle pg-blue pt-3">
-              {% if answers.has_previous %}
-                <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
-                <li class="page-item ">
-                  <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-              {% endif %}
+    <br>
+    <div class="usersanswer mb-3">
+      <button title="reply or view all other replies" class="reply-butt butt" class="text-muted mr-2">
+          <i class="fas fa-people-arrows"></i>
+      </button>
+      <span class="ml-2">
+        {{ answer.replies.count }}
+        {% if answer.replies.count > 1 %}
+          replies
+        {% elif answer.replies.count == 0 %}
+          replies
+        {% else %}
+          reply
+        {% endif %}
+      </span>
+      <hr class="my-2" />
+      <br />
+    </div>
+    <div class="replied-answers container mt-2 mb-2 ml-4" style="display: none;">
+      {% for reply in answer.replies.all %}
+      <div class="container">
+        <small class="d-flex">
+          <img src="{{ reply.user.profile.profile_pic.url }}" alt=""
+            style="width: 30px;height: 30px;border-radius: 15px;" />
+            <div class="ml-3">
 
-              {% for c in answers.paginator.page_range %}
-                {% if answers.number == c %}
-                  <li class="page-item active">
-                    <a href="?page={{ c }}" class="page-link">{{ c }}</a>
-                  </li>
-                {% elif c > answers.number|add:"-3" and c < answers.number|add:"-3" %}
-                  {{ c }}
-                {% else %}
-                  <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
-              {% endif %}
-            {% endfor %}
-
-            {% if answers.has_next %}
-              <li class="page-item">
-                  <a href="?page={{ answers.next_page_number }}" class="page-link" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-                <li class="page-item"><a href="?page={{ answers.paginator.num_pages }}" class="page-link">Last</a></li>
-            {% endif %}
-            </ul>
-          </nav>
+              <a class="text-muted" href="{% url 'userprofilepost' reply.user.username %}">{{ reply.user }}</a>
+              <p>{{ reply.answer }}</p>
+              <hr class="my-4">
+            </div>
+        </small>
+      </div>
+      {% empty %}
+      <p>Sorry,no replies yet.</p>
+      {% endfor %}
+      <div class="form-group row ml-4">
+        <form method="post" class="reply-form" action=".">
+          <fieldset class="form-group">
+            {% csrf_token %}
+            <input type="hidden" name="answer_id" value="{{ answer.id }}" />
+            {{ form|crispy }}
+          </fieldset>
+          {% if user.is_authenticated %}
+          <div class="form-group">
+            <button class="butt" type="submit">
+              Submit
+            </button>
+          </div>
+          {% else %}
+          <div class="form-group">
+            <button class="butt" type="submit" disabled>
+              Submit
+            </button>
+          </div>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+    {% endfor %}
   </div>
-</div>
+<!--    pagination-->
+  <nav aria-label="Page navigation example">
+          <ul class="pagination pagination-circle pg-blue pt-3">
+            {% if answers.has_previous %}
+              <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
+              <li class="page-item ">
+                <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+            {% endif %}
+
+            {% for c in answers.paginator.page_range %}
+              {% if answers.number == c %}
+                <li class="page-item active">
+                  <a href="?page={{ c }}" class="page-link">{{ c }}</a>
+                </li>
+              {% elif c > answers.number|add:"-3" and c < answers.number|add:"-3" %}
+                {{ c }}
+              {% else %}
+                <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if answers.has_next %}
+            <li class="page-item">
+                <a href="?page={{ answers.next_page_number }}" class="page-link" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+              <li class="page-item"><a href="?page={{ answers.paginator.num_pages }}" class="page-link">Last</a></li>
+          {% endif %}
+          </ul>
+        </nav>
+        <form method="post" class="answer-form" action=".">
+          <fieldset class="form-group">
+            {% csrf_token %}
+            {{ form|crispy }}
+          </fieldset>
+          {% if user.is_authenticated %}
+          <div class="form-group">
+            <button class="butt" type="submit">
+              Submit
+            </button>
+          </div>
+          {% else %}
+          <div class="form-group">
+            <button class="butt" type="submit" disabled>
+              Submit
+            </button>
+          </div>
+          {% endif %}
+        </form>
+      <br />
 <script>
   CKEDITOR.replace('answerform');
 </script>

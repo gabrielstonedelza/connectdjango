@@ -173,7 +173,110 @@ p.full-group-description {
 }
 
 .qdetail-section {
-  display: -ms-grid;
-  display: grid;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row  wrap;
+          flex-flow: row  wrap;
+}
+
+.qdetail-section .qsection-a {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 20px;
+}
+
+.qdetail-section .qsection-a .question-header-with-image h4 {
+  font-weight: bold;
+}
+
+.qdetail-section .qsection-a p {
+  width: 100%;
+}
+
+.qdetail-section .qsection-a .main-answer-section .answers-section .userpicandname {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.qdetail-section .qsection-a .main-answer-section .answers-section .userpicandname img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.qdetail-section .qsection-a .main-answer-section .answers-section .userpicandname .who-answered {
+  padding: 10px;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.267);
+}
+
+.qdetail-section .qsection-a .main-answer-section .answers-section .userpicandname .who-answered a {
+  font-weight: bold;
+}
+
+.qdetail-section .other-questions {
+  padding: 20px;
+}
+
+.my-tutorial-detail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row  wrap;
+          flex-flow: row  wrap;
+}
+
+.my-tutorial-detail .tutorial-container {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  width: 100%;
+  padding: 20px;
+}
+
+.my-tutorial-detail .tutorial-container p {
+  background-color: rgba(0, 0, 0, 0.267);
+  padding: 10px;
+}
+
+.my-tutorial-detail .other-tutorials {
+  padding: 20px;
+}
+
+.my-tutorial-form, .my-question-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.my-tutorial-form .create-tutorial-form, .my-tutorial-form .create-question-form, .my-question-form .create-tutorial-form, .my-question-form .create-question-form {
+  width: 50%;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
 }
 /*# sourceMappingURL=questions_tutorials.css.map */

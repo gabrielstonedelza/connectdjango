@@ -154,6 +154,8 @@ def question_detail(request, id):
     page = request.GET.get('page')
     answers = paginator.get_page(page)
 
+    other_questions = Question.objects.all().order_by('-date_posted')[:10]
+
     if Answers.objects.filter(question=question) and not Answers.objects.filter(answer=None):
         question.answered = True
         question.save()
@@ -184,6 +186,7 @@ def question_detail(request, id):
         'question': question,
         'form': form,
         'answers': answers,
+        "other_questions": other_questions,
         'answers_count': answers_count,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],

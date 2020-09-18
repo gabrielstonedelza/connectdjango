@@ -209,28 +209,7 @@ form{
     resize: none;
   }
 }
-.answers-section{
-  .userpicandname{
-    display: flex;
-    img{
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-    }
-    .who-answered{
-      width: 100%;
-      overflow: hidden;
-      padding: 10px;
-      background: rgba(94, 92, 92, 0.37);
-      border-radius: 20px;  
-    }
-  }
-}
-.question_description_container{
-  padding: 15px;
-  background: rgba(94, 92, 92, 0.37);
-  border-radius: 20px;
-}
+
 // group photo detail
 .group-photo-detail{
   padding: 20px;
