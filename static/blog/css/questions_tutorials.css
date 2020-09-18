@@ -139,15 +139,38 @@ button.butt:hover {
   list-style-type: none;
 }
 
-#notifications ul {
-  padding: 10px;
-  border-radius: 10px;
-  list-style-type: none;
-  background-color: rgba(0, 0, 0, 0.267);
+.mynotifications {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-#notifications ul a {
-  color: #fff !important;
+.mynotifications .notifs {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  -ms-flex-preferred-size: 50%;
+      flex-basis: 50%;
+  padding: 10px;
+}
+
+.mynotifications .notifs ul {
+  list-style-type: none;
+}
+
+.mynotifications .notifs ul a {
+  font-weight: bold;
+  color: gray;
 }
 
 #tutocontent {

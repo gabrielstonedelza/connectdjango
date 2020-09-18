@@ -47,118 +47,18 @@ button.butt:hover {
   color: #000;
 }
 
-.new_to_django {
-  width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+.myexplore-users {
+  display: -ms-grid;
+  display: grid;
+  gap: 1rem;
+  -ms-grid-columns: (minmax(150px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
-.new_to_django .swiper-slide {
-  background-position: center;
-  background-size: cover;
-  width: 300px;
-  height: 300px;
-}
-
-.new_to_django .swiper-slide .explore-box {
-  width: 300px;
-  height: 300px;
-}
-
-.new_to_django .swiper-slide .explore-box .card-body a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.new_to_django .swiper-slide .explore-box .card-body a img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-}
-
-.new_to_django .swiper-slide .explore-box .card-body a .userdetails h5 {
-  font-weight: bold;
-  text-transform: capitalize;
-  color: black;
-}
-
-.upostcodesmodes a .likecomment {
-  display: none;
-  color: white;
-  font-weight: bold;
-  position: absolute;
-  z-index: 1;
-  margin-top: 130px;
-  margin-left: 90px;
-}
-
-.upostcodesmodes a .likecomment .fa-heart,
-.upostcodesmodes a .likecomment .fa-eye {
-  color: white;
-  font-size: 20px;
-}
-
-.upostcodesmodes a .upost-img-holder {
-  width: 256px;
-  height: 256px;
-}
-
-.upostcodesmodes a .upost-img-holder .upost-img img {
-  position: relative;
-  padding: 10px;
-  width: 256px;
-  height: 256px;
-}
-
-.upostcodesmodes a:hover .image-overlay {
-  width: 256px;
-  height: 256px;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1;
-}
-
-.upostcodesmodes a:hover .likecomment {
-  display: block;
-}
-
-.newuser-container {
+.myexplore-users .explore-user-box {
+  -webkit-columns: 1;
+          columns: 1;
   padding: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.newuser-container img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-}
-
-.newuser-container a {
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
+  border-radius: 20px;
 }
 /*# sourceMappingURL=explore.css.map */
