@@ -1,6 +1,5 @@
 {% load crispy_forms_tags %}
-<div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-4 mb-3 mr-auto">
+<div class="main-feedback-container">
       <div class="feedback-form-box z-depth-1-half">
         <form action="." method="post" id="feedback_form">
             {% csrf_token %}
@@ -12,65 +11,62 @@
             </div>
         </form>
       </div>
-    </div>
 
-    <div class="col-xs-6 col-sm-6 col-md-6 mb-3 ml-auto">
-        <div class="all_feedbacks_section">
-            <ul class="group-item">
-                {% for fb in all_feedbacks %}
-                    <li class="list-group-item d-flex">
-                        <img src="{{ fb.user.profile.profile_pic.url }}" alt="user photo" class="mr-3" style="width:40px;height:40px;border-radius:50%;">
-                        <div class="ml-2">
-                            <a class="text-muted" href="{% url 'userprofilepost' fb.user %}">
-                                {{ fb.user }}
-                            </a>
-                            <br>
-                            <p>{{ fb.feedback }}</p>
-                            <small class="text-muted">{{ fb.date_posted }}</small>
-                        </div>
-                    </li>
-                {% empty %}
-                    <li class="text-center text-muted list-group-item">No feedbacks yet</li>
-                {% endfor %}
-            </ul>
-            <br>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination pagination-circle pg-blue pt-3">
-                  {% if all_feedbacks.has_previous %}
-                    <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
-                    <li class="page-item ">
-                      <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                  {% endif %}
-              
-                  {% for c in all_feedbacks.paginator.page_range %}
-                    {% if all_feedbacks.number == c %}
-                      <li class="page-item active">
-                        <a href="?page={{ c }}" class="page-link">{{ c }}</a>
-                      </li>
-                    {% elif c > all_feedbacks.number|add:"-3" and c < all_feedbacks.number|add:"-3" %}
-                      {{ c }}
-                    {% else %}
-                      <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
-                  {% endif %}
-                {% endfor %}
-              
-                {% if all_feedbacks.has_next %}
-                  <li class="page-item">
-                      <a href="?page={{ all_feedbacks.next_page_number }}" class="page-link" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a href="?page={{ all_feedbacks.paginator.num_pages }}" class="page-link">Last</a></li>
+      <div class="all_feedbacks_section">
+          <ul class="group-item">
+              {% for fb in all_feedbacks %}
+                  <li class="list-group-item d-flex">
+                      <img src="{{ fb.user.profile.profile_pic.url }}" alt="user photo" class="mr-3" style="width:40px;height:40px;border-radius:50%;">
+                      <div class="ml-2">
+                          <a class="text-muted" href="{% url 'userprofilepost' fb.user %}">
+                              {{ fb.user }}
+                          </a>
+                          <br>
+                          <p>{{ fb.feedback }}</p>
+                          <small class="text-muted">{{ fb.date_posted }}</small>
+                      </div>
+                  </li>
+              {% empty %}
+                  <li class="text-center text-muted list-group-item">No feedbacks yet</li>
+              {% endfor %}
+          </ul>
+          <br>
+          <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-circle pg-blue pt-3">
+                {% if all_feedbacks.has_previous %}
+                  <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
                 {% endif %}
-                </ul>
-              </nav>
-        </div>
-    </div>
+            
+                {% for c in all_feedbacks.paginator.page_range %}
+                  {% if all_feedbacks.number == c %}
+                    <li class="page-item active">
+                      <a href="?page={{ c }}" class="page-link">{{ c }}</a>
+                    </li>
+                  {% elif c > all_feedbacks.number|add:"-3" and c < all_feedbacks.number|add:"-3" %}
+                    {{ c }}
+                  {% else %}
+                    <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
+                {% endif %}
+              {% endfor %}
+            
+              {% if all_feedbacks.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ all_feedbacks.next_page_number }}" class="page-link" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a href="?page={{ all_feedbacks.paginator.num_pages }}" class="page-link">Last</a></li>
+              {% endif %}
+              </ul>
+            </nav>
+      </div>
 </div>
 
 

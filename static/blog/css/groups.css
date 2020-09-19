@@ -95,29 +95,70 @@ button.butt:hover {
   }
 }
 
-.gdetails {
+.main-group-details {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  gap: 3rem;
+  -ms-flex-flow: wrap;
+      flex-flow: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 20px;
+}
+
+.main-group-details .gdetails .grouplogo img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.main-group-details .gdetails .grouplogo .join-edit {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.main-group-details .gdetails2 {
+  padding: 20px;
+}
+
+.main-group-update-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 2rem;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  padding: 20px;
+}
+
+.main-group-update-container .main-group-update-form {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.main-group-update-container .mytab_item {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
 
-.gdetails .grouplogo {
-  padding: 10px;
-  text-align: center;
-}
-
-.gdetails .grouplogo img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: solid 2px #0C4B33;
-}
-
-.gdetails .gd {
-  padding: 10px;
-  font-size: 20px;
+@media (max-width: 500px) {
+  .main-group-update-container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 20px;
+  }
 }
 
 .mytab_item .nav-tabs {

@@ -135,6 +135,16 @@
           {% endif %}
         </form>
       <br />
+
+
 <script>
-  CKEDITOR.replace('answerform');
+  CKEDITOR.replace( 'answerform',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
 </script>

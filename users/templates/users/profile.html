@@ -5,16 +5,13 @@
 {% load static %}
 {% block content %}
 <div class="container mt-3">
-  <div class="row just-user-profile mb-3 d-flex justify-content-center">
+  <div class="just-user-profile">
     <br>
-    <div class="col-xs-6 col-sm-6 col-md-4 mb-3 mt-4">
-      <div class="container ml-5">
+      <div class="just-user-profile-photo">
         <div class="user-profile-photo ml-4">
           <img class="z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="">
         </div>
       </div>
-    </div>
-    <div class="col-xs-6 col-sm-6 col-md-8 mb-3 mt-4">
       <div class="user-profile-details">
         <div class="d-flex">
           <h4 class="mb-1">{{ user.username }}</h4>
@@ -65,12 +62,11 @@
       {% endif %}
       {% if user.profile.your_github %}
       <a target="_blank" href="{{ user.profile.your_github }}">
-          <i class="fab fa-github"></i>
+        <img src="{% static 'blog/images/github.png' %}" alt="">
       </a>
       {% endif %}
       </span>
       </div>
-    </div>
   </div>
   <br>
   <hr class="my-4">

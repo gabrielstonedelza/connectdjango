@@ -34,25 +34,60 @@
   }
 }
 
-.gdetails {
+.main-group-details{
   display: flex;
-  flex-wrap: wrap;
-  .grouplogo {
-    padding: 10px;
-    text-align: center;
-    img {
+  gap: 3rem;
+  flex-flow: wrap;
+  justify-content: center;
+  padding: 20px;
+  .gdetails{
+    .grouplogo{
+      img{
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      border: solid 2px $primary_color;
+      }
+      .join-edit{
+        display: grid;
+        place-items: center;
+      }
     }
   }
-  .gd {
-    padding: 10px;
-    font-size: 20px;
+  .gdetails2{
+    padding: 20px;
   }
 }
 
+@media(max-width: 500px){
+  
+}
+// update group
+.main-group-update-container{
+  display: flex;
+  gap: 2rem;
+  flex-flow:row wrap;
+  padding: 20px;
+  .main-group-update-form{
+    // width: 40%;
+    flex: 1;
+  }
+  .mytab_item{
+    flex: 1;
+    flex-wrap: wrap;
+  }
+}
+
+@media(max-width: 500px){
+  .main-group-update-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    // flex-flow:row wrap;
+    padding: 20px;
+    // justify-content: center;
+    // align-items: center;
+  }
+}
 // tab in group update view
 .mytab_item {
   .nav-tabs {
