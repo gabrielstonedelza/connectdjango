@@ -3,12 +3,10 @@
 {{ question.question }}
 {% endblock %}
 {% block content %}
-{% load crispy_forms_tags %}
 <div class="container mt-4 mb-4">
   <br>
   <div class="qdetail-section">
     <div class="qsection-a">
-      <div class="question-header-with-image">
         <span class="mr-2">
           <h4>{{ question.question }}</h4>
           <div class="d-flex">
@@ -16,7 +14,6 @@
             <span class="text-muted ml-3">Asked on {{ question.date_posted|date:"M D Y" }}</span>
           </div>
         </span>
-      </div>
       <hr class="my-4">
       <p>{{ question.q_description|safe }}</p>
 
@@ -41,6 +38,7 @@
   </div>
 </div>
 <br>
+
 
 {% endblock %}
 

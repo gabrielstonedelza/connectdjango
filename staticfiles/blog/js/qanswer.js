@@ -6,40 +6,15 @@ $(function(){
 
     // answers ajax
   $(document).on("submit",".answer-form",function(event){
-    event.preventDefault()
-    $.ajax({
-      type:"POST",
-      url:$(this).attr('action'),
-      data:$(this).serialize(),
-      dataType:'json',
-      success:function(response){
-        $(".main-answer-section").html(response['form'])
-        $('textarea').val('')
-      },
-      error:function(rs,e){
-        console.log(rs.responseText)
-      }
-    })
+    // event.preventDefault()
+      $('textarea').val('')
   })
 
   // reply form
   $(document).on("submit", ".reply-form", function (event) {
-    event.preventDefault();
-    $.ajax({
-      type: "POST",
-      url: $(this).attr("action"),
-      data: $(this).serialize(),
-      dataType: "json",
-      success: function (response) {
-        $(".main-answer-section").html(response["form"]);
-        $("textarea").val("");
-        $(".reply-butt").on("click", function (event) {
-          $(this).parent().next(".replied-answers").fadeToggle();
-        });
-      },
-      error: function (rs, e) {
-        console.log(rs.responseText);
-      },
+    $("textarea").val("");
+    $(".reply-butt").on("click", function (event) {
+      $(this).parent().next(".replied-answers").fadeToggle();
     });
   });
 

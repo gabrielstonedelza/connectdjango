@@ -1,18 +1,39 @@
 @import "./variables";
 
-.contactform {
-  #contact_form_section {
-    .contact-form-box {
-      padding: 20px;
-      border-radius: 20px;
+.main-feedback-container{
+  display: flex;
+  gap: 2rem;
+  flex-flow: wrap;
+
+  .feedback-form-box{
+    flex: 1;
+    padding: 10px;
+  }
+  .all_feedbacks_section{
+    flex: 2;
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+@media(max-width: 500px){
+  .main-feedback-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 20px;
+  
+    .feedback-form-box{
+      // flex: 1;
+      padding: 10px;
     }
-    form {
-      textarea {
-        resize: none;
-      }
+    .all_feedbacks_section{
+      // flex: 2;
+      padding: 10px;
     }
   }
 }
+
 
 // feedback
 #feedback_section {
@@ -43,6 +64,69 @@ textarea {
           width: 50px;
           height: 50px;
           border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+// contact
+.main-contact-form{
+  display: flex;
+  gap: 2rem;
+  flex-flow: wrap;
+  padding: 20px;
+  #contact_form_section {
+    .contact-form-box {
+      padding: 20px;
+      border-radius: 20px;
+    }
+    form {
+      textarea {
+        resize: none;
+      }
+    }
+  }
+  .mysocial{
+    flex-wrap: wrap;
+    .for_our_facebook, .for_our_instagram{
+      a{
+        img{
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
+  }
+}
+
+@media(max-width: 500px){
+  .main-contact-form{
+    display: flex;
+    gap: 2rem;
+    flex-flow: wrap;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    #contact_form_section {
+      padding: 10px;
+      .contact-form-box {
+        padding: 20px;
+        border-radius: 20px;
+      }
+      form {
+        textarea {
+          resize: none;
+        }
+      }
+    }
+    .mysocial{
+      .for_our_facebook, .for_our_instagram{
+        a{
+          img{
+            width: 40px;
+            height: 40px;
+          }
         }
       }
     }

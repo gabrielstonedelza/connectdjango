@@ -178,7 +178,6 @@ def question_detail(request, id):
             if not answer.user == question.question_author:
                 NotifyMe.objects.create(user=question.question_author, notify_title="Question Answered",
                                         notify_alert=message, follower_sender=request.user, que_id=question.id)
-
     else:
         form = AnswerForm()
 

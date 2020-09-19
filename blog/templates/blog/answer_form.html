@@ -3,6 +3,25 @@
   
 <hr class="my-4" />
 <br />
+<form method="post" class="answer-form" action=".">
+  <fieldset class="form-group">
+    {% csrf_token %}
+    {{ form|crispy }}
+  </fieldset>
+  {% if user.is_authenticated %}
+  <div class="form-group">
+    <button class="butt" type="submit">
+      Submit
+    </button>
+  </div>
+  {% else %}
+  <div class="form-group">
+    <button class="butt" type="submit" disabled>
+      Submit
+    </button>
+  </div>
+  {% endif %}
+</form>
   <h4 class="mb-3">
   <span class="mr-2">{{ answers_count }} Answers</span>
   </h4>
@@ -115,36 +134,17 @@
           {% endif %}
           </ul>
         </nav>
-        <form method="post" class="answer-form" action=".">
-          <fieldset class="form-group">
-            {% csrf_token %}
-            {{ form|crispy }}
-          </fieldset>
-          {% if user.is_authenticated %}
-          <div class="form-group">
-            <button class="butt" type="submit">
-              Submit
-            </button>
-          </div>
-          {% else %}
-          <div class="form-group">
-            <button class="butt" type="submit" disabled>
-              Submit
-            </button>
-          </div>
-          {% endif %}
-        </form>
+        
       <br />
 
-
-<script>
-  CKEDITOR.replace( 'answerform',
-    {
-        entities: false,
-        basicEntities: false,
-        entities_greek: false,
-        entities_latin: false,
-        htmlDecodeOutput:true,
-    }
-   );
-</script>
+      <script>
+        CKEDITOR.replace( 'myanswerform',
+          {
+              entities: false,
+              basicEntities: false,
+              entities_greek: false,
+              entities_latin: false,
+              htmlDecodeOutput:true,
+          }
+         );
+      </script>

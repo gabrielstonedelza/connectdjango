@@ -1,21 +1,21 @@
-.profile-following-tab,
-.profile-followers-tab {
-  ul {
-    list-style-type: none;
-    li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      a {
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
-  }
-}
+// .profile-following-tab,
+// .profile-followers-tab {
+//   ul {
+//     list-style-type: none;
+//     li {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       a {
+//         img {
+//           width: 50px;
+//           height: 50px;
+//           border-radius: 50%;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .user-social {
   display: flex;
@@ -26,4 +26,24 @@
       height: 30px;
     }
   }
+}
+
+.just-user-profile{
+  display: flex;
+  gap: 2rem;
+  flex-flow: wrap;
+  padding: 20px;
+  justify-content: center;
+
+  .just-user-profile-photo{
+    .user-profile-photo {
+      img {
+        width: 160px;
+        height: 160px;
+        border-radius: 80px;
+        border: solid #0c4b33 2px;
+      }
+    }
+  }
+
 }

@@ -1,97 +1,172 @@
 @import "./variables";
 
-.new_to_django {
-  width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+.myexplore-users{
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+  padding: 10px;
 
-  .swiper-slide {
-    background-position: center;
-    background-size: cover;
-    width: 300px;
-    height: 300px;
-    .explore-box {
-      width: 300px;
-      height: 300px;
-      .card-body {
-        a {
-          @include setFlex(column);
-          img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-          }
-          .userdetails {
-            h5 {
-              font-weight: bold;
-              text-transform: capitalize;
-              color: black;
-            }
-          }
-        }
+  .explore-user-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: solid 2px silver;
+    padding: 20px;
+    background-color: rgba(156, 156, 156, 0.295);
+    .user-profile-picture{
+      img{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
       }
     }
-  }
-}
-
-.upostcodesmodes {
-  a {
-    .likecomment {
-      display: none;
-      color: white;
+    .user-profile-name{
+      font-size: 18px;
+      text-align: center;
       font-weight: bold;
-      position: absolute;
-      z-index: 1;
-      margin-top: 130px;
-      margin-left: 90px;
-      .fa-heart,
-      .fa-eye {
-        color: white;
-        font-size: 20px;
-      }
-    }
-    .upost-img-holder {
-      width: 256px;
-      height: 256px;
-
-      .upost-img {
-        img {
-          position: relative;
-          padding: 10px;
-          width: 256px;
-          height: 256px;
-        }
-      }
-    }
-    &:hover {
-      .image-overlay {
-        width: 256px;
-        height: 256px;
-        position: absolute;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 1;
-      }
-      .likecomment {
-        display: block;
+      small{
+        font-weight: bold;
       }
     }
   }
 }
 
-.newuser-container {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+@media(max-width: 500px){
+  .myexplore-users{
+    display: grid;
+    grid-template-columns: 1fr;
+    .explore-user-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: solid 2px silver;
+    padding: 20px;
+    background-color: rgba(156, 156, 156, 0.295);
+    .user-profile-picture{
+      img{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+    }
+    .user-profile-name{
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+    }
   }
-  a {
+  }
+}
+
+// explore groups
+.explore-groups-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+  gap: 1rem;
+  padding: 10px;
+  .explore-group-box{
+    // width: 28%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: solid 2px silver;
     padding: 10px;
-    text-align: center;
-    font-weight: bold;
+    background-color: rgba(156, 156, 156, 0.295);
+    .group-poster{
+      img{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      }
+    }
+  }
+}
+
+@media(max-width: 500px){
+  .explore-groups-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    .explore-group-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: solid 2px silver;
+    padding: 20px;
+    background-color: rgba(156, 156, 156, 0.295);
+    .user-profile-picture{
+      img{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+    }
+    .group-poster{
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  }
+}
+
+// new to connect django
+.mynew-users-connect{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+  padding: 20px;
+  gap: 1rem;
+  .users-to-connect{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: solid 2px silver;
+    padding: 20px;
+    background-color: rgba(156, 156, 156, 0.295);
+    .newuser-container{
+      font-weight: bold;
+      img{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+@media(max-width: 500px){
+  .mynew-users-connect{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 1rem;
+    .users-to-connect{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      border: solid 2px silver;
+      padding: 20px;
+      background-color: rgba(156, 156, 156, 0.295);
+      .newuser-container{
+        font-weight: bold;
+        img{
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+      }
+    }
   }
 }

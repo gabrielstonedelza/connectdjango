@@ -47,52 +47,118 @@ button.butt:hover {
   color: #000;
 }
 
-.group-swipe-container {
-  width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+.allgroups-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(150px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  padding: 20px;
 }
 
-.group-swipe-container .swiper-slide {
-  background-position: center;
-  background-size: cover;
-  width: 300px;
-  height: 400px;
-}
-
-.group-swipe-container .swiper-slide .group-details-container {
-  width: 300px;
-  height: 400px;
-}
-
-.group-swipe-container .swiper-slide .group-details-container .view img {
-  width: 300px;
-  height: 250px;
-}
-
-.gdetails {
+.allgroups-container .the-group-box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 10px;
+  border: solid 2px silver;
+  padding: 10px;
+  background-color: rgba(156, 156, 156, 0.295);
+}
+
+.allgroups-container .the-group-box .group-poster img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+@media (max-width: 500px) {
+  .allgroups-container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 20px;
+  }
+}
+
+.main-group-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 3rem;
+  -ms-flex-flow: wrap;
+      flex-flow: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 20px;
+}
+
+.main-group-details .gdetails .grouplogo img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.main-group-details .gdetails .grouplogo .join-edit {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.main-group-details .gdetails2 {
+  padding: 20px;
+}
+
+.main-group-update-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 2rem;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  padding: 20px;
+}
+
+.main-group-update-container .main-group-update-form {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.main-group-update-container .mytab_item {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
 
-.gdetails .grouplogo {
-  padding: 10px;
-  text-align: center;
-}
-
-.gdetails .grouplogo img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: solid 2px #0C4B33;
-}
-
-.gdetails .gd {
-  padding: 10px;
-  font-size: 20px;
+@media (max-width: 500px) {
+  .main-group-update-container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 20px;
+  }
 }
 
 .mytab_item .nav-tabs {
@@ -107,13 +173,15 @@ button.butt:hover {
   font-weight: bold;
 }
 
-.addmembers-section ul, .pendingmembers-section ul {
+.addmembers-section ul,
+.pendingmembers-section ul {
   padding: 20px;
   border-radius: 10px;
   list-style-type: none;
 }
 
-.addmembers-section ul li, .pendingmembers-section ul li {
+.addmembers-section ul li,
+.pendingmembers-section ul li {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -123,11 +191,13 @@ button.butt:hover {
   padding: 20px;
 }
 
-.addmembers-section ul li a, .pendingmembers-section ul li a {
+.addmembers-section ul li a,
+.pendingmembers-section ul li a {
   color: black;
 }
 
-.addmembers-section ul li a img, .pendingmembers-section ul li a img {
+.addmembers-section ul li a img,
+.pendingmembers-section ul li a img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -201,7 +271,8 @@ button.butt:hover {
   margin-left: 70px;
 }
 
-.groupdetail-tabs .for-photos .photodetails a .likecomment .fa-heart, .groupdetail-tabs .for-photos .photodetails a .likecomment .fa-eye {
+.groupdetail-tabs .for-photos .photodetails a .likecomment .fa-heart,
+.groupdetail-tabs .for-photos .photodetails a .likecomment .fa-eye {
   color: white;
 }
 
@@ -251,32 +322,6 @@ form #group_post_comment_form {
 
 form #answerform {
   resize: none;
-}
-
-.answers-section .userpicandname {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.answers-section .userpicandname img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.answers-section .userpicandname .who-answered {
-  width: 100%;
-  overflow: hidden;
-  padding: 10px;
-  background: rgba(94, 92, 92, 0.37);
-  border-radius: 20px;
-}
-
-.question_description_container {
-  padding: 15px;
-  background: rgba(94, 92, 92, 0.37);
-  border-radius: 20px;
 }
 
 .group-photo-detail {

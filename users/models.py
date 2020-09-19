@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from PIL import Image
 
-
 GROUP_MEMBER_STATUS = (
     ("Pending", "Pending"),
     ("Approved", "Approved")
@@ -29,7 +28,6 @@ class Profile(models.Model):
     your_linkedin = models.CharField(max_length=450, blank=True)
     your_github = models.CharField(max_length=450, blank=True)
     date_followed = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return f"{self.user.username}"
@@ -83,7 +81,8 @@ class GroupPost(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     gmember = models.ForeignKey(User, on_delete=models.CASCADE, related_name="member_making_post")
     title = models.CharField(max_length=100, default="Likes coding")
-    content = models.TextField(default="If you like programming just start learning and start building projects that matter", blank=True)
+    content = models.TextField(
+        default="If you like programming just start learning and start building projects that matter", blank=True)
     photo = models.ImageField(upload_to="group_post_photos", blank=True)
     views = models.IntegerField(default=0)
     likes = models.ManyToManyField(User, related_name='group_post_likes', blank=True)
@@ -145,6 +144,3 @@ class GroupAdminMsg(models.Model):
 
     def __str__(self):
         return f"{self.g_leader} sent a note to all group members"
-
-
-
