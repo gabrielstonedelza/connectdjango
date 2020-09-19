@@ -8,7 +8,7 @@
   <div class="just-user-profile">
     <br>
       <div class="just-user-profile-photo">
-        <div class="user-profile-photo ml-4">
+        <div class="user-profile-photo">
           <img class="z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="">
         </div>
       </div>
@@ -20,13 +20,13 @@
         </div>
         <br>
         <div class="d-flex mb-1">
-          <p class="mr-3"><strong  class="mr-2">{{myques.count}}</strong>questions</p>
-          <p  class="mr-3"><strong class="mr-2">{{mytutos.count}}</strong>tutorials</p>
-          <p  class="mr-3" id="followerscount"><strong class="mr-2">{{ followers_count }}</strong>followers</p>
-          <p class="mr-3" id="followingcount"><strong class="mr-2">{{ following_count }}</strong>following</p>
+          <p class="mr-2"><strong  class="mr-2">{{myques.count}}</strong>questions</p>
+          <p  class="mr-2"><strong class="mr-2">{{mytutos.count}}</strong>tutorials</p>
+          <p  class="mr-2" id="followerscount"><strong class="mr-2">{{ followers_count }}</strong>followers</p>
+          <p class="mr-2" id="followingcount"><strong class="mr-2">{{ following_count }}</strong>following</p>
         </div>
         <div>
-          <h5 class="mb-3">{{ user.profile.name }}</h5>
+          <h5 class="mb-2">{{ user.profile.name }}</h5>
           <p>{{ user.profile.bio }}</p>
         </div>
         <span class="user-social">
@@ -74,19 +74,19 @@
 
   <li class="nav-item">
     <a class="nav-link active" id="questions-tab" data-toggle="tab" href="#questions" role="tab" aria-controls="questions"
-      aria-selected="false"><i class="fas fa-question mr-2"></i>Questions</a>
+      aria-selected="false"><i class="fas fa-question"></i>Questions</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="tutorials-tab" data-toggle="tab" href="#tutorials" role="tab" aria-controls="tutorials"
-      aria-selected="false"><i class="fas fa-chalkboard-teacher mr-2"></i>Tutorials</a>
+      aria-selected="false"><i class="fas fa-chalkboard-teacher "></i>Tutorials</a>
   </li>
       <li class="nav-item">
     <a class="nav-link" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following"
-      aria-selected="false"><i class="fas fa-users mr-2"></i>Following</a>
+      aria-selected="false"><i class="fas fa-users "></i>Following</a>
   </li>
     <li class="nav-item">
     <a class="nav-link" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers"
-      aria-selected="false"><i class="fas fa-users mr-2"></i>Followers</a>
+      aria-selected="false"><i class="fas fa-users "></i>Followers</a>
   </li>
 </ul>
 <div class="tab-content profile-tabs" id="myTabContent">
