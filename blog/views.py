@@ -467,7 +467,7 @@ def explore_new(request):
 
     myprofile = get_object_or_404(Profile, user=request.user)
     following = myprofile.following.all()
-    new_users = User.objects.exclude(id=request.user.id).order_by('-date_joined')[:15]
+    new_users = User.objects.exclude(id=request.user.id).order_by('-date_joined')[:12]
     groups = Group.objects.all().order_by('-date_created')[:15]
     user = request.user
 
@@ -500,7 +500,7 @@ def new_to_dja(request):
 
     myprofile = get_object_or_404(Profile, user=request.user)
     following = myprofile.following.all()
-    new_users = User.objects.exclude(id=request.user.id).order_by('-date_joined')
+    new_users = User.objects.exclude(id=request.user.id).order_by('-date_joined')[:15]
     groups = Group.objects.all().order_by('-date_created')
 
     not_following = []
