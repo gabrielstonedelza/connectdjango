@@ -14,16 +14,16 @@
       </div>
       <div class="user-profile-details">
         <div class="d-flex">
-          <h4 class="mb-1">{{ user.username }}</h4>
+          <h4 class="mb-1 ml-3">{{ user.username }}</h4>
           <a href="{% url 'editprofile'  user.username %}" class="butt ml-3">Edit Profile</a>
           <a class="butt ml-3" href="{% url 'logout' %}">Logout</a>
         </div>
         <br>
         <div class="d-flex mb-1">
-          <p class="mr-2"><strong  class="mr-2">{{myques.count}}</strong>questions</p>
-          <p  class="mr-2"><strong class="mr-2">{{mytutos.count}}</strong>tutorials</p>
-          <p  class="mr-2" id="followerscount"><strong class="mr-2">{{ followers_count }}</strong>followers</p>
-          <p class="mr-2" id="followingcount"><strong class="mr-2">{{ following_count }}</strong>following</p>
+          <p class="mr-1"><strong  class="mr-1">{{myques.count}}</strong>questions</p>
+          <p  class="mr-1"><strong class="mr-1">{{mytutos.count}}</strong>tutorials</p>
+          <p  class="mr-1" id="followerscount"><strong class="mr-1">{{ followers_count }}</strong>followers</p>
+          <p class="mr-1" id="followingcount"><strong class="mr-1">{{ following_count }}</strong>following</p>
         </div>
         <div>
           <h5 class="mb-2">{{ user.profile.name }}</h5>

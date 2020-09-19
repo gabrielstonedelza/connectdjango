@@ -15,17 +15,17 @@
 
     <div class="user-profile-details ">
         <div class="d-flex">
-            <h4 class="mb-1">{{ deuser.username }}</h4>
+            <h4 class="mb-1 ml-3">{{ deuser.username }}</h4>
             <span class="ml-2" id="connection_section">
                     {% include "users/user_connection.html" %}
             </span>
         </div>
         <br>
         <div class="d-flex mb-1">
-            <p class="mr-3"><strong class="mr-2">{{question_count}}</strong>questions</p>
-            <p class="mr-3"><strong class="mr-2">{{tutorial_count}}</strong>tutorials</p>
-            <a class="mr-3" data-target="#userprofile-followers-modal" data-toggle="modal"><strong class="mr-2">{{ defollowers.count}}</strong>followers</a>
-            <a class="mr-3" data-target="#userprofile-following-modal" data-toggle="modal"><strong class="mr-2">{{ defollowing.count}}</strong>following</a>
+            <p class="mr-1"><strong class="mr-1">{{question_count}}</strong>questions</p>
+            <p class="mr-1"><strong class="mr-1">{{tutorial_count}}</strong>tutorials</p>
+            <a class="mr-1" data-target="#userprofile-followers-modal" data-toggle="modal"><strong class="mr-1">{{ defollowers.count}}</strong>followers</a>
+            <a class="mr-1" data-target="#userprofile-following-modal" data-toggle="modal"><strong class="mr-1">{{ defollowing.count}}</strong>following</a>
         </div>
         <div>
             <h5 class="mb-3">{{ deuser.profile.name }}</h5>
