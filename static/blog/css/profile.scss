@@ -44,6 +44,37 @@
         border: solid #0c4b33 2px;
       }
     }
+    .user-profile-details{
+      padding: 20px;
+      flex-wrap: wrap;
+    }
   }
 
+}
+
+@media(max-width:500px){
+  .just-user-profile{
+    display: grid;
+    place-items: center;
+    gap: 2rem;
+    padding: 20px;
+  
+    .just-user-profile-photo{
+      .user-profile-photo {
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 80px;
+          border: solid #0c4b33 2px;
+        }
+      }
+      .user-profile-details{
+        h4{
+          
+        }
+        padding: 20px;
+      }
+    }
+  
+  }
 }
