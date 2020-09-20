@@ -1,16 +1,6 @@
 {% load crispy_forms_tags %}
 <div class="main-feedback-container">
-      <div class="feedback-form-box z-depth-1-half">
-        <form action="." method="post" id="feedback_form">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form|crispy }}
-            </div>
-            <div class="form-group">
-                <button type="submit" class="butt">Submit</button>
-            </div>
-        </form>
-      </div>
+      
 
       <div class="all_feedbacks_section">
           <ul class="group-item">
@@ -66,6 +56,17 @@
               {% endif %}
               </ul>
             </nav>
+      </div>
+      <div class="feedback-form-box ">
+        <form action="." method="post" id="feedback_form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form|crispy }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="butt">Submit</button>
+            </div>
+        </form>
       </div>
 </div>
 
