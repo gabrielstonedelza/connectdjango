@@ -57,9 +57,6 @@ button.butt:hover {
 }
 
 .main-feedback-container .feedback-form-box {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
   padding: 10px;
 }
 
