@@ -1,4 +1,3 @@
-{% load static %}
 {% load crispy_forms_tags %}
   
 <hr class="my-4" />
@@ -63,7 +62,6 @@
           <img src="{{ reply.user.profile.profile_pic.url }}" alt=""
             style="width: 30px;height: 30px;border-radius: 15px;" />
             <div class="ml-3">
-
               <a class="text-muted" href="{% url 'userprofilepost' reply.user.username %}">{{ reply.user }}</a>
               <p>{{ reply.answer }}</p>
               <hr class="my-4">
