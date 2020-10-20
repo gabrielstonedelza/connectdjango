@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import (Question, Answers, Tutorial, MyLikes, NotifyMe, FeedBack, ContactUs)
+from .models import (Project, ProjectFiles, ProjectIssues, Issues, NotifyMe, FeedBack, ContactUs)
 
-admin.site.register(Question)
-admin.site.register(Answers)
-admin.site.register(Tutorial)
-admin.site.register(MyLikes)
+admin.site.register(Project)
+admin.site.register(ProjectFiles)
+admin.site.register(ProjectIssues)
+admin.site.register(Issues)
 admin.site.register(NotifyMe)
 admin.site.register(FeedBack)
 admin.site.register(ContactUs)

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, Group, GroupPost, GroupAdminMsg, Comments
+from .models import Profile
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -43,41 +43,3 @@ class PasswordChangeForm(forms.Form):
         attrs={"class": "form-control", "placeholder": "confirm password"}))
 
 
-class GroupUpdateForm(forms.ModelForm):
-    group_name = forms.CharField(label="", widget=forms.TextInput(attrs={'class': 'form-control'}))
-    logo = forms.ImageField(label='')
-    group_description = forms.CharField(label="", widget=forms.Textarea(attrs={'class': 'form-control'}))
-
-    class Meta:
-        model = Group
-        fields = ['group_name', 'logo', 'group_description']
-
-
-class GroupPostForm(forms.ModelForm):
-    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'id': 'grouppostform'}))
-
-    class Meta:
-        model = GroupPost
-        fields = ['title', 'content', 'photo']
-
-
-class CreateNewGroupForm(forms.ModelForm):
-    class Meta:
-        model = Group
-        fields = ['group_name', 'logo', 'group_description']
-
-
-class AdminMessageForm(forms.ModelForm):
-    class Meta:
-        model = GroupAdminMsg
-        fields = ['title', 'message']
-
-
-class CommentsForm(forms.ModelForm):
-    comment = forms.CharField(label='', widget=forms.Textarea(
-        attrs={'placeholder': 'Comments goes here....', 'rows': '1', 'cols': '50', 'id': 'group_post_comment_form',
-               'name': 'group_post_comment_form', 'class': 'form-control mb-2 mr-sm-2'}))
-
-    class Meta:
-        model = Comments
-        fields = ['comment']

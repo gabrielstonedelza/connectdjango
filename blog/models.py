@@ -3,68 +3,64 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from users.models import Group, GroupPost
 
-
-class Question(models.Model):
-    question_author = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.CharField(max_length=500, help_text="Title of your question")
-    q_description = models.TextField(default="Someone help me", help_text="Explanation of your question")
-    answered = models.BooleanField(default=False, blank=True)
+class Project(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    project_title = models.CharField(max_length=150, help_text="Title of your project")
+    contributors = models.ManyToManyField(User, related_name="wants_to_contribute",
+                                          help_text="Invite other users to help build this project with you.")
+    project_description = models.TextField(help_text="What is this project about?")
     views = models.IntegerField(default=0, blank=True)
-    likes = models.ManyToManyField(User, related_name="likes", blank=True)
+    project_status = models.IntegerField(default=0)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.owner.username} has created a new project"
+
+    def get_absolute_project_url(self):
+        return reverse("project_detail", args={self.project_title})
+
+
+class ProjectFiles(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_making_contribution")
+    file_name = models.CharField(max_length=100)
+    code = models.TextField(help_text="Use this section if you don't have the file to upload", blank=True)
+    code_in_file = models.FileField(upload_to="project_files", help_text="you can leave this field empty if you put "
+                                                                         "the code in the code section.", blank=True)
+    approves = models.ManyToManyField(User, related_name="those_who_approved")
+    approved = models.BooleanField(default=False)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.question_author.username} posted '{self.question}'."
+        return f"{self.user.username} has made changes to the {self.project.project_title}"
 
-    def get_absolute_url(self):
-        return reverse("question_detail", args={self.pk})
-
-    def question_count(self):
-        return self.question.count
+    def get_absolute_project_file(self):
+        return reverse("project_file_detail", args={self.file_name})
 
 
-class Answers(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+class Issues(models.Model):
+    projectF = models.ForeignKey(ProjectFiles, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    reply = models.ForeignKey("Answers", null=True, related_name="replies", on_delete=models.CASCADE)
-    answer = models.TextField()
+    issues = models.TextField(help_text="What are the issues about this code?Just address the issue without fix")
+    fix = models.TextField("What should be the fix?Provide it here.")
+    resolved = models.BooleanField(default=False)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} answered {self.question}"
-
-    def answers_count(self):
-        return self.answer.count
+        return f"{self.user.username} just highlighted an issue in {self.projectF.file_name}"
 
 
-class Tutorial(models.Model):
-    tutorial_author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=300)
-    tutorial_content = models.TextField()
-    views = models.IntegerField(default=0)
-    likes = models.ManyToManyField(User, related_name="tutorial_likes", blank=True)
-    make_private = models.BooleanField(default=False, help_text="Make this tutorial private")
-    date_posted = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.tutorial_author} has posted a tutorial '{self.title}'"
-
-    def get_absolute_tutorial_url(self):
-        return reverse("tuto_detail", args={self.pk})
-
-    def likes_count(self):
-        return self.likes.count
-
-
-class MyLikes(models.Model):
-    tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
+class ProjectIssues(models.Model):
+    project_with_issue = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    issues = models.TextField(help_text="What are the issues about this project?Just address the issue without fix")
+    fix = models.TextField("What should be the fix?Provide it here.")
+    resolved = models.BooleanField(default=False)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.tutorial.title}"
+        return f"{self.user.username} just addressed an issue about {self.project_with_issue.project_name}"
 
 
 class NotifyMe(models.Model):
@@ -72,10 +68,6 @@ class NotifyMe(models.Model):
     notify_title = models.CharField(max_length=100, default="New Notification")
     notify_alert = models.CharField(max_length=200)
     follower_sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="who_started_following")
-    gname = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
-    gpost = models.ForeignKey(GroupPost, on_delete=models.CASCADE, blank=True, null=True)
-    que_id = models.IntegerField(blank=True, default=0)
-    tuto_id = models.IntegerField(blank=True, default=0)
     read = models.BooleanField(default=False)
     date_notified = models.DateTimeField(auto_now_add=True)
 

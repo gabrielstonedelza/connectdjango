@@ -1,41 +1,5 @@
 from django import forms
-from .models import Answers, Tutorial, Question, FeedBack, ContactUs
-
-
-class QuestionForm(forms.ModelForm):
-    question = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-
-    class Meta:
-        model = Question
-        fields = ['question', 'q_description']
-
-
-class AnswerForm(forms.ModelForm):
-    answer = forms.CharField(label='', widget=forms.Textarea(attrs={'class':'form-control','placeholder': '....', 'rows': '2', 'cols': '35', 'id': 'myanswerform', 'name':'myanswerform'}))
-
-    class Meta:
-        model = Answers
-        fields = ['answer']
-
-
-class TutorialForm(forms.ModelForm):
-    title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    tutorial_content = forms.CharField(widget=forms.Textarea(
-        attrs={'placeholder': 'Add tutorial here....', 'rows': '2', 'cols': '35', 'id': 'mytutorialform'}))
-
-    class Meta:
-        model = Tutorial
-        fields = ['title', 'tutorial_content', 'make_private']
-
-
-class TutorialUpdateForm(forms.ModelForm):
-    title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    tutorial_content = forms.CharField(widget=forms.Textarea(
-        attrs={'placeholder': 'Add tutorial here....', 'rows': '2', 'cols': '35', 'id': 'mytutorialform'}))
-
-    class Meta:
-        model = Tutorial
-        fields = ['title', 'tutorial_content', 'make_private']
+from .models import  Project, ProjectFiles, ProjectIssues, Issues, FeedBack, ContactUs
 
 
 class FeedbackForm(forms.ModelForm):

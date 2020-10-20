@@ -1,0 +1,12 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Projects for you
+{% endblock %}
+{% block content%}
+<div class="project-container">
+    <h3 class="text-center">Projects</h3>
+    {% for project in projects %}
+    <a href="">{{ project.project_title }}</a>
+    {% endfor %}
+</div>
+{% endblock %}
