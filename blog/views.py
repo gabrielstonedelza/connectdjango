@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView
 from django.template.loader import render_to_string
 from .models import (Project, ProjectFiles, ProjectIssues, Issues, NotifyMe, FeedBack, ContactUs)
 from django.contrib.auth.decorators import login_required
@@ -18,32 +18,87 @@ from .notifications import mynotifications
 @login_required
 def all_projects(request):
     projects = Project.objects.all().order_by('-date_created')
+    total_projects = projects.count()
+    all_issues_count = Issues.objects.all()
+    project_issues = ProjectIssues.objects.all()
+    issues = all_issues_count.count() + project_issues.count()
+    users = User.objects.all()
+
+    paginator = Paginator(projects, 10)
+    page = request.GET.get('page')
+    projects = paginator.get_page(page)
+
     context = {
-        "projects": projects
+        "projects": projects,
+        "tprojects": total_projects,
+        "all_issues": issues,
+        "users": users
     }
 
     return render(request, "blog/projects.html", context)
 
 
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    model = Project
+    fields = ['project_title', 'contributors', 'project_description']
+    success_url = "/projects"
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+@login_required
+def project_detail(request, project_name):
+    project = get_object_or_404(Project, project_title=project_name)
+    project_files = ProjectFiles.objects.filter(project=project)
+    project_issues = ProjectIssues.objects.filter(project_with_issue=project)
+
+    if project:
+        project.views += 1
+        project.save()
+
+    context = {
+        "project": project,
+        "project_files": project_files,
+        "p_issues": project_issues
+    }
+
+    return render(request, "blog/project_detail.html", context)
+
+
+@login_required
+def project_file_detail(request, project_file):
+    projectFile = get_object_or_404(ProjectFiles, file_name=project_file)
+    pfile_issues = Issues.objects.filter(projectF=projectFile)
+
+    context = {
+        "projectFile": projectFile,
+        "pfissues": pfile_issues
+    }
+
+    return render(request, "blog/project_file_detail.html", context)
+
+
 @login_required
 def search_queries(request):
     query = request.GET.get('q', None)
-    if query is not None:
-        questions = Question.objects.filter(
-            Q(question__icontains=query) |
-            Q(question_author__username__icontains=query)
-        )
-        tutorials = Tutorial.objects.filter(
-            Q(title__icontains=query) |
-            Q(tutorial_author__username__icontains=query)
-        )
-        all_groups = Group.objects.filter(
-            Q(group_name__icontains=query) |
-            Q(group_leader__username__icontains=query)
-        )
-        all_group_posts = GroupPost.objects.filter(
-            Q(title__icontains=query)
-        )
+    # if query is not None:
+    #     questions = Question.objects.filter(
+    #         Q(question__icontains=query) |
+    #         Q(question_author__username__icontains=query)
+    #     )
+    #     tutorials = Tutorial.objects.filter(
+    #         Q(title__icontains=query) |
+    #         Q(tutorial_author__username__icontains=query)
+    #     )
+    #     all_groups = Group.objects.filter(
+    #         Q(group_name__icontains=query) |
+    #         Q(group_leader__username__icontains=query)
+    #     )
+    #     all_group_posts = GroupPost.objects.filter(
+    #         Q(title__icontains=query)
+    #     )
 
     context = {
         'questions': questions,

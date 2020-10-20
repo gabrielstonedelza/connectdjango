@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .views import ProjectCreateView
 from django.contrib.auth import views as auth_views
 from users import views as uviews
 
@@ -17,6 +18,9 @@ urlpatterns = [
     path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('register/', uviews.register, name='register'),
     path('projects/', views.all_projects, name='projects'),
+    path('new-project/new/', views.ProjectCreateView.as_view(), name="create_project"),
+    path('project/<str:project_name>/', views.project_detail, name='project_detail'),
+    path('project-file/<str:project_file>/', views.project_file_detail, name="project_file_detail"),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('contact-us/', views.contact_us, name="contact-us"),

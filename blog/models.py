@@ -6,16 +6,17 @@ from django.contrib.auth.models import User
 
 class Project(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    project_title = models.CharField(max_length=150, help_text="Title of your project")
+    project_title = models.CharField(max_length=150, help_text="Title of your project", unique=True)
     contributors = models.ManyToManyField(User, related_name="wants_to_contribute",
-                                          help_text="Invite other users to help build this project with you.")
+                                          help_text="Invite other users to help build this project with you.Hold Ctrl "
+                                                    "and click to add")
     project_description = models.TextField(help_text="What is this project about?")
     views = models.IntegerField(default=0, blank=True)
     project_status = models.IntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.owner.username} has created a new project"
+        return self.project_title
 
     def get_absolute_project_url(self):
         return reverse("project_detail", args={self.project_title})
@@ -28,12 +29,12 @@ class ProjectFiles(models.Model):
     code = models.TextField(help_text="Use this section if you don't have the file to upload", blank=True)
     code_in_file = models.FileField(upload_to="project_files", help_text="you can leave this field empty if you put "
                                                                          "the code in the code section.", blank=True)
-    approves = models.ManyToManyField(User, related_name="those_who_approved")
-    approved = models.BooleanField(default=False)
+    approves = models.ManyToManyField(User, related_name="those_who_approved", blank=True)
+    approved = models.BooleanField(default=False, blank=True)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} has made changes to the {self.project.project_title}"
+        return self.file_name
 
     def get_absolute_project_file(self):
         return reverse("project_file_detail", args={self.file_name})
@@ -60,7 +61,7 @@ class ProjectIssues(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} just addressed an issue about {self.project_with_issue.project_name}"
+        return f"{self.user.username} just addressed an issue about {self.project_with_issue.project_title}"
 
 
 class NotifyMe(models.Model):

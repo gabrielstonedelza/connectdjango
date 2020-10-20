@@ -1,0 +1,12 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ project.project_title }}
+{% endblock %}
+{% block content%}
+<div class="project-detail-container">
+   {{ project.owner.username }}/ {{ project.project_title }}
+    {% for pf in project_files %}
+    <a href="{{ pf.get_absolute_project_file }}">{{ pf.file_name }}</a>
+    {% endfor %}
+</div>
+{% endblock %}
