@@ -55,8 +55,9 @@ class Issues(models.Model):
 class ProjectIssues(models.Model):
     project_with_issue = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    issues = models.TextField(help_text="What are the issues about this project?Just address the issue without fix")
-    fix = models.TextField("What should be the fix?Provide it here.")
+    issues = models.CharField(max_length=150, help_text="What are the issues about this project?Just address the issue "
+                                                       "without fix")
+    fix = models.CharField(max_length=150, help_text="What should be the fix?Provide it here.Should be short")
     resolved = models.BooleanField(default=False)
     date_posted = models.DateTimeField(auto_now_add=True)
 

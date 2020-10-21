@@ -10,7 +10,7 @@ Projects for you
     <div class="project-container">
         {% for project in projects %}
             <div class="project-list">
-                <img src="{% static 'blog/images/project.png' %}" alt="">
+                <img src="{% static 'blog/images/project.png' %}" alt="" style="width:25px;height:25px;">
                 <div>
                     <a href="{{ project.get_absolute_project_url }}">{{ project.project_title }}</a>
                     <br>
@@ -64,7 +64,6 @@ Projects for you
         <br>
         <span>Issues: {{ all_issues }}</span>
         <br>
-        
         <span>Users: {{ users.count }}</span>
     </div>
 </div>

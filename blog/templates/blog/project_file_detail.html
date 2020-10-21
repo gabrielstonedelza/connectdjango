@@ -3,7 +3,9 @@
 {{ projectFile.file_name }}
 {% endblock %}
 {% block content%}
-<div class="project_file_detail-container">
+<div class="container">
+    <br>
+    <h3>{{ projectFile.file_name }}</h3>
     {{ projectFile.code }}
 
     {% for p in pfissues %}

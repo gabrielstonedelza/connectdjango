@@ -1,12 +1,51 @@
 {% extends "blog/base_with_nav.html"%}
+{% load static %}
 {% block title %}
 {{ project.project_title }}
 {% endblock %}
 {% block content%}
-<div class="project-detail-container">
-   {{ project.owner.username }}/ {{ project.project_title }}
+<div class="container">
+    <br>
+    <div class="project-detail">
+        <div class="project-title-owner">
+            <img src="{% static 'blog/images/project.png' %}" alt="" style="width:25px;height:25px;">
+            <span><a href="">{{ project.owner.username }}</a></span>/ <span><a href="{{ project.get_absolute_project_url}}">{{ project.project_title }}</a></span>
+        </div>
+        <br>
+    </div>
+    <br>
+    <div class="project-tabs">
+        <a href="{% url 'issues_fixes' project.project_title %}">Issues & Fixes</a>
+        <a href="">Ask to Contribute</a>
+        <a href="">Address Issue</a>
+        <a href="">Files in Stock</a>
+    </div>
+    <hr class="my-4">
+    <br>
+    <table class="table table-striped">
     {% for pf in project_files %}
-    <a href="{{ pf.get_absolute_project_file }}">{{ pf.file_name }}</a>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Files</th>
+          <th scope="col">Approves</th>
+          <th scope="col">File By</th>
+          <th scope="col">Last Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>
+              <img src="{% static 'blog/images/file.png' %}" alt="" style="width:20px;height:20px;">
+              <a href="{{ pf.get_absolute_project_file }}">{{ pf.file_name }}</a>
+          </td>
+          <td>{{ pf.approves.count }} out of {{ pf.project.contributors.count }}</td>
+          <td><a href="">{{ pf.user.username }}</a></td>
+          <td>{{ pf.date_posted|date:"M d,Y" }}</td>
+        </tr>
+      </tbody>
     {% endfor %}
+</table>
 </div>
 {% endblock %}

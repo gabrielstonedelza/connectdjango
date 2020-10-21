@@ -81,6 +81,20 @@ def project_file_detail(request, project_file):
 
 
 @login_required
+def issues_fixes(request, project_name):
+    issued_project = get_object_or_404(Project, project_title=project_name)
+    project_with_issues = ProjectIssues.objects.filter(project_with_issue=issued_project).order_by('-date_posted')
+
+    context = {
+        "issued_project": issued_project,
+        "project_with_issues": project_with_issues
+    }
+
+    return render(request, "blog/issues&fixes.html", context)
+
+
+
+@login_required
 def search_queries(request):
     query = request.GET.get('q', None)
     # if query is not None:
@@ -101,10 +115,10 @@ def search_queries(request):
     #     )
 
     context = {
-        'questions': questions,
-        'tutorials': tutorials,
-        'all_groups': all_groups,
-        'all_group_posts': all_group_posts,
+        # 'questions': questions,
+        # 'tutorials': tutorials,
+        # 'all_groups': all_groups,
+        # 'all_group_posts': all_group_posts,
     }
     if request.is_ajax():
         html = render_to_string("blog/search_list.html", context, request=request)

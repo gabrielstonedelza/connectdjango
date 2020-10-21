@@ -1,0 +1,44 @@
+{% extends "blog/base_with_nav.html"%}
+{% load static %}
+{% block title %}
+Issues and Fixes for {{ issued_project.project_title }}
+{% endblock %}
+{% block content%}
+<div class="container">
+    <br>
+    <div class="issued-project-detail">
+        <div class="project-title-owner">
+            <img src="{% static 'blog/images/project.png' %}" alt="" style="width:25px;height:25px;">
+            <span><a href="">{{ issued_project.owner.username }}</a></span>/ <span><a href="{{ issued_project.get_absolute_project_url}}">{{ issued_project.project_title }}</a></span>
+        </div>
+        <br>
+    </div>
+    <br>
+    <h3>Issues and Fixes</h3>
+    <hr class="my-4">
+    <br>
+    <div class="issues-fixes-lists">
+        <ul class="list-group">
+           {% for issue in project_with_issues %}
+            <li class="list-group-item d-flex">
+                <span class="text-muted mr-2 font-weight-bold">Issue Id: {{ issue.id }}</span>
+                <div>
+                    <span class="issue badge badge-danger">
+                    {{ issue.issues }}
+                        <br>
+                    </span>
+                    <br>
+                    <span class="fixes badge badge-success">
+                        {{ issue.fix }}
+                    </span>
+                </div>
+
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
+
+{% endblock %}
