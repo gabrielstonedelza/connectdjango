@@ -8,11 +8,5 @@
     <h3>{{ projectFile.file_name }}</h3>
     {{ projectFile.code }}
 
-    {% for p in pfissues %}
-    <div>
-       <h2>Issue: </h2> {{ p.issues }}
-        <h2>Fix: </h2>{{ p.fix }}
-    </div>
-    {% endfor %}
 </div>
 {% endblock %}

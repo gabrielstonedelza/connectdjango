@@ -19,3 +19,10 @@ class ContactUsForm(forms.ModelForm):
     class Meta:
         model = ContactUs
         fields = ['name', 'email', 'subject', 'message']
+
+        
+class ProjectFilesForm(forms.ModelForm):
+
+    class Meta:
+        model = ProjectFiles
+        fields = ['']

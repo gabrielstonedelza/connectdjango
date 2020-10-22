@@ -16,36 +16,39 @@
     <br>
     <div class="project-tabs">
         <a href="{% url 'issues_fixes' project.project_title %}">Issues & Fixes</a>
-        <a href="">Ask to Contribute</a>
         <a href="">Address Issue</a>
         <a href="">Files in Stock</a>
+        <a href="">Add to Project</a>
     </div>
     <hr class="my-4">
     <br>
     <table class="table table-striped">
-    {% for pf in project_files %}
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Files</th>
-          <th scope="col">Approves</th>
-          <th scope="col">File By</th>
-          <th scope="col">Last Updated</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">{{ forloop.counter }}</th>
-          <td>
-              <img src="{% static 'blog/images/file.png' %}" alt="" style="width:20px;height:20px;">
-              <a href="{{ pf.get_absolute_project_file }}">{{ pf.file_name }}</a>
-          </td>
-          <td>{{ pf.approves.count }} out of {{ pf.project.contributors.count }}</td>
-          <td><a href="">{{ pf.user.username }}</a></td>
-          <td>{{ pf.date_posted|date:"M d,Y" }}</td>
-        </tr>
-      </tbody>
-    {% endfor %}
-</table>
+        {% for pf in project_files %}
+            {% if pf.approved %}
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Files</th>
+                  <th scope="col">Approves</th>
+                  <th scope="col">File By</th>
+                  <th scope="col">Last Updated</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>
+                      <img src="{% static 'blog/images/file.png' %}" alt="" style="width:20px;height:20px;">
+                      <a href="{{ pf.get_absolute_project_file }}">{{ pf.file_name }}</a>
+                  </td>
+                  <td>{{ pf.approves.count }} out of {{ pf.project.contributors.count }}</td>
+                  <td><a href="">{{ pf.user.username }}</a></td>
+                  <td>{{ pf.date_posted|date:"M d,Y" }}</td>
+                  <td><img src="{% static 'blog/images/tick.png' %}" alt="" style="width:20px;height:20px;"></td>
+                </tr>
+              </tbody>
+            {% endif %}
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}

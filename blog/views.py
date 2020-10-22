@@ -93,6 +93,10 @@ def issues_fixes(request, project_name):
     return render(request, "blog/issues&fixes.html", context)
 
 
+class ProjectFileCreation(LoginRequiredMixin, CreateView):
+    model = ProjectFiles
+    fields = ['']
+
 
 @login_required
 def search_queries(request):
