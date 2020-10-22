@@ -1,0 +1,62 @@
+{% extends "blog/base_with_nav.html"%}
+{% load static %}
+{% block title %}
+Files in stock {{ project.project_title }}
+{% endblock %}
+{% block content%}
+<div class="container">
+    <br>
+    <div class="project-detail">
+        <div class="project-title-owner">
+            <img alt="" src="{% static 'blog/images/project.png' %}" style="width:25px;height:25px;">
+            <span><a href="">{{ project.owner.username }}</a></span>/ <span><a
+                href="{{ project.get_absolute_project_url}}">{{ project.project_title }}</a></span>
+        </div>
+        <br>
+    </div>
+
+    <h3>All Files</h3>
+    <hr class="my-4">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">File</th>
+            <th scope="col">Approved</th>
+            <th scope="col">File By</th>
+            <th scope="col">Posted on</th>
+        </tr>
+        </thead>
+        {% for pf in all_files %}
+        <tbody>
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>
+                <img alt="" src="{% static 'blog/images/file.png' %}" style="width:20px;height:20px;">
+                <a href="{{ pf.get_absolute_project_file }}">{{ pf.file_name }}</a>
+            </td>
+            <td>
+                {% if pf.approved %}
+                <img alt="" src="{% static 'blog/images/approved.png' %}" style="width:20px;height:20px;"> approved
+                {% else %}
+                <img alt="" src="{% static 'blog/images/not-approved.png' %}" style="width:20px;height:20px;"> not
+                approved
+                {% endif %}
+
+            </td>
+            <td><a href="">{{ pf.user.username }}</a></td>
+            <td>{{ pf.date_posted|date:"M d,Y" }}</td>
+            <td>
+                {% if pf.approved %}
+                <img alt="" src="{% static 'blog/images/tick.png' %}" style="width:20px;height:20px;">
+                {% else %}
+                <img alt="" src="{% static 'blog/images/close.png' %}" style="width:15px;height:15px;">
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

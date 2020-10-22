@@ -20,8 +20,9 @@ urlpatterns = [
     path('projects/', views.all_projects, name='projects'),
     path('new-project/new/', views.ProjectCreateView.as_view(), name="create_project"),
     path('project/<str:project_name>/', views.project_detail, name='project_detail'),
-    path('project-file/<str:project_file>/', views.project_file_detail, name="project_file_detail"),
+    path('project-file/<int:id>/', views.project_file_detail, name="project_file_detail"),
     path('project/<str:project_name>/issues-fixes/', views.issues_fixes, name="issues_fixes"),
+    path('project/<int:id>/files-in/', views.files_in, name="files_in"),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('contact-us/', views.contact_us, name="contact-us"),
@@ -30,6 +31,6 @@ urlpatterns = [
     path('notifications/', views.user_notifications, name='notifications'),
 
     path('search/', views.search_queries, name='search'),
-    path('<str:username>/', views.user_post_profile, name="userprofilepost"),
+    # path('<str:username>/', views.user_post_profile, name="userprofilepost"),
 
 ]

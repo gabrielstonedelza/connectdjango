@@ -6,7 +6,7 @@
 <div class="container">
     <br>
     <h3>{{ projectFile.file_name }}</h3>
-    {{ projectFile.code }}
+    {{ projectFile.code|safe }}
 
 </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends "blog/base_with_nav.html"%}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
 {{ project.project_title }}
@@ -14,21 +15,18 @@
         <br>
     </div>
     <br>
-    <div class="project-tabs">
-        <a href="{% url 'issues_fixes' project.project_title %}">Issues & Fixes</a>
-        <a href="">Address Issue</a>
-        <a href="">Files in Stock</a>
-        <a href="">Add to Project</a>
-    </div>
+    {% include "blog/inproject-nav.html" %}
+    <h3>Approved files</h3>
     <hr class="my-4">
     <br>
+
     <table class="table table-striped">
         {% for pf in project_files %}
             {% if pf.approved %}
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Files</th>
+                  <th scope="col">File</th>
                   <th scope="col">Approves</th>
                   <th scope="col">File By</th>
                   <th scope="col">Last Updated</th>
@@ -48,7 +46,48 @@
                 </tr>
               </tbody>
             {% endif %}
+        {% empty %}
+            <p class="text-muted">No approved files yet.</p>
         {% endfor %}
     </table>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="addnewfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add or upload a file</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ form|crispy }}
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="butt">Add</button>
+              </div>
+          </form>
+          <br>
+          <small class="text-muted">Note that your file or code would be reviewed before added to main container.</small>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+     CKEDITOR.replace( 'project_file_code',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+</script>
 {% endblock %}
+<!-- Button trigger modal -->

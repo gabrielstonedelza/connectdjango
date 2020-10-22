@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from .forms import (FeedbackForm, ContactUsForm)
+from .forms import (FeedbackForm, ContactUsForm, ProjectFilesForm)
 from django.db.models import Q
 from users.models import Profile, LastSeen
 from users.views import user_connection
@@ -58,23 +58,36 @@ def project_detail(request, project_name):
         project.views += 1
         project.save()
 
+    # add a new project file
+    if request.method == "POST":
+        form = ProjectFilesForm(request.POST, request.FILES)
+        if form.is_valid():
+            fname = form.cleaned_data.get('file_name')
+            code = form.cleaned_data.get('code')
+            code_file = form.cleaned_data.get('code_in_file')
+            ProjectFiles.objects.create(project=project, user=request.user, file_name=fname, code=code,code_in_file=code_file)
+            messages.success(request, f"File added successfully.")
+            return redirect('files_in', project.id)
+    else:
+
+        form = ProjectFilesForm()
+
     context = {
         "project": project,
         "project_files": project_files,
-        "p_issues": project_issues
+        "p_issues": project_issues,
+        "form": form
     }
 
     return render(request, "blog/project_detail.html", context)
 
 
 @login_required
-def project_file_detail(request, project_file):
-    projectFile = get_object_or_404(ProjectFiles, file_name=project_file)
-    pfile_issues = Issues.objects.filter(projectF=projectFile)
+def project_file_detail(request, id):
+    project_file = get_object_or_404(ProjectFiles, id=id)
 
     context = {
-        "projectFile": projectFile,
-        "pfissues": pfile_issues
+        "projectFile": project_file,
     }
 
     return render(request, "blog/project_file_detail.html", context)
@@ -93,9 +106,26 @@ def issues_fixes(request, project_name):
     return render(request, "blog/issues&fixes.html", context)
 
 
-class ProjectFileCreation(LoginRequiredMixin, CreateView):
-    model = ProjectFiles
-    fields = ['']
+@login_required
+def files_in(request, id):
+    project = get_object_or_404(Project, id=id)
+    all_files = ProjectFiles.objects.filter(project=project).order_by('-date_posted')
+
+    context = {
+        "all_files": all_files,
+        "project": project
+    }
+    return render(request, "blog/file_in_stock.html", context)
+
+
+# class ProjectFileCreation(LoginRequiredMixin, CreateView):
+#     model = ProjectFiles
+#     fields = ['file_name', 'code', 'code_in_file']
+#     success_url = '/files_in'
+#
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         return super().form_valid(form)
 
 
 @login_required

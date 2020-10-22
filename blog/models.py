@@ -26,7 +26,8 @@ class ProjectFiles(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_making_contribution")
     file_name = models.CharField(max_length=100)
-    code = models.TextField(help_text="Use this section if you don't have the file to upload", blank=True)
+    code = models.TextField(help_text="Use this section if you don't have the file to upload.Leave blank if you have "
+                                      "a file.", blank=True)
     code_in_file = models.FileField(upload_to="project_files", help_text="you can leave this field empty if you put "
                                                                          "the code in the code section.", blank=True)
     approves = models.ManyToManyField(User, related_name="those_who_approved", blank=True)
@@ -37,7 +38,7 @@ class ProjectFiles(models.Model):
         return self.file_name
 
     def get_absolute_project_file(self):
-        return reverse("project_file_detail", args={self.file_name})
+        return reverse("project_file_detail", args={self.pk})
 
 
 class Issues(models.Model):
