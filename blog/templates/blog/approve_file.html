@@ -1,0 +1,15 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<form action="{% url 'approve_code' project_file.id %}" method="POST" id="approve_file_form">
+    {% csrf_token %}
+
+    {% if has_approved %}
+        <img src="{% static 'blog/images/tick.png' %}" alt="" style="width:30px;height:30px;">
+        <br>
+        <small class="text-muted">You have approved this code</small>
+        <br>
+    {% else %}
+        <button type="submit" class="butt" id="approve_button" value="{{ project_file.id }}">Approve</button>
+    {% endif %}
+</form>

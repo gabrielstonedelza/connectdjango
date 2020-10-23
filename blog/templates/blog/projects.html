@@ -14,12 +14,15 @@ Projects for you
                 <div>
                     <a href="{{ project.get_absolute_project_url }}">{{ project.project_title }}</a>
                     <br>
+                    <span class="text-muted">{{ project.short_description_for_project }}</span>
+                    <br>
                     <span class="text-muted">{{ project.contributors.count }} contributors</span>
                     <span class="text-muted">status {{ project.project_status }}</span>
                     <span class="text-muted"><i class="fas fa-eye"></i> {{ project.views }}</span>
                     <span class="text-muted">created on: {{ project.date_created|date:"M D d,Y" }}</span>
                 </div>
             </div>
+        <hr class="my-4">
         {% endfor %}
         <br>
         <nav aria-label="Page navigation example">

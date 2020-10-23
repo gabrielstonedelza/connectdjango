@@ -15,7 +15,7 @@ Issues and Fixes for {{ issued_project.project_title }}
     </div>
     <br>
 
-    <h3>Issues and Fixes</h3>
+    <h3>Issues and Fixes</h3><a href="#" class="butt">Address Issue</a>
     <hr class="my-4">
     <span class="text-muted">* Addressing an issue should be short and concise,then download code edit and upload for review</span>
     <br>
@@ -25,14 +25,11 @@ Issues and Fixes for {{ issued_project.project_title }}
             <li class="list-group-item d-flex">
                 <span class="text-muted mr-2 font-weight-bold">Issue Id: {{ issue.id }}</span>
                 <div>
-                    <span class="issue badge badge-danger mr-2">
-                    {{ issue.issues }}
+                    <a href="{{ issue.get_absolute_projectissue }}" class="issue badge badge-danger mr-2">
+                    {{ issue.issue|safe }}
                         <br>
-                    </span><img src="{% static 'blog/images/close.png' %}" alt="" style="width:15px;height:15px;">
+                    </a><img src="{% static 'blog/images/close.png' %}" alt="" style="width:15px;height:15px;">
                     <br>
-                    <span class="fixes badge badge-success mr-2">
-                        {{ issue.fix }}
-                    </span><img src="{% static 'blog/images/tick.png' %}" alt="" style="width:20px;height:20px;">
                 </div>
 
             </li>

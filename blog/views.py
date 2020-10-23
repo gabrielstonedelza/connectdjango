@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView
 from django.template.loader import render_to_string
-from .models import (Project, ProjectFiles, ProjectIssues, Issues, NotifyMe, FeedBack, ContactUs)
+from .models import (Project, ProjectFiles, ProjectIssues, Issues,FixProjectIssue, NotifyMe, FeedBack, ContactUs)
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from .forms import (FeedbackForm, ContactUsForm, ProjectFilesForm)
+from .forms import (FeedbackForm, ContactUsForm, ProjectFilesForm, Project_Issue_Form, FixForm)
 from django.db.models import Q
 from users.models import Profile, LastSeen
 from users.views import user_connection
@@ -40,7 +40,7 @@ def all_projects(request):
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['project_title', 'contributors', 'project_description']
+    fields = ['project_title', 'contributors', 'project_description', 'short_description_for_project']
     success_url = "/projects"
 
     def form_valid(self, form):
@@ -53,6 +53,10 @@ def project_detail(request, project_name):
     project = get_object_or_404(Project, project_title=project_name)
     project_files = ProjectFiles.objects.filter(project=project)
     project_issues = ProjectIssues.objects.filter(project_with_issue=project)
+
+    paginator = Paginator(project_files, 10)
+    page = request.GET.get('page')
+    project_files = paginator.get_page(page)
 
     if project:
         project.views += 1
@@ -72,11 +76,24 @@ def project_detail(request, project_name):
 
         form = ProjectFilesForm()
 
+    # addressing an issue
+    if request.method == "POST":
+        issue_form = Project_Issue_Form(request.POST)
+        if issue_form.is_valid():
+            issue = issue_form.cleaned_data.get('issue')
+            ProjectIssues.objects.create(project_with_issue=project, user=request.user, issue=issue)
+            messages.success(request, f"Thanks {request.user.username},your issued would be reviewed")
+            return redirect('issues_fixes', project.project_title)
+
+    else:
+        issue_form = Project_Issue_Form()
+
     context = {
         "project": project,
         "project_files": project_files,
         "p_issues": project_issues,
-        "form": form
+        "form": form,
+        "issue_form": issue_form
     }
 
     return render(request, "blog/project_detail.html", context)
@@ -85,9 +102,14 @@ def project_detail(request, project_name):
 @login_required
 def project_file_detail(request, id):
     project_file = get_object_or_404(ProjectFiles, id=id)
+    has_approved = False
+
+    if project_file.approves.filter(id=request.user.id).exists():
+        has_approved = True
 
     context = {
-        "projectFile": project_file,
+        "project_file": project_file,
+        "has_approved": has_approved
     }
 
     return render(request, "blog/project_file_detail.html", context)
@@ -107,9 +129,37 @@ def issues_fixes(request, project_name):
 
 
 @login_required
+def project_issue_detail(request, id):
+    project = get_object_or_404(ProjectIssues, id=id)
+
+    if request.method == "POST":
+        form = FixForm(request.POST)
+        if form.is_valid():
+            fix = form.cleaned_data.get('fix')
+            FixProjectIssue.objects.create(issue=project, user=request.user, fix=fix)
+            return redirect('')
+    else:
+        form = FixForm()
+
+    context = {
+        "form": form,
+        "project": project
+    }
+    if request.is_ajax():
+        pissue = render_to_string("blog/fix_form.html", context, request=request)
+        return JsonResponse({"issue": pissue})
+
+    return render(request, "blog/project_issue_detail.html", context)
+
+
+@login_required
 def files_in(request, id):
     project = get_object_or_404(Project, id=id)
     all_files = ProjectFiles.objects.filter(project=project).order_by('-date_posted')
+
+    paginator = Paginator(all_files, 10)
+    page = request.GET.get('page')
+    all_files = paginator.get_page(page)
 
     context = {
         "all_files": all_files,
@@ -118,14 +168,23 @@ def files_in(request, id):
     return render(request, "blog/file_in_stock.html", context)
 
 
-# class ProjectFileCreation(LoginRequiredMixin, CreateView):
-#     model = ProjectFiles
-#     fields = ['file_name', 'code', 'code_in_file']
-#     success_url = '/files_in'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
+@login_required
+def approve_code(request, id):
+    project_file = get_object_or_404(ProjectFiles,id=id)
+
+    has_approved = False
+    if not project_file.approves.filter(id=request.user.id).exists():
+        project_file.approves.add(request.user)
+        has_approved = True
+
+    context = {
+        "project_file": project_file,
+        "has_approved": has_approved
+    }
+
+    if request.is_ajax():
+        pfile = render_to_string("blog/approve_file.html",context,request=request)
+        return JsonResponse({"file": pfile})
 
 
 @login_required

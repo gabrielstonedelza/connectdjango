@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, ProjectFiles, ProjectIssues, Issues, FeedBack, ContactUs
+from .models import Project, ProjectFiles, ProjectIssues, Issues, FixProjectIssue, FeedBack, ContactUs
 
 
 class FeedbackForm(forms.ModelForm):
@@ -25,7 +25,30 @@ class ContactUsForm(forms.ModelForm):
 
 
 class ProjectFilesForm(forms.ModelForm):
-    code = forms.CharField(label="",widget=forms.Textarea(attrs={"class":"form-control","placeholder":"Enter code for file","id":"project_file_code", "name":"project_file_code"}))
+    code = forms.CharField(label="", widget=forms.Textarea(
+        attrs={"class": "form-control", "placeholder": "Enter code for file", "id": "project_file_code",
+               "name": "project_file_code"}))
+
     class Meta:
         model = ProjectFiles
         fields = ['file_name', 'code', 'code_in_file']
+
+
+class Project_Issue_Form(forms.ModelForm):
+    issue = forms.CharField(label="", widget=forms.Textarea(
+        attrs={"class": "form-control", "placeholder": "Enter issue here", "id": "issue_code",
+               "name": "issue_code"}))
+
+    class Meta:
+        model = ProjectIssues
+        fields = ['issue']
+
+
+class FixForm(forms.ModelForm):
+    fix = forms.CharField(label="", widget=forms.Textarea(
+        attrs={"class": "form-control", "placeholder": "fix.....", "id": "fix_code",
+               "name": "fix_code"}))
+
+    class Meta:
+        model = ProjectIssues
+        fields = ['fix']
