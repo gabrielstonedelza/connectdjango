@@ -47,7 +47,7 @@ class ProjectFilesUpdateForm(forms.ModelForm):
 class Project_Issue_Form(forms.ModelForm):
     issue = forms.CharField(label="", widget=forms.Textarea(
         attrs={"class": "form-control", "placeholder": "Enter issue here", "id": "issue_code",
-               "name": "issue_code"}))
+               "name": "issue_code", "rows": "3", "cols": "7"}))
 
     class Meta:
         model = ProjectIssues

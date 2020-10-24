@@ -9,8 +9,15 @@ Files in  {{ project.project_title }}
     <div class="project-detail">
         <div class="project-title-owner">
             <img alt="" src="{% static 'blog/images/project.png' %}" style="width:25px;height:25px;">
-            <span><a href="">{{ project.owner.username }}</a></span>/ <span><a
+            {% if request.user == project.owner %}
+                <span><a href="{% url 'profile' project.owner.username %}">{{ project.owner.username }}</a></span>/ <span><a
                 href="{{ project.get_absolute_project_url}}">{{ project.project_title }}</a></span>
+            {% else %}
+                <span><a href="{% url 'userprofilepost' project.owner.username %}">{{ project.owner.username }}</a></span>/ <span><a
+                href="{{ project.get_absolute_project_url}}">{{ project.project_title }}</a></span>
+            {% endif %}
+            <!-- <span><a href="">{{ project.owner.username }}</a></span>/ <span><a
+                href="{{ project.get_absolute_project_url}}">{{ project.project_title }}</a></span> -->
         </div>
         <br>
     </div>

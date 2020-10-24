@@ -77,7 +77,7 @@ class FixProjectIssue(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} added a fix to {self.issue.project_title}"
+        return f"{self.user.username} added a fix to {self.issue.project_with_issue}"
 
 
 class NotifyMe(models.Model):

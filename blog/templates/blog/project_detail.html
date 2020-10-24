@@ -10,8 +10,13 @@
     <div class="project-detail">
         <div class="project-title-owner">
             <img alt="" src="{% static 'blog/images/project.png' %}" style="width:25px;height:25px;">
-            <span><a href="">{{ project.owner.username }}</a></span>/ <span><a
+            {% if request.user == project.owner %}
+                <span><a href="{% url 'profile' project.owner.username %}">{{ project.owner.username }}</a></span>/ <span><a
                 href="{{ project.get_absolute_project_url}}">{{ project.project_title }}</a></span>
+            {% else %}
+                <span><a href="{% url 'userprofilepost' project.owner.username %}">{{ project.owner.username }}</a></span>/ <span><a
+                href="{{ project.get_absolute_project_url}}">{{ project.project_title }}</a></span>
+            {% endif %}
         </div>
         <br>
     </div>
@@ -127,30 +132,6 @@
 </div>
 
 <!-- address project issue modal -->
-<div aria-hidden="true" aria-labelledby="addressProjectIssueModal" class="modal fade" id="addressissueModal" role="dialog"
-     tabindex="-1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addressProjectIssueModal">Address an issue</h5>
-                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ issue_form|crispy }}
-                    </div>
-                    <div class="form-group">
-                        <button class="butt" type="submit">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
      CKEDITOR.replace( 'project_file_code',
     {

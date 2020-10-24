@@ -31,7 +31,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio', 'name', 'profile_pic', 'your_facebook', 'your_instagram', 'your_twitter',
-                  'your_youtube', 'your_medium', 'your_linkedin', 'your_github']
+                  'your_youtube', 'your_medium', 'your_linkedin', 'your_github', 'your_organization']
 
 
 class PasswordChangeForm(forms.Form):

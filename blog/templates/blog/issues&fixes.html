@@ -10,59 +10,27 @@ Issues and Fixes for {{ issued_project.project_title }}
     <div class="issued-project-detail">
         <div class="project-title-owner">
             <img src="{% static 'blog/images/project.png' %}" alt="" style="width:25px;height:25px;">
-            <span><a href="">{{ issued_project.owner.username }}</a></span>/ <span><a href="{{ issued_project.get_absolute_project_url}}">{{ issued_project.project_title }}</a></span>
+            {% if request.user == issued_project.owner %}
+                <span><a href="{% url 'profile' issued_project.owner.username %}">{{ issued_project.owner.username }}</a></span>/ <span><a
+                href="{{ issued_project.get_absolute_project_url}}">{{ issued_project.project_title }}</a></span>
+            {% else %}
+                <span><a href="{% url 'userprofilepost' issued_project.owner.username %}">{{ issued_project.owner.username }}</a></span>/ <span><a
+                href="{{ issued_project.get_absolute_project_url}}">{{ issued_project.project_title }}</a></span>
+            {% endif %}
+            <!-- <span><a href="">{{ issued_project.owner.username }}</a></span>/ <span><a href="{{ issued_project.get_absolute_project_url}}">{{ issued_project.project_title }}</a></span> -->
         </div>
         <br>
     </div>
     <br>
 
-    <h3>Issues</h3><a href="#" class="butt" data-toggle="modal" data-target="#addressIssueModal">Address Issue</a>
+    <h3>Issues</h3><a href="#issue_form_section" class="butt">New</a>
     <hr class="my-4">
     <span class="text-muted">* Addressing an issue should be short and concise,then download code edit and upload for review</span>
     <br>
-    <div class="issues-fixes-lists">
-        <ul class="list-group">
-           {% for issue in project_with_issues %}
-            <li class="list-group-item d-flex">
-                <span class="text-muted mr-2 font-weight-bold">Issue Id: {{ issue.id }}</span>
-                <div>
-                    <a href="{{ issue.get_absolute_projectissue }}" class="issue badge badge-danger mr-2">
-                    {{ issue.issue|safe }} 
-                        <br>
-                    </a><img src="{% static 'blog/images/close.png' %}" alt="" style="width:15px;height:15px;">
-                    <span class="ml-2">{{ pfixed_count }} fixes</span>
-                    <br>
-                </div>
-
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="issues_fixes_lists" id="issue_form_section">
+        {% include "blog/issuing_form.html" %}
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="addressIssueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Issue</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form method="post">
-              {% csrf_token %}
-              <div class="form-group">
-                  {{ issue_form|crispy }}
-              </div>
-              <div class="form-group">
-                  <button type="submit" class="butt">Add</button>
-              </div>
-          </form>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %}

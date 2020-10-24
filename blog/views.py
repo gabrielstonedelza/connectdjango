@@ -75,24 +75,11 @@ def project_detail(request, project_name):
 
         form = ProjectFilesForm()
 
-    # addressing an issue
-    if request.method == "POST":
-        issue_form = Project_Issue_Form(request.POST)
-        if issue_form.is_valid():
-            issue = issue_form.cleaned_data.get('issue')
-            ProjectIssues.objects.create(project_with_issue=project, user=request.user, issue=issue)
-            messages.success(request, f"Thanks {request.user.username},your issued would be reviewed")
-            return redirect('issues_fixes', project.project_title)
-
-    else:
-        issue_form = Project_Issue_Form()
-
     context = {
         "project": project,
         "project_files": project_files,
         "p_issues": project_issues,
         "form": form,
-        "issue_form": issue_form,
         "pp": pp
     }
 
@@ -139,21 +126,19 @@ def project_file_update(request, id):
 def issues_fixes(request, project_name):
     issued_project = get_object_or_404(Project, project_title=project_name)
     project_with_issues = ProjectIssues.objects.filter(project_with_issue=issued_project).order_by('-date_posted')
-    project_fixes = ''
-    for i in project_with_issues.all():
-        project_fixes = FixProjectIssue.objects.filter(issue=i)
-        for f in project_fixes.all():
-            print(f.issue)
-        pfixed_count = project_fixes.count()
+    project_with_issues_count = project_with_issues.count()
+
+    paginator = Paginator(project_with_issues, 10)
+    page = request.GET.get('page')
+    project_with_issues = paginator.get_page(page)
+
     # addressing an issue
     if request.method == "POST":
         issue_form = Project_Issue_Form(request.POST)
         if issue_form.is_valid():
             issue = issue_form.cleaned_data.get('issue')
             ProjectIssues.objects.create(project_with_issue=issued_project, user=request.user, issue=issue)
-            messages.success(request, f"Thanks {request.user.username},your issued would be reviewed")
-            return redirect('issues_fixes',issued_project.project_title)
-
+            # messages.success(request, f"Thanks {request.user.username},your issued would be reviewed")
     else:
         issue_form = Project_Issue_Form()
 
@@ -161,8 +146,12 @@ def issues_fixes(request, project_name):
         "issued_project": issued_project,
         "project_with_issues": project_with_issues,
         "issue_form": issue_form,
-        "pfixed_count": pfixed_count
+        "project_with_issues_count": project_with_issues_count,
     }
+
+    if request.is_ajax():
+        is_issuing = render_to_string("blog/issuing_form.html", context, request=request)
+        return JsonResponse({"issuing": is_issuing})
 
     return render(request, "blog/issues&fixes.html", context)
 
@@ -213,7 +202,7 @@ def files_in(request, id):
 
 @login_required
 def approve_code(request, id):
-    project_file = get_object_or_404(ProjectFiles,id=id)
+    project_file = get_object_or_404(ProjectFiles, id=id)
 
     has_approved = False
     if not project_file.approves.filter(id=request.user.id).exists():
@@ -226,7 +215,7 @@ def approve_code(request, id):
     }
 
     if request.is_ajax():
-        pfile = render_to_string("blog/approve_file.html",context,request=request)
+        pfile = render_to_string("blog/approve_file.html", context, request=request)
         return JsonResponse({"file": pfile})
 
 
@@ -264,7 +253,7 @@ def search_queries(request):
 
 
 @login_required
-def user_post_profile(request, username):
+def user_profile(request, username):
     my_notify = mynotifications(request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)

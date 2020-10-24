@@ -34,6 +34,6 @@ urlpatterns = [
     path('notifications/', views.user_notifications, name='notifications'),
 
     path('search/', views.search_queries, name='search'),
-    # path('<str:username>/', views.user_post_profile, name="userprofilepost"),
+    path('<str:username>/', views.user_profile, name="userprofilepost"),
 
 ]

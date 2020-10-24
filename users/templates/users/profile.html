@@ -29,6 +29,15 @@
           <h5 class="mb-2">{{ user.profile.name }}</h5>
           <p class="">{{ user.profile.bio }}</p>
         </div>
+        <hr class="my-4">
+        <br>
+        <p>contributing to</p>
+        {% for project in projects %}
+          <li>{{ project }}</li>
+        {% endfor %}
+        <p>Issues highlighted {{ issues_highlighted }}</p>
+        <p>Fixes {{ fixes_count }}</p>
+        <p>Files upload {{ project_files_count }}</p>
         <span class="user-social">
           {% if user.profile.your_facebook %}
             <a target="_blank" href="{{ user.profile.your_facebook }}">

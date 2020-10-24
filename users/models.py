@@ -18,6 +18,7 @@ class Profile(models.Model):
     your_medium = models.CharField(max_length=450, blank=True)
     your_linkedin = models.CharField(max_length=450, blank=True)
     your_github = models.CharField(max_length=450, blank=True)
+    your_organization = models.CharField(max_length=150, blank=True)
     date_followed = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
