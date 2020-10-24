@@ -21,10 +21,11 @@ urlpatterns = [
     path('new-project/new/', views.ProjectCreateView.as_view(), name="create_project"),
     path('project/<str:project_name>/', views.project_detail, name='project_detail'),
     path('project-file/<int:id>/', views.project_file_detail, name="project_file_detail"),
-    path('project/<str:project_name>/issues-fixes/', views.issues_fixes, name="issues_fixes"),
+    path('project/<str:project_name>/issues/', views.issues_fixes, name="issues_fixes"),
     path('project/<int:id>/files-in/', views.files_in, name="files_in"),
     path('project-file/<int:id>/approve_code/', views.approve_code, name="approve_code"),
     path('project/<int:id>/fix/', views.project_issue_detail, name='project_issue_detail'),
+    path('project-file/<int:id>/update/', views.project_file_update, name='file_update'),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('contact-us/', views.contact_us, name="contact-us"),

@@ -1,23 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView, CreateView
 from django.contrib import messages
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegistrationForm, UserUpdateForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.conf import settings
-from .models import Profile, LastSeen
+from .models import Profile
 from .forms import (UserUpdateForm, ProfileUpdateForm, PasswordChangeForm)
-from blog.models import Project, ProjectFiles, ProjectIssues, Issues, NotifyMe
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Q
-
-from django.core.paginator import Paginator
+from blog.models import NotifyMe
 
 from blog.notifications import mynotifications
 from blog.process_mail import send_my_mail
-import sys
+from blog.models import Project, ProjectFiles, Issues, FixProjectIssue, ProjectIssues
 
 
 def register(request):
@@ -32,7 +27,11 @@ def register(request):
                 username = form.cleaned_data.get('username')
                 send_my_mail(f"Welcome to ConnectDjango", settings.EMAIL_HOST_USER,
                              useremail,
-                             "Thank you for joining Connect Django,we are happy to see you and we assure you that you will never regret it.<br>Here we help each other by answering posted questions and giving out some tutorials that you and i need to become a better Django developer.<br>Stay blessed and keep on djangoing.<br>Yours sincerely,<br>The ConnectDjango Team.")
+                             "Thank you for joining Connect Django,we are happy to see you and we assure you that you "
+                             "will never regret it.<br>Here we help each other by answering posted questions and "
+                             "giving out some tutorials that you and i need to become a better Django "
+                             "developer.<br>Stay blessed and keep on djangoing.<br>Yours sincerely,"
+                             "<br>The ConnectDjango Team.")
                 messages.success(request, f'Your account is created {username},login now')
                 return redirect('login')
     else:
@@ -48,10 +47,15 @@ def register(request):
 @login_required
 def profile(request, username):
     my_notify = mynotifications(request.user)
-    # myques = Question.objects.filter(question_author=request.user)
-    # mytutos = Tutorial.objects.filter(tutorial_author=request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)
+    # projects created by this user
+    my_projects = Project.objects.filter(owner=request.user)
+    my_project_count = my_projects.count()
+    #projects this user is contributing to
+    projects = Project.objects.filter(contributors=request.user)
+
+
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
@@ -60,12 +64,12 @@ def profile(request, username):
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
-        # "myques": myques,
-        # "mytutos": mytutos,
         "following": following,
         "followers": followers,
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
+        "my_project_count": my_project_count,
+        "projects": projects,
     }
     return render(request, "users/profile.html", context)
 

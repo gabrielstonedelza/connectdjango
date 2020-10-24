@@ -9,7 +9,6 @@ class Profile(models.Model):
     bio = models.CharField(max_length=100, blank=True, default="I am a django developer")
     name = models.CharField(max_length=150, default="New User")
     profile_pic = models.ImageField(upload_to="profile_pics", blank=True, default='default.jpg')
-    cover_pic = models.ImageField(upload_to="cover_pics", blank=True, default='cover-default.jpg')
     following = models.ManyToManyField(User, blank=True, related_name='following')
     followers = models.ManyToManyField(User, blank=True, related_name="followers")
     your_facebook = models.CharField(max_length=450, blank=True)

@@ -1,0 +1,41 @@
+{% extends "blog/base_with_nav.html"%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{ project_file.file_name }}
+{% endblock %}
+{% block content%}
+<div class="container">
+    <br>
+    <div class="project-detail">
+        <div class="project-title-owner">
+            <img alt="" src="{% static 'blog/images/project.png' %}" style="width:25px;height:25px;">
+            <span><a href="">{{ project_file.project.owner.username }}</a></span>/ <span><a
+                href="{{ project_file.project.get_absolute_project_url}}">{{ project_file.project.project_title }}</a></span>
+        </div>
+        <br>
+    </div>
+    <hr class="my-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form|crispy }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="butt">Update</button>
+        </div>
+    </form>
+
+</div>
+<script>
+    CKEDITOR.replace( 'project_file_update',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+</script>
+{% endblock %}

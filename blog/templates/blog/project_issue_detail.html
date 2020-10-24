@@ -1,8 +1,7 @@
 {% extends "blog/base_with_nav.html"%}
-{% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
-{{ project.project_with_issue.project_title }}
+Fixes for {{ project.issue }}
 {% endblock %}
 {% block content%}
 <div class="container">
@@ -10,10 +9,25 @@
     <div class="project-detail">
         <div class="project-title-owner">
             <img src="{% static 'blog/images/project.png' %}" alt="" style="width:25px;height:25px;">
-            <span><a href="">{{ project.project_with_issue.owner.username }}</a></span>/ <span><a href="{{ project.get_absolute_project_url}}">{{ project.project_with_issue.project_title }}</a></span>
+            <span><a href="">{{ project.project_with_issue.owner.username }}</a></span>/ <span><a href="{{ project.project_with_issue.get_absolute_project_url}}">{{ project.project_with_issue.project_title }}</a></span>
         </div>
         <br>
     </div>
+    <h3>({{ project.issue }})'s fixes</h3>
+    <hr class="my-4">
+    <div id="show_add_fix_section">
+        {% include "blog/fix_form.html" %}
+    </div>
 </div>
-
+<script>
+    CKEDITOR.replace( 'fix_code',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+</script>
 {% endblock %}

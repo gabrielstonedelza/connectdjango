@@ -31,7 +31,17 @@ class ProjectFilesForm(forms.ModelForm):
 
     class Meta:
         model = ProjectFiles
-        fields = ['file_name', 'code', 'code_in_file']
+        fields = ['file_name', 'code']
+
+
+class ProjectFilesUpdateForm(forms.ModelForm):
+    code = forms.CharField(label="", widget=forms.Textarea(
+        attrs={"class": "form-control", "placeholder": "Enter code for file", "id": "project_file_update",
+               "name": "project_file_update"}))
+
+    class Meta:
+        model = ProjectFiles
+        fields = ['file_name', 'code']
 
 
 class Project_Issue_Form(forms.ModelForm):

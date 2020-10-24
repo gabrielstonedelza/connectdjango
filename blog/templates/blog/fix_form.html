@@ -1,0 +1,21 @@
+{% load crispy_forms_tags %}
+<span class="fixes font-weight-bold">Fixes {{ fixes_count }}</span>
+<br>
+<ul class="list-group mt-2">
+    {% for fix in all_fixes%}
+        <li class="list-group-item"><span class="text-muted mr-2">{{ forloop.counter }}.</span>{{ fix.fix|safe }}</li>
+    {% empty %}
+        <li class="text-muted list-group-item">There are no fixes yet</li>
+    {% endfor %}
+</ul>
+<br>
+<hr class="my-4">
+<form action="." method="post" class="add_fix_form">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form|crispy }}
+    </div>
+    <div class="form-group">
+        <button type="submit" class="butt">Add</button>
+    </div>
+</form>

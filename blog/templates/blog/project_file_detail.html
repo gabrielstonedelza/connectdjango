@@ -13,11 +13,21 @@
         </div>
         <br>
     </div>
-    <div id="approve_file_section">
-        {% if request.user in project_file.project.contributors.all %}
-            {% include "blog/approve_file.html" %}
+    <div class="d-flex">
+        <div id="approve_file_section">
+            {% if request.user in project_file.project.contributors.all or request.user == project_file.project.owner %}
+                {% include "blog/approve_file.html" %}
+            {% endif %}
+        </div>
+        {% if request.user == project_file.user %}
+            <div class="ml-3">
+                <a href="{% url 'file_update' project_file.id %}" class="butt">Update file</a><br>
+                <small class="text-muted">You only can edit this file.</small>
+            </div>
         {% endif %}
+
     </div>
+
     <hr class="my-4">
     <h3>{{ project_file.file_name }}</h3>
     {{ project_file.code|safe }}

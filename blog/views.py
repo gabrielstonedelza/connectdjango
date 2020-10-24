@@ -1,17 +1,16 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView
-from django.template.loader import render_to_string
-from .models import (Project, ProjectFiles, ProjectIssues, Issues,FixProjectIssue, NotifyMe, FeedBack, ContactUs)
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import JsonResponse
-from .forms import (FeedbackForm, ContactUsForm, ProjectFilesForm, Project_Issue_Form, FixForm)
-from django.db.models import Q
-from users.models import Profile, LastSeen
-from users.views import user_connection
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
+from django.views.generic import CreateView
+
+from users.models import Profile
+from .forms import (FeedbackForm, ContactUsForm, ProjectFilesForm, Project_Issue_Form, FixForm, ProjectFilesUpdateForm)
+from .models import (Project, ProjectFiles, ProjectIssues, Issues, FixProjectIssue, FeedBack, ContactUs)
 from .notifications import mynotifications
 
 
@@ -40,7 +39,7 @@ def all_projects(request):
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
-    fields = ['project_title', 'contributors', 'project_description', 'short_description_for_project']
+    fields = ['project_title', 'contributors', 'project_description', 'short_description_for_project', 'project_logo']
     success_url = "/projects"
 
     def form_valid(self, form):
@@ -51,6 +50,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 @login_required
 def project_detail(request, project_name):
     project = get_object_or_404(Project, project_title=project_name)
+    pp = Project.objects.filter(project_title=project)
     project_files = ProjectFiles.objects.filter(project=project)
     project_issues = ProjectIssues.objects.filter(project_with_issue=project)
 
@@ -64,12 +64,11 @@ def project_detail(request, project_name):
 
     # add a new project file
     if request.method == "POST":
-        form = ProjectFilesForm(request.POST, request.FILES)
+        form = ProjectFilesForm(request.POST)
         if form.is_valid():
             fname = form.cleaned_data.get('file_name')
             code = form.cleaned_data.get('code')
-            code_file = form.cleaned_data.get('code_in_file')
-            ProjectFiles.objects.create(project=project, user=request.user, file_name=fname, code=code,code_in_file=code_file)
+            ProjectFiles.objects.create(project=project, user=request.user, file_name=fname, code=code)
             messages.success(request, f"File added successfully.")
             return redirect('files_in', project.id)
     else:
@@ -93,7 +92,8 @@ def project_detail(request, project_name):
         "project_files": project_files,
         "p_issues": project_issues,
         "form": form,
-        "issue_form": issue_form
+        "issue_form": issue_form,
+        "pp": pp
     }
 
     return render(request, "blog/project_detail.html", context)
@@ -116,13 +116,52 @@ def project_file_detail(request, id):
 
 
 @login_required
+def project_file_update(request, id):
+    project_file = get_object_or_404(ProjectFiles, id=id)
+
+    if request.method == "POST":
+        form = ProjectFilesUpdateForm(request.POST, instance=project_file)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"File was updated")
+    else:
+        form = ProjectFilesUpdateForm(instance=project_file)
+
+    context = {
+        "project_file": project_file,
+        "form": form
+    }
+
+    return render(request, "blog/projectfiles_form.html", context)
+
+
+@login_required
 def issues_fixes(request, project_name):
     issued_project = get_object_or_404(Project, project_title=project_name)
     project_with_issues = ProjectIssues.objects.filter(project_with_issue=issued_project).order_by('-date_posted')
+    project_fixes = ''
+    for i in project_with_issues.all():
+        project_fixes = FixProjectIssue.objects.filter(issue=i)
+        for f in project_fixes.all():
+            print(f.issue)
+        pfixed_count = project_fixes.count()
+    # addressing an issue
+    if request.method == "POST":
+        issue_form = Project_Issue_Form(request.POST)
+        if issue_form.is_valid():
+            issue = issue_form.cleaned_data.get('issue')
+            ProjectIssues.objects.create(project_with_issue=issued_project, user=request.user, issue=issue)
+            messages.success(request, f"Thanks {request.user.username},your issued would be reviewed")
+            return redirect('issues_fixes',issued_project.project_title)
+
+    else:
+        issue_form = Project_Issue_Form()
 
     context = {
         "issued_project": issued_project,
-        "project_with_issues": project_with_issues
+        "project_with_issues": project_with_issues,
+        "issue_form": issue_form,
+        "pfixed_count": pfixed_count
     }
 
     return render(request, "blog/issues&fixes.html", context)
@@ -131,19 +170,23 @@ def issues_fixes(request, project_name):
 @login_required
 def project_issue_detail(request, id):
     project = get_object_or_404(ProjectIssues, id=id)
+    all_fixes = FixProjectIssue.objects.filter(issue=project).order_by('-date_posted')
+    fixes_count = all_fixes.count()
 
     if request.method == "POST":
         form = FixForm(request.POST)
         if form.is_valid():
             fix = form.cleaned_data.get('fix')
-            FixProjectIssue.objects.create(issue=project, user=request.user, fix=fix)
-            return redirect('')
+            my_fix = FixProjectIssue.objects.create(issue=project, user=request.user, fix=fix)
+            my_fix.save()
     else:
         form = FixForm()
 
     context = {
         "form": form,
-        "project": project
+        "project": project,
+        "all_fixes": all_fixes,
+        "fixes_count": fixes_count
     }
     if request.is_ajax():
         pissue = render_to_string("blog/fix_form.html", context, request=request)
@@ -233,20 +276,12 @@ def user_post_profile(request, username):
     deuser_following = deUser.profile.following.all()
     deuser_followers = deUser.profile.followers.all()
 
-    # upost_questions = Question.objects.filter(question_author=deUser).order_by('-date_posted')
-    # q_count = upost_questions.count()
-    # upost_tutorials = Tutorial.objects.filter(tutorial_author=deUser).order_by('-date_posted')
-    # t_count = upost_tutorials.count()
-
     context = {
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
-        # "question_count": q_count,
-        # "tutorial_count": t_count,
-        # "upost_tutorials": upost_tutorials,
-        # "upost_questions": upost_questions,
+
         "following": following,
         "followers": followers,
         "defollowing": deuser_following,

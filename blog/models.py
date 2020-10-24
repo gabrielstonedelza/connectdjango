@@ -14,6 +14,7 @@ class Project(models.Model):
     project_description = models.TextField(help_text="What is this project about?")
     short_description_for_project = models.CharField(max_length=100, default="This is an awesome project")
     views = models.IntegerField(default=0, blank=True)
+    project_logo = models.ImageField(upload_to="project_logos", blank=True, default="project-logo-default.png")
     project_status = models.IntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
 
@@ -28,10 +29,7 @@ class ProjectFiles(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_making_contribution")
     file_name = models.CharField(max_length=100)
-    code = models.TextField(help_text="Use this section if you don't have the file to upload.Leave blank if you have "
-                                      "a file.", blank=True)
-    code_in_file = models.FileField(upload_to="project_files", help_text="you can leave this field empty if you put "
-                                                                         "the code in the code section.", blank=True)
+    code = models.TextField(help_text="Enter your code here.")
     approves = models.ManyToManyField(User, related_name="those_who_approved", blank=True)
     approved = models.BooleanField(default=False, blank=True)
     date_posted = models.DateTimeField(auto_now_add=True)

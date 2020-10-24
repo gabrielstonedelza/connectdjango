@@ -1,4 +1,5 @@
 {% extends "blog/base_with_nav.html"%}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
 Issues and Fixes for {{ issued_project.project_title }}
@@ -15,7 +16,7 @@ Issues and Fixes for {{ issued_project.project_title }}
     </div>
     <br>
 
-    <h3>Issues and Fixes</h3><a href="#" class="butt">Address Issue</a>
+    <h3>Issues</h3><a href="#" class="butt" data-toggle="modal" data-target="#addressIssueModal">Address Issue</a>
     <hr class="my-4">
     <span class="text-muted">* Addressing an issue should be short and concise,then download code edit and upload for review</span>
     <br>
@@ -26,18 +27,42 @@ Issues and Fixes for {{ issued_project.project_title }}
                 <span class="text-muted mr-2 font-weight-bold">Issue Id: {{ issue.id }}</span>
                 <div>
                     <a href="{{ issue.get_absolute_projectissue }}" class="issue badge badge-danger mr-2">
-                    {{ issue.issue|safe }}
+                    {{ issue.issue|safe }} 
                         <br>
                     </a><img src="{% static 'blog/images/close.png' %}" alt="" style="width:15px;height:15px;">
+                    <span class="ml-2">{{ pfixed_count }} fixes</span>
                     <br>
                 </div>
 
             </li>
             {% endfor %}
         </ul>
-
     </div>
-
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="addressIssueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Issue</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ issue_form|crispy }}
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="butt">Add</button>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
