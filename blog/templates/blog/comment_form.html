@@ -1,0 +1,58 @@
+
+{% load crispy_forms_tags%}
+    <form method="post" class="comment-form" action=".">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      {{ form|crispy}}
+    </fieldset>
+    <button type="submit" class="butt">Submit</button>
+    </form>
+    <hr>
+    <!--comments section  -->
+    <div class="comment-section">
+    {% for comment in comments %}
+    <blockquote class="blockquote">
+
+       <img src="{{ comment.user.profile.profile_pic.url }}" alt="" style="width: 50px;height:50px;border-radius:25px;float: left;">
+       <a href="" class="ml-3" style="text-transform: capitalize;color:black;font-size: 15px;font-weight: bold;">{{ comment.user.username }}</a>
+       <br>
+      <small class="text-muted ml-3">{{comment.comment }}</small><br>
+      <small class="text-muted" style="font-size: 12px;">{{ comment.date_posted }}</small>
+      <!-- <footer class="blockquote-footer">
+        <button class="reply-btn btn btn-outline-dark btn-sm ml-4" title="Click to view replies or add a reply">Reply</button>
+      </footer> -->
+    </blockquote>
+
+    <!--reply container  -->
+    <!-- <div class="replies-comments container mt-2" style="display:none;">
+      {% for reply in comment.replies.all %}
+      <blockquote class="blockquote">
+        <p class="mb-0 rips"><small>{{reply.comment }}</small></p>
+        <footer class="blockquote-footer ripsfoot">By:
+          <small>
+            <a href="" style="text-transform: capitalize;color:black;font-size: 15px;font-weight: bold;">{{reply.user }}</a>
+          </small>
+         </footer>
+      </blockquote>
+      {% endfor %}
+      <div class="form-group row">
+        <form method="post" class="reply-form" action=".">
+          {% csrf_token %}
+          <input type="hidden" name='comment_id' value="{{ comment.id }}">
+          <fieldset class="form-group">
+            {{ form|crispy}}
+          </fieldset>
+          {% if user.is_authenticated %}
+            <div class="form-group">
+              <button class="btn btn-outline-success btn-sm" type="submit" >Reply</button>
+            </div>
+          {% else %}
+          <div class="form-group">
+            <button class="btn btn-outline-success btn-sm" type="submit" disabled>Reply</button>
+          </div>
+          {% endif %}
+        </form>
+      </div>
+    </div> -->
+    {% endfor %}
+    </div>

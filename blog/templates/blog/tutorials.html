@@ -1,0 +1,67 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+All Tutorials
+{% endblock %}
+{% load static %}
+{% block content%}
+<br>
+<div class="container">
+    <br>
+    <div class="main-home-tutorials-container">
+    <div class="project-container">
+      <!-- <h3 class="">Latest Projects And All</h3> -->
+        {% for tutorial in tutorials %}
+            <div class="tutorial-list">
+                <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="" style="width:40px;height:40px;border-radius:50%">
+                <div>
+                    <a href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
+                    <br>
+                    <span class="text-muted mr-2">{{ tutorial.likes.count }}</span>  |
+                    <span class="text-muted ml-2 mr-1"><i class="fas fa-eye"></i> {{ tutorial.views }}</span>  |
+                    <span class="text-muted ml-2">last updated: {{ tutorial.date_posted|date:"M D d,Y" }}</span>
+                </div>
+            </div>
+        <hr class="my-4">
+        {% endfor %}
+        <br>
+        <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-circle pg-blue pt-3">
+                {% if tutorial.has_previous %}
+                  <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                {% endif %}
+
+                {% for c in tutorial.paginator.page_range %}
+                  {% if tutorial.number == c %}
+                    <li class="page-item active">
+                      <a href="?page={{ c }}" class="page-link">{{ c }}</a>
+                    </li>
+                  {% elif c > tutorial.number|add:"-3" and c < tutorial.number|add:"-3" %}
+                    {{ c }}
+                  {% else %}
+                    <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
+                {% endif %}
+              {% endfor %}
+
+              {% if tutorial.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ tutorial.next_page_number }}" class="page-link" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a href="?page={{ tutorial.paginator.num_pages }}" class="page-link">Last</a></li>
+              {% endif %}
+              </ul>
+            </nav>
+    </div>
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

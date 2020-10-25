@@ -12,7 +12,6 @@ from blog.models import NotifyMe
 
 from blog.notifications import mynotifications
 from blog.process_mail import send_my_mail
-from blog.models import Project, ProjectFiles, Issues, FixProjectIssue, ProjectIssues
 
 
 def register(request):
@@ -49,21 +48,6 @@ def profile(request, username):
     my_notify = mynotifications(request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)
-    # projects created by this user
-    my_projects = Project.objects.filter(owner=request.user)
-    my_project_count = my_projects.count()
-    # projects this user is contributing to
-    projects = Project.objects.filter(contributors=request.user)
-    # issues addressed
-    issues = ProjectIssues.objects.filter(user=request.user)
-    file_issues = Issues.objects.filter(user=request.user)
-    issues_highlighted = file_issues.count() + issues.count()
-    # fixes provided
-    fixes = FixProjectIssue.objects.filter(user=request.user)
-    fixes_count = fixes.count()
-    # project files
-    project_files = ProjectFiles.objects.filter(user=request.user)
-    project_files_count = project_files.count()
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
@@ -77,11 +61,6 @@ def profile(request, username):
         "followers": followers,
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
-        "my_project_count": my_project_count,
-        "projects": projects,
-        "issues_highlighted": issues_highlighted,
-        "fixes_count": fixes_count,
-        "project_files_count": project_files_count,
     }
     return render(request, "users/profile.html", context)
 

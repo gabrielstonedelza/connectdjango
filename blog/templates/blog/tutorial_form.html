@@ -5,8 +5,9 @@ Projects for you
 {% endblock %}
 {% block content%}
 <div class="project-container">
-    <h3 class="text-center">Create new project</h3>
-    <form method="post">
+    <br>
+    <h3 class="text-center">Create new tutorial</h3>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             {{ form|crispy }}
@@ -16,4 +17,17 @@ Projects for you
         </div>
     </form>
 </div>
+
+<script>
+     CKEDITOR.replace( 'tutorial_form',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+
+</script>
 {% endblock %}

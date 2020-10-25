@@ -9,214 +9,185 @@ from django.template.loader import render_to_string
 from django.views.generic import CreateView
 
 from users.models import Profile
-from .forms import (FeedbackForm, ContactUsForm, ProjectFilesForm, Project_Issue_Form, FixForm, ProjectFilesUpdateForm)
-from .models import (Project, ProjectFiles, ProjectIssues, Issues, FixProjectIssue, FeedBack, ContactUs)
+from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm)
+from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost)
 from .notifications import mynotifications
 
 
 @login_required
-def all_projects(request):
-    projects = Project.objects.all().order_by('-date_created')
-    total_projects = projects.count()
-    all_issues_count = Issues.objects.all()
-    project_issues = ProjectIssues.objects.all()
-    issues = all_issues_count.count() + project_issues.count()
-    users = User.objects.all()
+def all_tutorial(request):
+    tutorials = Tutorial.objects.all().order_by('-date_posted')
 
-    paginator = Paginator(projects, 10)
+    paginator = Paginator(tutorials, 10)
     page = request.GET.get('page')
-    projects = paginator.get_page(page)
+    tutorials = paginator.get_page(page)
 
     context = {
-        "projects": projects,
-        "tprojects": total_projects,
-        "all_issues": issues,
-        "users": users
+        "tutorials": tutorials,
     }
 
-    return render(request, "blog/projects.html", context)
-
-
-class ProjectCreateView(LoginRequiredMixin, CreateView):
-    model = Project
-    fields = ['project_title', 'contributors', 'project_description', 'short_description_for_project', 'project_logo']
-    success_url = "/projects"
-
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
+    return render(request, "blog/tutorials.html", context)
 
 
 @login_required
-def project_detail(request, project_name):
-    project = get_object_or_404(Project, project_title=project_name)
-    pp = Project.objects.filter(project_title=project)
-    project_files = ProjectFiles.objects.filter(project=project)
-    project_issues = ProjectIssues.objects.filter(project_with_issue=project)
-
-    paginator = Paginator(project_files, 10)
-    page = request.GET.get('page')
-    project_files = paginator.get_page(page)
-
-    if project:
-        project.views += 1
-        project.save()
-
-    # add a new project file
+def create_tutorial(request):
     if request.method == "POST":
-        form = ProjectFilesForm(request.POST)
+        form = TutorialForm(request.POST, request.FILES)
         if form.is_valid():
-            fname = form.cleaned_data.get('file_name')
-            code = form.cleaned_data.get('code')
-            ProjectFiles.objects.create(project=project, user=request.user, file_name=fname, code=code)
-            messages.success(request, f"File added successfully.")
-            return redirect('files_in', project.id)
+            title = form.cleaned_data.get('title')
+            t_content = form.cleaned_data.get('tutorial_content')
+            img = form.cleaned_data.get('image')
+
+            Tutorial.objects.create(user=request.user, title=title, image=img, tutorial_content=t_content)
+            return redirect('tutorials')
     else:
-
-        form = ProjectFilesForm()
-
-    context = {
-        "project": project,
-        "project_files": project_files,
-        "p_issues": project_issues,
-        "form": form,
-        "pp": pp
-    }
-
-    return render(request, "blog/project_detail.html", context)
-
-
-@login_required
-def project_file_detail(request, id):
-    project_file = get_object_or_404(ProjectFiles, id=id)
-    has_approved = False
-
-    if project_file.approves.filter(id=request.user.id).exists():
-        has_approved = True
+        form = TutorialForm()
 
     context = {
-        "project_file": project_file,
-        "has_approved": has_approved
-    }
-
-    return render(request, "blog/project_file_detail.html", context)
-
-
-@login_required
-def project_file_update(request, id):
-    project_file = get_object_or_404(ProjectFiles, id=id)
-
-    if request.method == "POST":
-        form = ProjectFilesUpdateForm(request.POST, instance=project_file)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"File was updated")
-    else:
-        form = ProjectFilesUpdateForm(instance=project_file)
-
-    context = {
-        "project_file": project_file,
         "form": form
     }
 
-    return render(request, "blog/projectfiles_form.html", context)
+    return render(request, "blog/tutorial_form.html", context)
 
 
 @login_required
-def issues_fixes(request, project_name):
-    issued_project = get_object_or_404(Project, project_title=project_name)
-    project_with_issues = ProjectIssues.objects.filter(project_with_issue=issued_project).order_by('-date_posted')
-    project_with_issues_count = project_with_issues.count()
+def tutorial_detail(request, id):
+    tutorial = get_object_or_404(Tutorial, id=id)
+    has_liked = False
 
-    paginator = Paginator(project_with_issues, 10)
-    page = request.GET.get('page')
-    project_with_issues = paginator.get_page(page)
+    if tutorial.likes.filter(id=request.user.id).exists():
+        has_liked = True
 
-    # addressing an issue
-    if request.method == "POST":
-        issue_form = Project_Issue_Form(request.POST)
-        if issue_form.is_valid():
-            issue = issue_form.cleaned_data.get('issue')
-            ProjectIssues.objects.create(project_with_issue=issued_project, user=request.user, issue=issue)
-            # messages.success(request, f"Thanks {request.user.username},your issued would be reviewed")
-    else:
-        issue_form = Project_Issue_Form()
-
-    context = {
-        "issued_project": issued_project,
-        "project_with_issues": project_with_issues,
-        "issue_form": issue_form,
-        "project_with_issues_count": project_with_issues_count,
-    }
-
-    if request.is_ajax():
-        is_issuing = render_to_string("blog/issuing_form.html", context, request=request)
-        return JsonResponse({"issuing": is_issuing})
-
-    return render(request, "blog/issues&fixes.html", context)
-
-
-@login_required
-def project_issue_detail(request, id):
-    project = get_object_or_404(ProjectIssues, id=id)
-    all_fixes = FixProjectIssue.objects.filter(issue=project).order_by('-date_posted')
-    fixes_count = all_fixes.count()
-
-    if request.method == "POST":
-        form = FixForm(request.POST)
+    comments = Comments.objects.filter(tutorial=tutorial, reply=None).order_by('-date_posted')
+    comments_count = comments.count()
+    if request.method == 'POST':
+        form = CommentsForm(request.POST)
         if form.is_valid():
-            fix = form.cleaned_data.get('fix')
-            my_fix = FixProjectIssue.objects.create(issue=project, user=request.user, fix=fix)
-            my_fix.save()
+            comment = request.POST.get('comment')
+            reply_id = request.POST.get('comment_id')
+            comment_qs = None
+            if reply_id:
+                comment_qs = Comments.objects.get(id=reply_id)
+            comment = Comments.objects.create(tutorial=tutorial, user=request.user, comment=comment, reply=comment_qs)
+            comment.save()
+
     else:
-        form = FixForm()
+        form = CommentsForm()
+
+    if tutorial:
+        tutorial.views += 1
+        tutorial.save()
 
     context = {
+        "tutorial": tutorial,
+        "has_liked": has_liked,
+        "likes_count": tutorial.likes_count(),
+        "comments": comments,
         "form": form,
-        "project": project,
-        "all_fixes": all_fixes,
-        "fixes_count": fixes_count
-    }
-    if request.is_ajax():
-        pissue = render_to_string("blog/fix_form.html", context, request=request)
-        return JsonResponse({"issue": pissue})
-
-    return render(request, "blog/project_issue_detail.html", context)
-
-
-@login_required
-def files_in(request, id):
-    project = get_object_or_404(Project, id=id)
-    all_files = ProjectFiles.objects.filter(project=project).order_by('-date_posted')
-
-    paginator = Paginator(all_files, 10)
-    page = request.GET.get('page')
-    all_files = paginator.get_page(page)
-
-    context = {
-        "all_files": all_files,
-        "project": project
-    }
-    return render(request, "blog/file_in_stock.html", context)
-
-
-@login_required
-def approve_code(request, id):
-    project_file = get_object_or_404(ProjectFiles, id=id)
-
-    has_approved = False
-    if not project_file.approves.filter(id=request.user.id).exists():
-        project_file.approves.add(request.user)
-        has_approved = True
-
-    context = {
-        "project_file": project_file,
-        "has_approved": has_approved
+        "comments_count": comments_count
     }
 
     if request.is_ajax():
-        pfile = render_to_string("blog/approve_file.html", context, request=request)
-        return JsonResponse({"file": pfile})
+        comment = render_to_string("blog/comment_form.html", context, request=request)
+        return JsonResponse({"comments": comment})
+
+    return render(request, "blog/tutorial_detail.html", context)
+
+
+@login_required
+def like_tutorial(request, id):
+    tutorial = get_object_or_404(Tutorial, id=id)
+    has_liked = False
+
+    if not tutorial.likes.filter(id=request.user.id).exists():
+        tutorial.likes.add(request.user)
+        has_liked = True
+
+    else:
+        tutorial.likes.remove(request.user)
+        has_liked = False
+
+    context = {
+        "tutorial": tutorial,
+        "has_liked": has_liked,
+        "likes_count": tutorial.likes_count(),
+    }
+    if request.is_ajax():
+        like = render_to_string("blog/like_form.html", context, request=request)
+        return JsonResponse({"likes": like})
+
+
+@login_required
+def blogs(request):
+    blog_posts = BlogPost.objects.all().order_by('-date_posted')
+
+    context = {
+        "blogs": blog_posts
+    }
+
+    return render(request, "blog/blog_posts.html", context)
+
+
+@login_required
+def blog_detail(request, id):
+    blog = get_object_or_404(BlogPost, id=id)
+    is_liked = False
+
+    if blog.likes.filter(id=request.user.id).exists():
+        is_liked = True
+
+    if blog:
+        blog.views += 1
+        blog.save()
+
+    context = {
+        "blog": blog,
+        "is_liked": is_liked
+    }
+
+    return render(request, "blog/blog_detail.html", context)
+
+
+@login_required
+def like_blog(request, id):
+    blog = get_object_or_404(BlogPost, id=id)
+    is_liked = False
+
+    if not blog.likes.filter(id=request.user.id).exists():
+        blog.likes.add(request.user)
+        is_liked = True
+    else:
+        blog.likes.remove(request.user)
+        is_liked = False
+
+    context = {
+        "blog": blog,
+        "is_liked": is_liked
+    }
+
+    if request.is_ajax():
+        like = render_to_string("blog/blog_like_form.html", context, request=request)
+        return JsonResponse({"likes": like})
+
+
+@login_required
+def create_blog(request):
+    if request.method == "POST":
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            content = form.cleaned_data.get('content')
+            blog_img = form.cleaned_data.get('blog_image')
+
+            BlogPost.objects.create(user=request.user, title=title, content=content, blog_image=blog_img)
+            return redirect('all_blogs')
+    else:
+        form = BlogPostForm()
+
+    context = {
+        "form": form
+    }
+    return render(request, "blog/blog_post_form.html", context)
 
 
 @login_required

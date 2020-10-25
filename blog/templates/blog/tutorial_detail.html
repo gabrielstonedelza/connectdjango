@@ -1,0 +1,129 @@
+{% extends "blog/base_with_nav.html"%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{ project.project_title }}
+{% endblock %}
+{% block content%}
+<div class="container">
+    <br>
+    <div class="tutorial-detail-main">
+        
+        <br>
+        {% if tutorial.image %}
+            <img src="{{ tutorial.image.url }}" alt="">
+        {% endif %}
+        <h3>{{ tutorial.title }}</h3>
+        <div class="tutorial-author d-flex">
+          <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;">
+          <div class="other-details">
+            {% if tutorial.user == request.user %}
+              <a href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username}}</a>
+            {% else %}
+              <a href="{% url 'userprofilepost' tutorial.user.username %}">{{ tutorial.user.username}}</a>
+            {% endif %}
+            <span><button class="butt">Follow</button></span>
+            <br>
+            <small class="text-muted">{{ tutorial.date_posted|date:"M, D Y"}}</small>
+            <span class="user-social">
+              {% if tutorial.user.profile.your_facebook %}
+                <a target="_blank" href="{{ tutorial.user.profile.your_facebook }}">
+                  <img src="{% static 'blog/images/facebook.png' %}" alt="user's facebook">
+                </a>
+              {% endif %}
+              {% if tutorial.user.profile.your_instagram %}
+                <a target="_blank" href="{{ tutorial.user.profile.your_instagram }}">
+                  <img src="{% static 'blog/images/instagram.png' %}" alt="user's instagram">
+                </a>
+              {% endif %}
+              {% if tutorial.user.profile.your_twitter %}
+                <a target="_blank" href="{{ tutorial.user.profile.your_twitter }}">
+                  <img src="{% static 'blog/images/twitter.png' %}" alt="">
+                </a>
+              {% endif %}
+              {% if tutorial.user.profile.your_youtube %}
+                <a target="_blank" href="{{ tutorial.user.profile.your_youtube }}">
+                  <img src="{% static 'blog/images/youtube.png' %}" alt="">
+                </a>
+              {% endif %}
+              {% if tutorial.user.profile.your_medium %}
+              <a target="_blank" href="{{ tutorial.user.profile.your_medium }}">
+                <img src="{% static 'blog/images/medium.png' %}" alt="">
+              </a>
+            {% endif %}
+            {% if tutorial.user.profile.your_linkedin %}
+            <a target="_blank" href="{{ tutorial.user.profile.your_linkedin }}">
+              <img src="{% static 'blog/images/linkedin.png' %}" alt="">
+            </a>
+          {% endif %}
+          {% if tutorial.user.profile.your_github %}
+          <a target="_blank" href="{{ tutorial.user.profile.your_github }}">
+            <img src="{% static 'blog/images/github.png' %}" alt="">
+          </a>
+          {% endif %}
+          </span>
+          </div>
+        </div>
+        <p>{{ tutorial.tutorial_content|safe }}</p>
+        <br>
+        <hr class="my-4">
+        <div id="like-helpful-section" class="d-flex">
+             <div id="likes_section">
+                {% include "blog/like_form.html" %}
+            </div>
+            <a class="ml-3" href="#" data-toggle="modal" data-target="#sideModalTR"><i class="fas fa-comment fa-2x"></i></a>
+            <span class="text-muted ml-1 mt-2">{{ comments.count }}</span>
+        </div>
+
+    </div>
+</div>
+<br>
+
+<!-- To change the direction of the modal animation change .right class -->
+<div class="modal fade right" id="sideModalTR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+
+  <!-- Add class .modal-side and then add class .modal-top-right (or other classes from list above) to set a position to the modal -->
+  <div class="modal-dialog modal-side modal-top-right" role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Comments</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="comments_section">
+          {% include "blog/comment_form.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Side Modal Top Right -->
+<!-- Modal -->
+
+<!-- address project issue modal -->
+<script>
+     CKEDITOR.replace( 'project_file_code',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+    CKEDITOR.replace( 'issue_code',
+    {
+        entities: false,
+        basicEntities: false,
+        entities_greek: false,
+        entities_latin: false,
+        htmlDecodeOutput:true,
+    }
+   );
+</script>
+<br>
+{% endblock %}
+

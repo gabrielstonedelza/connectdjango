@@ -1,7 +1,5 @@
 from django.urls import path
-
 from . import views
-from .views import ProjectCreateView
 from django.contrib.auth import views as auth_views
 from users import views as uviews
 
@@ -17,15 +15,14 @@ urlpatterns = [
         template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('register/', uviews.register, name='register'),
-    path('projects/', views.all_projects, name='projects'),
-    path('new-project/new/', views.ProjectCreateView.as_view(), name="create_project"),
-    path('project/<str:project_name>/', views.project_detail, name='project_detail'),
-    path('project-file/<int:id>/', views.project_file_detail, name="project_file_detail"),
-    path('project/<str:project_name>/issues/', views.issues_fixes, name="issues_fixes"),
-    path('project/<int:id>/files-in/', views.files_in, name="files_in"),
-    path('project-file/<int:id>/approve_code/', views.approve_code, name="approve_code"),
-    path('project/<int:id>/fix/', views.project_issue_detail, name='project_issue_detail'),
-    path('project-file/<int:id>/update/', views.project_file_update, name='file_update'),
+    path('tutorial/new/', views.create_tutorial, name="tutorial_new"),
+    path('tutorials/', views.all_tutorial, name='tutorials'),
+    path('tutorial/<int:id>/', views.tutorial_detail, name="tutorial_detail"),
+    path('like-tutorial/<int:id>/', views.like_tutorial, name="tutorial_like"),
+    path('blog-posts/', views.blogs, name="all_blogs"),
+    path('blog-post/<int:id>/', views.blog_detail, name="blogpost_detail"),
+    path('like-blog/<int:id>/', views.like_blog, name="like_blog"),
+    path("blog/new/", views.create_blog, name="create_blog"),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('contact-us/', views.contact_us, name="contact-us"),

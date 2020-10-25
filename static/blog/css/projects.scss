@@ -1,0 +1,47 @@
+@import "./variables";
+
+.main-home-projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    .stats_section{
+        flex: 1 1 50px;
+        margin: 5px;
+        ul{
+            li{
+                display: flex;
+                justify-content: space-between;
+                span{
+                    background-color: gray;
+                    padding: 5px;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+
+    .project-container{
+        flex: 1 1 250px;
+        margin: 5px;
+        .project-list{
+            display: flex;
+            padding: 10px;
+            gap: 1rem;
+        }
+    }
+}
+
+// project detail
+.project-detail-main{
+    display: grid;
+    grid-template-columns: auto;
+
+    .project-tabs{
+        a{
+            font-weight: bold;
+            padding: 20px;
+        }
+    }
+
+}

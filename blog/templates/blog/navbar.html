@@ -1,9 +1,8 @@
 {% load static %}
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0C4B33;">
-    <div class="container">
     <!-- Navbar brand -->
-    <a id="mynav_bar_container" title="Home" style="font-style: italic;font-weight: bold;" class="navbar-brand ml-5 mr-5" href="{% url 'projects' %}">Connect Django <img src="{% static 'blog/images/connectdjangohome.png' %}" style="width: 20px;height: 20px;"></a>
+    <a id="mynav_bar_container" title="Home" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="{% url 'tutorials' %}">Connect Django <img src="{% static 'blog/images/connectdjangohome.png' %}" style="width: 20px;height: 20px;"></a>
   
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -18,8 +17,13 @@
 
       </ul>
       <ul class="navbar-nav ml-auto nav-flex-icons">
+          <li class="nav-item ml-3 mr-3">
+          <a title="blogs about django"  href="{% url 'all_blogs' %}" title="Profile" class="nav-link">
+           Blog
+          </a>
+        </li>
          <li class="nav-item ml-3 mr-3">
-          <a title="Create new project"  href="{% url 'create_project' %}" title="Profile" class="nav-link">
+          <a title="add new tutorial"  href="{% url 'tutorial_new' %}" title="Profile" class="nav-link">
            <i class="fas fa-plus"></i>
           </a>
         </li>
@@ -55,7 +59,6 @@
     </ul>
     </div>
     <!-- Collapsible content -->
-</div>
   </nav>
   <!--/.Navbar-->
   <!-- Modal -->

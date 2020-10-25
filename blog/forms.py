@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project, ProjectFiles, ProjectIssues, Issues, FixProjectIssue, FeedBack, ContactUs
+from .models import Tutorial, Comments, FeedBack, ContactUs, BlogPost
 
 
 class FeedbackForm(forms.ModelForm):
@@ -24,41 +24,27 @@ class ContactUsForm(forms.ModelForm):
         fields = ['name', 'email', 'subject', 'message']
 
 
-class ProjectFilesForm(forms.ModelForm):
-    code = forms.CharField(label="", widget=forms.Textarea(
-        attrs={"class": "form-control", "placeholder": "Enter code for file", "id": "project_file_code",
-               "name": "project_file_code"}))
+class TutorialForm(forms.ModelForm):
+    tutorial_content = forms.CharField(label="",
+                                       widget=forms.Textarea(attrs={"class": "form-control", "id": "tutorial_form"}))
 
     class Meta:
-        model = ProjectFiles
-        fields = ['file_name', 'code']
+        model = Tutorial
+        fields = ['title', 'tutorial_content', 'image']
 
 
-class ProjectFilesUpdateForm(forms.ModelForm):
-    code = forms.CharField(label="", widget=forms.Textarea(
-        attrs={"class": "form-control", "placeholder": "Enter code for file", "id": "project_file_update",
-               "name": "project_file_update"}))
-
-    class Meta:
-        model = ProjectFiles
-        fields = ['file_name', 'code']
-
-
-class Project_Issue_Form(forms.ModelForm):
-    issue = forms.CharField(label="", widget=forms.Textarea(
-        attrs={"class": "form-control", "placeholder": "Enter issue here", "id": "issue_code",
-               "name": "issue_code", "rows": "3", "cols": "7"}))
+class CommentsForm(forms.ModelForm):
+    comment = forms.CharField(label="", widget=forms.TextInput(
+        attrs={"class": "form-control", "id": "comment_form", "placeholder": "what do you think about this tutorial"}))
 
     class Meta:
-        model = ProjectIssues
-        fields = ['issue']
+        model = Comments
+        fields = ['comment']
 
 
-class FixForm(forms.ModelForm):
-    fix = forms.CharField(label="", widget=forms.Textarea(
-        attrs={"class": "form-control", "placeholder": "fix.....", "id": "fix_code",
-               "name": "fix_code"}))
+class BlogPostForm(forms.ModelForm):
+    content = forms.CharField(label="", widget=forms.Textarea(attrs={"class": "form-control", "id": "blog_content"}))
 
     class Meta:
-        model = ProjectIssues
-        fields = ['fix']
+        model = BlogPost
+        fields = ['title', 'content', 'blog_image']
