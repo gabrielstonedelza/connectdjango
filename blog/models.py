@@ -26,13 +26,13 @@ class Tutorial(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        if self.image:
+            img = Image.open(self.image.path)
 
-        img = Image.open(self.image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+            if img.height > 400 or img.width > 700:
+                output_size = (399, 680)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
 
 
 class Comments(models.Model):
@@ -42,20 +42,6 @@ class Comments(models.Model):
     comment = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
 
-
-class NotifyMe(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    notify_title = models.CharField(max_length=100, default="New Notification")
-    notify_alert = models.CharField(max_length=200)
-    follower_sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="who_started_following")
-    read = models.BooleanField(default=False)
-    date_notified = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"New {self.notify_title} to {self.user}"
-
-    def get_absolute_notification_url(self):
-        return reverse("notify_detail", args=self.pk)
 
 
 class FeedBack(models.Model):
@@ -92,12 +78,32 @@ class BlogPost(models.Model):
     def get_absolute_blog_post(self):
         return reverse("blogpost_detail", args={self.pk})
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #
-    #     img = Image.open(self.blog_image.path)
-    #
-    #     if img.height > 300 or img.width > 300:
-    #         output_size = (300, 300)
-    #         img.thumbnail(output_size)
-    #         img.save(self.blog_image.path)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.blog_image:
+            img = Image.open(self.blog_image.path)
+
+            if img.height > 400 or img.width > 700:
+                output_size = (399, 680)
+                img.thumbnail(output_size)
+                img.save(self.blog_image.path)
+
+    def likes_count(self):
+        return self.likes.count
+
+
+class NotifyMe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    notify_title = models.CharField(max_length=100, default="New Notification")
+    notify_alert = models.CharField(max_length=200)
+    follower_sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="who_started_following")
+    read = models.BooleanField(default=False)
+    blog_id = models.IntegerField(blank=True, default=0)
+    tuto_id = models.IntegerField(blank=True, default=0)
+    date_notified = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"New {self.notify_title} to {self.user}"
+
+    def get_absolute_notification_url(self):
+        return reverse("notify_detail", args=self.pk)

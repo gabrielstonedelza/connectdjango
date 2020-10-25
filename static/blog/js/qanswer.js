@@ -1,8 +1,8 @@
 $(function(){
 
-  $(".reply-btn").on('click',function(){
-    $(this).parent().parent().next('.replies-comments').fadeToggle();
-  });
+  // $(".reply-btn").on('click',function(){
+  //   $(this).parent().parent().next('.replies-comments').fadeToggle();
+  // });
   setTimeout(function(){
     $(".alert").slideUp(3000);
   },5000);
@@ -30,26 +30,26 @@ $(function(){
     });
   });
 
-  $(document).on('submit','.reply-form',function(event){
-    event.preventDefault();
-    $.ajax({
-      type:'POST',
-      url:$(this).attr('action'),
-      data:$(this).serialize(),
-      dataType:'json',
-      success:function(response){
-        $(".main-comment-section").html(response['comments']);
-        $("input").val('');
-        $(".reply-btn").on('click',function(){
-          $(this).parent().parent().next('.replies-comments').fadeToggle();
-          $("input").val('');
-        });
+  // $(document).on('submit','.reply-form',function(event){
+  //   event.preventDefault();
+  //   $.ajax({
+  //     type:'POST',
+  //     url:$(this).attr('action'),
+  //     data:$(this).serialize(),
+  //     dataType:'json',
+  //     success:function(response){
+  //       $(".main-comment-section").html(response['comments']);
+  //       $("input").val('');
+  //       $(".reply-btn").on('click',function(){
+  //         $(this).parent().parent().next('.replies-comments').fadeToggle();
+  //         $("input").val('');
+  //       });
 
-      },
-      error:function(rs,e){
-        console.log(rs.responseText);
-      }
-    });
-  });
+  //     },
+  //     error:function(rs,e){
+  //       console.log(rs.responseText);
+  //     }
+  //   });
+  // });
 
 })

@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ blog.title }}
+{% endblock %}
+{% block content%}
+<br>
+<div class="container">
+    <br>
+    <div class="blog-detail-container">
+     <!-- blog image -->
+        <img src="{{ blog.blog_image.url }}" alt="blog_image">
+        <h3>{{ blog.title }}</h3>
+<!--        blog user -->
+        <img src="{{ blog.user.profile.profile_pic.url }}" alt="" style="width:50px;height:50px;border-radius:50%;">
+        <a href="{% url 'userprofilepost' blog.user.username %}">{{ blog.user.username }}</a><span id="like_blog_section">
+            {% include "blog/blog_like_form.html" %}
+        </span>
+        <br>
+        <hr class="my-4">
+        <br>
+        <div class="blog-content-section">
+            <p>{{ blog.content|safe }}</p>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
+<br>
+<br>
+{% endblock %}

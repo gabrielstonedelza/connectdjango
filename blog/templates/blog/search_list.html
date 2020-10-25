@@ -1,42 +1,23 @@
-{% if questions.count > 0  %}
-<ul id="search-results" class="list-group pt-2">
-    {% for question in questions %}
-    <li class="list-group-item pt-1 d-flex">
-        <img class="mr-2" src="{{ question.question_author.profile.profile_pic.url }}" alt="" style="width:30px;height:30px;border-radius:50%;">
-        <a class="text-muted" href="{{ question.get_absolute_url }}">{{ question.question }}</a>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
+
 {% if tutorials.count > 0  %}
 <ul id="search-results" class="list-group pt-2">
     {% for tutorial in tutorials %}
         <li class="list-group-item pt-1 d-flex">
-            <img class="mr-2" src="{{ tutorial.tutorial_author.profile.profile_pic.url }}" alt="" style="width:30px;height:30px;border-radius:50%;">
-            <a class="text-muted" href="{{ tutorial.get_absolute_tutorial_url }}">{{ tutorial.title }}</a>
+            <img class="mr-2" src="{{ tutorial.user.profile.profile_pic.url }}" alt="" style="width:30px;height:30px;border-radius:50%;">
+            <a class="text-muted" href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
         </li>
     {% endfor %}
 </ul>
 {% endif %}
 
-{% if all_groups %}
+{% if blogs.count > 0 %}
 <ul id="search-results" class="list-group pt-2">
-    {% for group in all_groups %}
+    {% for blog in blogs %}
     <li class="list-group-item pt-1 d-flex">
-        <img class="mr-2" src="{{ group.logo.url }}" alt="" style="width:30px;height:30px;border-radius:50%;">
-        <a class="mt-1 text-muted" href="{{ group.get_absolute_group_url }}">{{ group.group_name }}</a>
+        <img class="mr-2" src="{{ blog.user.profile.profile_pic.url }}" alt="" style="width:30px;height:30px;border-radius:50%;">
+        <a class="mt-1 text-muted" href="{{ blog.get_absolute_blog_post }}">{{ blog.title }}</a>
     </li>
     {% endfor %}
 </ul>
 {% endif %}
 
-{% if all_group_posts %}
-<ul id="search-results" class="list-group pt-2">
-    {% for group in all_group_posts %}
-    <li class="list-group-item pt-1 d-flex">
-        <img class="mr-2" src="{{ group.group.logo.url }}" alt="" style="width:30px;height:30px;border-radius:50%;">
-        <a class="mt-1 text-muted" href="{{ group.get_absolute_group_post_url }}">{{ group.title }}</a>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}

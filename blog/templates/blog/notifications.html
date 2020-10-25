@@ -12,8 +12,8 @@ Notifications
         {% if notification %}
         <ul class="">
             {% for u in notification %}
-            {% if u.notify_title == "New Group Request" %}
-                <a href="{% url 'group_update' %}">
+            {% if u.notify_title == "New Post" %}
+                <a href="{% url 'blogpost_detail' u.blog_id %}">
                     <li class="">
                         <div class="d-flex justify-between">
                             <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
@@ -24,60 +24,11 @@ Notifications
                     </li>
                 </a>
             <hr class="my-4">
-            {% elif u.notify_title == "Group Member Active" %}
-                <a href="{% url 'groups' %}">
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.gname.logo.url }}" alt="group logo"
-                                    style="width:30px;height:30px;border-radius:50%;">
-                                    <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
-                                    </span>
-                        </div>
-                    </li>
-                </a>
-            <hr class="my-4">
-            {% elif u.notify_title == "Follow Notice" %}
-                <a href="{% url 'userprofilepost' u.follower_sender.username %}">
+            {% elif u.notify_title == "New Comment" %}
+                <a href="{% url 'tutorial_detail' u.tuto_id %}">
                     <li class="">
                         <div class="d-flex justify-between">
                             <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
-                                    style="width:30px;height:30px;border-radius:50%;">
-                                    <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
-                                    </span>
-                        </div>
-                    </li>
-
-                </a>
-            <hr class="my-4">
-            {% elif u.notify_title == "New Group Post" %}
-                <a href="{% url 'group_detail' u.gname.id %}">
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.gname.logo.url }}" alt=""
-                                    style="width:30px;height:30px;border-radius:50%;">
-                                    <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
-                                    </span>
-                        </div>
-                    </li>
-
-                </a>
-                <hr class="my-4">
-            {% elif u.notify_title == "Follow Request Notice" %}
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
-                                    style="width:30px;height:30px;border-radius:50%;">
-                            <a href="{% url 'userprofilepost' u.follower_sender.username %}">{{ u.follower_sender }} is following you
-                                <br><small class="text-muted">{{ u.date_notified }}</small></a>
-                        </div>
-
-                    </li>
-                    <hr class="my-4">
-            {% elif u.notify_title == "New Question" %}
-                <a href="{% url 'userprofilepost' u.follower_sender.username %}">
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}"
                                     style="width:30px;height:30px;border-radius:50%;">
                                     <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
                                     </span>
@@ -86,52 +37,16 @@ Notifications
                 </a>
             <hr class="my-4">
             {% elif u.notify_title == "New Tutorial" %}
-                <a href="{% url 'userprofilepost' u.follower_sender.username %}">
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}"
+            <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                <li class="">
+                    <div class="d-flex justify-between">
+                        <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                     style="width:30px;height:30px;border-radius:50%;">
-                                    <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
-                                    </span>
-                        </div>
-                    </li>
-                </a>
-            <hr class="my-4">
-            {% elif u.notify_title == "Admin Messages" %}
-                <a href="{% url 'group_detail' u.id %}">
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
-                                    style="width:30px;height:30px;border-radius:50%;">
-                            <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
-                            </span>
-                        </div>
-                    </li>
-                </a>
-            <hr class="my-4">
-        {% elif u.notify_title == "Liked Tutorial" %}
-                <a href="{% url 'userprofilepost' u.follower_sender.username %}">
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
-                                    style="width:30px;height:30px;border-radius:50%;">
-                            <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
-                            </span>
-                        </div>
-                    </li>
-                </a>
-            <hr class="my-4">
-            {% elif u.notify_title == "Question Answered" %}
-                <a href="{% url 'question_detail' u.que_id %}">
-                    <li class="">
-                        <div class="d-flex justify-between">
-                            <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
-                                    style="width:30px;height:30px;border-radius:50%;">
-                            <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
-                            </span>
-                        </div>
-                    </li>
-                </a>
+                                <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                </span>
+                    </div>
+                </li>
+            </a>
             <hr class="my-4">
             {% endif %}
             {% endfor %}

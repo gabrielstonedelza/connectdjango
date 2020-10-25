@@ -7,15 +7,18 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.views.generic import CreateView
-
+from django.db.models import Q
 from users.models import Profile
 from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm)
-from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost)
+from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost,NotifyMe)
 from .notifications import mynotifications
+from .process_mail import send_my_mail
+from django.conf import settings
 
 
 @login_required
 def all_tutorial(request):
+    my_notify = mynotifications(request.user)
     tutorials = Tutorial.objects.all().order_by('-date_posted')
 
     paginator = Paginator(tutorials, 10)
@@ -24,6 +27,10 @@ def all_tutorial(request):
 
     context = {
         "tutorials": tutorials,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     return render(request, "blog/tutorials.html", context)
@@ -31,6 +38,16 @@ def all_tutorial(request):
 
 @login_required
 def create_tutorial(request):
+    user_profile = get_object_or_404(Profile, user=request.user)
+    user_followers = user_profile.followers.all()
+    # message = f"New tutorial from {request.user}"
+
+    ufollowers_emails = []
+    for i in user_followers:
+        ufollowers_emails.append(i.email)
+
+    my_notify = mynotifications(request.user)
+
     if request.method == "POST":
         form = TutorialForm(request.POST, request.FILES)
         if form.is_valid():
@@ -39,12 +56,21 @@ def create_tutorial(request):
             img = form.cleaned_data.get('image')
 
             Tutorial.objects.create(user=request.user, title=title, image=img, tutorial_content=t_content)
+            # for i in user_followers:
+            #     NotifyMe.objects.create(user=i, notify_title="New Tutorial", notify_alert=message,
+            #                             follower_sender=request.user)
+            send_my_mail(f"New Tutorial from {request.user.username}", settings.EMAIL_HOST_USER,
+                        ufollowers_emails, f"{request.user.username} just posted a tutorial '{title}'")
             return redirect('tutorials')
     else:
         form = TutorialForm()
 
     context = {
-        "form": form
+        "form": form,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     return render(request, "blog/tutorial_form.html", context)
@@ -52,9 +78,11 @@ def create_tutorial(request):
 
 @login_required
 def tutorial_detail(request, id):
+    my_notify = mynotifications(request.user)
     tutorial = get_object_or_404(Tutorial, id=id)
     has_liked = False
 
+    message = f"{request.user.username} commented on your tutorial '{tutorial.title}'"
     if tutorial.likes.filter(id=request.user.id).exists():
         has_liked = True
 
@@ -70,6 +98,8 @@ def tutorial_detail(request, id):
                 comment_qs = Comments.objects.get(id=reply_id)
             comment = Comments.objects.create(tutorial=tutorial, user=request.user, comment=comment, reply=comment_qs)
             comment.save()
+            # NotifyMe.objects.create(user=tutorial.user, notify_title="New Comment", notify_alert=message,
+            #                             follower_sender=request.user,tuto_id=tutorial)
 
     else:
         form = CommentsForm()
@@ -84,7 +114,11 @@ def tutorial_detail(request, id):
         "likes_count": tutorial.likes_count(),
         "comments": comments,
         "form": form,
-        "comments_count": comments_count
+        "comments_count": comments_count,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     if request.is_ajax():
@@ -119,10 +153,15 @@ def like_tutorial(request, id):
 
 @login_required
 def blogs(request):
+    my_notify = mynotifications(request.user)
     blog_posts = BlogPost.objects.all().order_by('-date_posted')
 
     context = {
-        "blogs": blog_posts
+        "blogs": blog_posts,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     return render(request, "blog/blog_posts.html", context)
@@ -131,6 +170,7 @@ def blogs(request):
 @login_required
 def blog_detail(request, id):
     blog = get_object_or_404(BlogPost, id=id)
+    my_notify = mynotifications(request.user)
     is_liked = False
 
     if blog.likes.filter(id=request.user.id).exists():
@@ -142,7 +182,12 @@ def blog_detail(request, id):
 
     context = {
         "blog": blog,
-        "is_liked": is_liked
+        "is_liked": is_liked,
+        "likes_count": blog.likes_count(),
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     return render(request, "blog/blog_detail.html", context)
@@ -162,7 +207,8 @@ def like_blog(request, id):
 
     context = {
         "blog": blog,
-        "is_liked": is_liked
+        "is_liked": is_liked,
+        "likes_count": blog.likes_count()
     }
 
     if request.is_ajax():
@@ -172,6 +218,14 @@ def like_blog(request, id):
 
 @login_required
 def create_blog(request):
+    user_profile = get_object_or_404(Profile, user=request.user)
+    user_followers = user_profile.followers.all()
+    # message = f"New post from {request.user}"
+
+    ufollowers_emails = []
+    for i in user_followers:
+        ufollowers_emails.append(i.email)
+    my_notify = mynotifications(request.user)
     if request.method == "POST":
         form = BlogPostForm(request.POST, request.FILES)
         if form.is_valid():
@@ -180,12 +234,19 @@ def create_blog(request):
             blog_img = form.cleaned_data.get('blog_image')
 
             BlogPost.objects.create(user=request.user, title=title, content=content, blog_image=blog_img)
+            
+            send_my_mail(f"New Post from {request.user.username}", settings.EMAIL_HOST_USER,
+                        ufollowers_emails, f"{request.user.username} just posted a blog '{title}'")
             return redirect('all_blogs')
     else:
         form = BlogPostForm()
 
     context = {
-        "form": form
+        "form": form,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
     return render(request, "blog/blog_post_form.html", context)
 
@@ -193,28 +254,19 @@ def create_blog(request):
 @login_required
 def search_queries(request):
     query = request.GET.get('q', None)
-    # if query is not None:
-    #     questions = Question.objects.filter(
-    #         Q(question__icontains=query) |
-    #         Q(question_author__username__icontains=query)
-    #     )
-    #     tutorials = Tutorial.objects.filter(
-    #         Q(title__icontains=query) |
-    #         Q(tutorial_author__username__icontains=query)
-    #     )
-    #     all_groups = Group.objects.filter(
-    #         Q(group_name__icontains=query) |
-    #         Q(group_leader__username__icontains=query)
-    #     )
-    #     all_group_posts = GroupPost.objects.filter(
-    #         Q(title__icontains=query)
-    #     )
+    if query is not None:
+        tutorials = Tutorial.objects.filter(
+            Q(title__icontains=query) |
+            Q(user__username__icontains=query)
+        )
+        blogs = BlogPost.objects.filter(
+            Q(title__icontains=query) |
+            Q(user__username__icontains=query)
+        )
 
     context = {
-        # 'questions': questions,
-        # 'tutorials': tutorials,
-        # 'all_groups': all_groups,
-        # 'all_group_posts': all_group_posts,
+        'blogs': blogs,
+        'tutorials': tutorials,
     }
     if request.is_ajax():
         html = render_to_string("blog/search_list.html", context, request=request)
@@ -279,7 +331,7 @@ def user_notifications(request):
 @login_required
 def feed_backs(request):
     all_feedbacks = FeedBack.objects.all().order_by('-date_posted')
-
+    my_notify = mynotifications(request.user)
     paginator = Paginator(all_feedbacks, 10)
     page = request.GET.get('page')
     all_feedbacks = paginator.get_page(page)
@@ -294,7 +346,11 @@ def feed_backs(request):
 
     context = {
         "all_feedbacks": all_feedbacks,
-        "form": form
+        "form": form,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     if request.is_ajax():
@@ -305,6 +361,7 @@ def feed_backs(request):
 
 
 def contact_us(request):
+    my_notify = mynotifications(request.user)
     if request.method == "POST":
         form = ContactUsForm(request.POST)
         if form.is_valid():
@@ -319,7 +376,11 @@ def contact_us(request):
         form = ContactUsForm()
 
     context = {
-        "form": form
+        "form": form,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     if request.is_ajax():

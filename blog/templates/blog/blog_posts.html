@@ -9,10 +9,7 @@ Blog Posts
     <div class="blog-post-container">
         <a href="{% url 'create_blog' %}">New Blog</a>
         {% for blog in blogs %}
-        <p>{{ blog.title }}</p>
-            <div>
-                {{ blog.content|safe }}
-            </div>
+            <a href="{{ blog.get_absolute_blog_post }}">{{ blog.title }}</a>
         {% endfor %}
     </div>
 </div>

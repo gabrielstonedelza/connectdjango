@@ -22,7 +22,7 @@
            Blog
           </a>
         </li>
-         <li class="nav-item ml-3 mr-3">
+         <li class="nav-item ml-1 mr-1">
           <a title="add new tutorial"  href="{% url 'tutorial_new' %}" title="Profile" class="nav-link">
            <i class="fas fa-plus"></i>
           </a>
@@ -50,7 +50,7 @@
             </div>
           </li>
 
-        <li class="nav-item ml-3 mr-3">
+        <li class="nav-item ml-1 mr-1">
           <a  href="{% url 'profile' request.user.username  %}" title="Profile" class="nav-link" href="#">
             <img style="width: 25px;height: 25px;border-radius: 50%;" class="z-depth-1-half" src="{{ request.user.profile.profile_pic.url }}" alt="">
           </a>
