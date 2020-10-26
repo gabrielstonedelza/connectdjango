@@ -112,6 +112,7 @@
     .tutorial-author {
       display: flex;
       gap: 1rem;
+      justify-self: start;
       // padding: 10px;
       .other-details {
         a {

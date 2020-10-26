@@ -9,9 +9,10 @@ from django.conf import settings
 from .models import Profile
 from .forms import (UserUpdateForm, ProfileUpdateForm, PasswordChangeForm)
 from blog.models import NotifyMe
-
+from django.core.paginator import Paginator
 from blog.notifications import mynotifications
 from blog.process_mail import send_my_mail
+from blog.models import BlogPost, Tutorial
 
 
 def register(request):
@@ -51,6 +52,16 @@ def profile(request, username):
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
+    tutorials = Tutorial.objects.filter(user=request.user)
+    blogs = BlogPost.objects.filter(user=request.user)
+
+    paginator = Paginator(tutorials, 15)
+    page = request.GET.get('page')
+    tutorials = paginator.get_page(page)
+
+    paginator = Paginator(blogs, 15)
+    page = request.GET.get('page')
+    blogs = paginator.get_page(page)
 
     context = {
         "notification": my_notify['notification'],
@@ -61,9 +72,35 @@ def profile(request, username):
         "followers": followers,
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
+        "tutorials": tutorials,
+        "blogs": blogs 
     }
     return render(request, "users/profile.html", context)
 
+@login_required
+def profile_followings(request,username):
+    myprofile = get_object_or_404(Profile, user=request.user)
+    
+    following = myprofile.following.all()
+
+    context = {
+        "following": following,
+        "myprofile": myprofile
+    }
+    return render(request, "users/profile_followings.html", context)
+
+@login_required
+def profile_followers(request,username):
+    myprofile = get_object_or_404(Profile, user=request.user)
+
+    followers = myprofile.followers.all()
+
+    context = {
+        "myprofile": myprofile,
+        "followers": followers,
+
+    }
+    return render(request, "users/profile_followers.html", context)
 
 @login_required
 def edit_profile(request, username):

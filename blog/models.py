@@ -78,15 +78,15 @@ class BlogPost(models.Model):
     def get_absolute_blog_post(self):
         return reverse("blogpost_detail", args={self.pk})
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.blog_image:
-            img = Image.open(self.blog_image.path)
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     if self.blog_image:
+    #         img = Image.open(self.blog_image.path)
 
-            if img.height > 400 or img.width > 700:
-                output_size = (399, 680)
-                img.thumbnail(output_size)
-                img.save(self.blog_image.path)
+    #         if img.height > 400 or img.width > 700:
+    #             output_size = (399, 680)
+    #             img.thumbnail(output_size)
+    #             img.save(self.blog_image.path)
 
     def likes_count(self):
         return self.likes.count

@@ -1,0 +1,93 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ request.user.username }}-following
+{% endblock %}
+{% load static %}
+{% block content %}
+<br>
+<div class="container">
+    <br>
+    <div class="userpostprofile-container">
+        <div class="userpostprofile-details">
+            <div class="userprofile-image">
+                <img src="{{ request.user.profile.profile_pic.url }}">
+                <!-- users full name -->
+                <h3>{{ request.user.profile.name }}</h3>
+                <span class="text-muted">{{ request.user.username }}</span>
+                <br>
+                <span class="text-muted">{{ request.user.profile.bio }}</span>
+                <br>
+                <a class="butt" href="{% url 'editprofile'  request.user.username %}">Edit Profile</a>
+                <div class="users-followings-followers">
+                    <a class="text-muted" href="{% url 'pfollowers' request.user.username  %}"><i class="fas fa-users"></i> {{followers_count}}Followers</a>
+                    <a class="text-muted" href="{% url 'pfollowing' request.user.username %}"><i class="fas fa-users"></i> {{ following_count }}Following</a>
+                </div>
+                <br>
+                <div class="user-social">
+                    {% if request.user.profile.your_facebook %}
+                    <a target="_blank" href="{{ request.user.profile.your_facebook }}">
+                        <img src="{% static 'blog/images/facebook.png' %}" alt="user's facebook">
+                    </a>
+                    {% endif %}
+                    {% if request.user.profile.your_instagram %}
+                    <a target="_blank" href="{{ request.user.profile.your_instagram }}">
+                        <img src="{% static 'blog/images/instagram.png' %}" alt="user's instagram">
+                    </a>
+                    {% endif %}
+                    {% if request.user.profile.your_twitter %}
+                    <a target="_blank" href="{{ request.user.profile.your_twitter }}">
+                        <img src="{% static 'blog/images/twitter.png' %}" alt="">
+                    </a>
+                    {% endif %}
+                    {% if request.user.profile.your_youtube %}
+                    <a target="_blank" href="{{ request.user.profile.your_youtube }}">
+                        <img src="{% static 'blog/images/youtube.png' %}" alt="">
+                    </a>
+                    {% endif %}
+                    {% if request.user.profile.your_medium %}
+                    <a target="_blank" href="{{ request.user.profile.your_medium }}">
+                        <img src="{% static 'blog/images/medium.png' %}" alt="">
+                    </a>
+                    {% endif %}
+                    {% if request.user.profile.your_linkedin %}
+                    <a target="_blank" href="{{ request.user.profile.your_linkedin }}">
+                    <img src="{% static 'blog/images/linkedin.png' %}" alt="">
+                    </a>
+                    {% endif %}
+                    {% if request.user.profile.your_github %}
+                    <a target="_blank" href="{{ request.user.profile.your_github }}">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="userpostprofile-posts">
+            {% for user in following %}
+                <div class="defollowin-container">
+                    <!-- defollowing image -->
+                    <div class="defollowing-image">
+                        <img src="{{ user.profile.profile_pic.url }}">
+                    </div>
+                    <!-- other details -->
+                    <div class="defollowing-other-details">
+                        <a href="{ url 'userprofilepost' user.username }">{{ user.profile.name }}</a><span class="text-muted">{{ user.username }}</span>
+                        <br>
+                        {% if user.profile.bio %}
+                            <span class="text-muted">{{ user.profile.bio }}</span>
+                        {% endif %}
+                        <br>
+                        {% if user.profile.your_organization %}
+                            <span class="text-muted">@{{ user.profile.your_organization }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                <hr class="my-4">
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

@@ -15,7 +15,11 @@ All Tutorials
               <div class="userimage-name">
                 <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="">
                 <div class="other">
-                  <span>{{ tutorial.user.username }}</span>
+                  {% if tutorial.user == request.user %}
+                    <a style="color:black" href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username }}</a>
+                  {% else %}
+                    <a style="color:black" href="{% url 'userprofilepost' tutorial.user.username %}">{{ tutorial.user.username }}</a>
+                  {% endif %}
                   <br>
                     <a class="text-muted" href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
                     <br>

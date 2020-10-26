@@ -21,6 +21,8 @@ urlpatterns = [
                       template_name='users/password_reset_complete.html'), name='password_reset_complete'),
                   path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
                   path('profile/<str:username>/', user_views.profile, name='profile'),
+                  path('profile/<str:username>/following/', user_views.profile_followings, name="pfollowing"),
+                  path('profile/<str:username>/followers/', user_views.profile_followers, name="pfollowers"),
                   path('connection/<int:id>/', user_views.user_connection, name='connection'),
                   path('profile_following/<int:id>/', user_views.profile_following, name='profile_following'),
                   path('profile_connection_followers/<int:id>/', user_views.profile_connection_followers,

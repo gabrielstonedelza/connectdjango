@@ -158,13 +158,19 @@ def like_tutorial(request, id):
 def blogs(request):
     my_notify = mynotifications(request.user)
     blog_posts = BlogPost.objects.all().order_by('-date_posted')
+    users = User.objects.exclude(id=request.user.id).order_by('-date_joined')[:5]
+
+    paginator = Paginator(blog_posts, 15)
+    page = request.GET.get('page')
+    blog_posts = paginator.get_page(page)
 
     context = {
-        "blogs": blog_posts,
+        "blog_posts": blog_posts,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
+        "users": users
     }
 
     return render(request, "blog/blog_posts.html", context)
@@ -284,11 +290,24 @@ def user_profile(request, username):
     my_notify = mynotifications(request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)
+    
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
     deUser = get_object_or_404(User, username=username)
+    
+    tutorials = Tutorial.objects.filter(user=deUser.id).order_by('-date_posted')
+    blogs = BlogPost.objects.filter(user=deUser.id).order_by('-date_posted')
+
+    paginator = Paginator(tutorials, 15)
+    page = request.GET.get('page')
+    tutorials = paginator.get_page(page)
+
+    paginator = Paginator(blogs, 15)
+    page = request.GET.get('page')
+    blogs = paginator.get_page(page)
+
     deuser_following = deUser.profile.following.all()
     deuser_followers = deUser.profile.followers.all()
 
@@ -303,10 +322,54 @@ def user_profile(request, username):
         "defollowing": deuser_following,
         "defollowers": deuser_followers,
         "deuser": deUser,
+        "tutorials": tutorials,
+        "blogs": blogs
     }
 
     return render(request, "blog/userpostprofile.html", context)
 
+
+@login_required
+def user_profile_following(request,username):
+    myprofile = get_object_or_404(Profile, user=request.user)
+    
+
+    following = myprofile.following.all()
+    followers = myprofile.followers.all()
+
+    deUser = get_object_or_404(User, username=username)
+    deuser_following = deUser.profile.following.all()
+    deuser_followers = deUser.profile.followers.all()
+
+    context = {
+        "following": following,
+        "followers": followers,
+        "defollowing": deuser_following,
+        "defollowers": deuser_followers,
+        "deuser": deUser,
+    }
+    return render(request, "blog/deuserprofile_followings.html", context)
+
+@login_required
+def user_profile_followers(request,username):
+    myprofile = get_object_or_404(Profile, user=request.user)
+    
+
+    following = myprofile.following.all()
+    followers = myprofile.followers.all()
+
+    deUser = get_object_or_404(User, username=username)
+    deuser_following = deUser.profile.following.all()
+    deuser_followers = deUser.profile.followers.all()
+
+    context = {
+        "following": following,
+        "followers": followers,
+        "defollowing": deuser_following,
+        "defollowers": deuser_followers,
+        "deuser": deUser,
+    }
+    return render(request, "blog/deuserprofile_followers.html", context)
 
 @login_required
 def user_notifications(request):

@@ -32,5 +32,7 @@ urlpatterns = [
 
     path('search/', views.search_queries, name='search'),
     path('<str:username>/', views.user_profile, name="userprofilepost"),
+    path('<str:username>/following/', views.user_profile_following, name="deuser_followings"),
+    path('<str:username>/followers/', views.user_profile_followers, name="deuser_followers")
 
 ]

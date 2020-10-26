@@ -132,6 +132,7 @@
   display: -ms-flexbox;
   display: flex;
   gap: 1rem;
+  justify-self: start;
 }
 
 .tutorial-detail-main .without-comment-like-button .tutorial-author .other-details a {
