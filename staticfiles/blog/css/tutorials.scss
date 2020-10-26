@@ -1,0 +1,169 @@
+.main-home-tutorials-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 20px;
+
+  .tutorial-container {
+    flex: 1 1 250px;
+    margin: 5px;
+    .tutorial-list {
+      display: flex;
+      // flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+
+      .userimage-name {
+        flex: 2;
+        display: flex;
+        gap: 1rem;
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+        .other {
+          span {
+            font-weight: bold;
+            text-transform: capitalize;
+          }
+          a {
+            font-size: 25px;
+            font-weight: bold;
+          }
+        }
+      }
+      .tutorial-image {
+        flex: 1;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  // user container
+  .users_to_follow {
+    .user-container {
+      display: flex;
+      gap: 1rem;
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+      .users-other-details {
+        a {
+          color: #000;
+          font-weight: bold;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .main-home-tutorials-container {
+    .tutorial-container {
+      .tutorial-list {
+        .userimage-name {
+          .other {
+            span {
+              font-size: 12px;
+            }
+            a {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// tutorial detail
+.tutorial-detail-main {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .without-comment-like-button {
+    // justify-content: center;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    max-width: 680px;
+    .detail-tuto-image {
+      
+      img {
+        width: 100%;
+        height: 339.59;
+      }
+    }
+
+    .tutorial-author {
+      display: flex;
+      gap: 1rem;
+      // padding: 10px;
+      .other-details {
+        a {
+          text-transform: capitalize;
+          font-weight: bold;
+          color: #000;
+        }
+      }
+    }
+    span.tuto-content {
+      font-size: 21px;
+      line-height: 1.5;
+      letter-spacing: -0.003em;
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+      font-style: italic;
+    }
+  }
+
+  #like-helpful-section{
+      display: flex;
+      position: fixed;
+      top: 300px;
+      left: 100px;
+  }
+}
+
+blockquote{
+    display: flex;
+    gap: 1rem;
+}
+
+// tutorial form
+.tutorial-form-container{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    form{
+        width: 50%;
+    }
+}
+
+@media(max-width: 500px){
+    .tutorial-form-container{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        form{
+            width: 100%;
+        }
+    }
+}

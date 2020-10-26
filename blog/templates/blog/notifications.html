@@ -48,6 +48,30 @@ Notifications
                 </li>
             </a>
             <hr class="my-4">
+            {% elif u.notify_title == "Liked Tutorial" %}
+            <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                <li class="">
+                    <div class="d-flex justify-between">
+                        <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
+                                    style="width:30px;height:30px;border-radius:50%;">
+                                <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                </span>
+                    </div>
+                </li>
+            </a>
+            <hr class="my-4">
+            {% elif u.notify_title == "Liked Blog" %}
+            <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                <li class="">
+                    <div class="d-flex justify-between">
+                        <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
+                                    style="width:30px;height:30px;border-radius:50%;">
+                                <span class="font-bold">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                </span>
+                    </div>
+                </li>
+            </a>
+            <hr class="my-4">
             {% endif %}
             {% endfor %}
         </ul>

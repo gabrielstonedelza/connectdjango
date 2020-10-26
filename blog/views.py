@@ -20,8 +20,9 @@ from django.conf import settings
 def all_tutorial(request):
     my_notify = mynotifications(request.user)
     tutorials = Tutorial.objects.all().order_by('-date_posted')
+    users = User.objects.exclude(id=request.user.id).order_by('-date_joined')[:5]
 
-    paginator = Paginator(tutorials, 10)
+    paginator = Paginator(tutorials, 15)
     page = request.GET.get('page')
     tutorials = paginator.get_page(page)
 
@@ -31,6 +32,7 @@ def all_tutorial(request):
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
+        "users": users
     }
 
     return render(request, "blog/tutorials.html", context)
@@ -59,8 +61,8 @@ def create_tutorial(request):
             # for i in user_followers:
             #     NotifyMe.objects.create(user=i, notify_title="New Tutorial", notify_alert=message,
             #                             follower_sender=request.user)
-            send_my_mail(f"New Tutorial from {request.user.username}", settings.EMAIL_HOST_USER,
-                        ufollowers_emails, f"{request.user.username} just posted a tutorial '{title}'")
+            # send_my_mail(f"New Tutorial from {request.user.username}", settings.EMAIL_HOST_USER,
+            #             ufollowers_emails, f"{request.user.username} just posted a tutorial '{title}'")
             return redirect('tutorials')
     else:
         form = TutorialForm()
@@ -82,7 +84,7 @@ def tutorial_detail(request, id):
     tutorial = get_object_or_404(Tutorial, id=id)
     has_liked = False
 
-    message = f"{request.user.username} commented on your tutorial '{tutorial.title}'"
+    # message = f"{request.user.username} commented on your tutorial '{tutorial.title}'"
     if tutorial.likes.filter(id=request.user.id).exists():
         has_liked = True
 
@@ -136,6 +138,7 @@ def like_tutorial(request, id):
     if not tutorial.likes.filter(id=request.user.id).exists():
         tutorial.likes.add(request.user)
         has_liked = True
+        
 
     else:
         tutorial.likes.remove(request.user)
@@ -201,6 +204,7 @@ def like_blog(request, id):
     if not blog.likes.filter(id=request.user.id).exists():
         blog.likes.add(request.user)
         is_liked = True
+       
     else:
         blog.likes.remove(request.user)
         is_liked = False

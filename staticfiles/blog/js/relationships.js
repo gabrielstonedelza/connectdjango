@@ -5,8 +5,6 @@ $(function(){
       var formData = $("#connection_form").serialize();
       var pk = $("#connection_butt").attr('value')
       // var id = event.currentTarget.value;
-      console.log(formData);
-      console.log(pk);
 
       $.ajax({
         type: "POST",
@@ -26,7 +24,6 @@ $(document).on("click", "#profile_connection_butt", (event) => {
       event.preventDefault();
       var formData = $("#profile_connection_form").serialize();
       var pk = event.currentTarget.value
-      console.log(pk);
 
       $.ajax({
         type: "POST",
@@ -46,7 +43,6 @@ $(document).on("click", "#profile_connection_followers_butt", (event) => {
       event.preventDefault();
       var formData = $("#profile_connection_followers_form").serialize();
       var pk = event.currentTarget.value
-      console.log(pk);
 
       $.ajax({
         type: "POST",
@@ -68,7 +64,6 @@ $(document).on("click", "#profile_connection_followers_butt", (event) => {
       event.preventDefault();
       var formData = $("#userprofile_connection_form").serialize();
       var pk = event.currentTarget.value
-      console.log(pk);
 
       $.ajax({
         type: "POST",
@@ -88,7 +83,6 @@ $(document).on("click", "#profile_connection_followers_butt", (event) => {
       event.preventDefault();
       var formData = $("#userprofile_followers_connection_form").serialize();
       var pk = event.currentTarget.value
-      console.log(pk)
 
       $.ajax({
         type: "POST",

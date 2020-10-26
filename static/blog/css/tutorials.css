@@ -1,0 +1,209 @@
+.main-home-tutorials-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 1.5rem;
+  padding: 20px;
+}
+
+.main-home-tutorials-container .tutorial-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 250px;
+          flex: 1 1 250px;
+  margin: 5px;
+}
+
+.main-home-tutorials-container .tutorial-container .tutorial-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 1rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other span {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other a {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.main-home-tutorials-container .tutorial-container .tutorial-list .tutorial-image {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.main-home-tutorials-container .tutorial-container .tutorial-list .tutorial-image img {
+  width: 100%;
+}
+
+.main-home-tutorials-container .users_to_follow .user-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.main-home-tutorials-container .users_to_follow .user-container img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.main-home-tutorials-container .users_to_follow .user-container .users-other-details a {
+  color: #000;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+@media (max-width: 500px) {
+  .main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other span {
+    font-size: 12px;
+  }
+  .main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other a {
+    font-size: 18px;
+  }
+}
+
+.tutorial-detail-main {
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tutorial-detail-main .without-comment-like-button {
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  max-width: 680px;
+}
+
+.tutorial-detail-main .without-comment-like-button .detail-tuto-image img {
+  width: 100%;
+  height: 339.59;
+}
+
+.tutorial-detail-main .without-comment-like-button .tutorial-author {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.tutorial-detail-main .without-comment-like-button .tutorial-author .other-details a {
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #000;
+}
+
+.tutorial-detail-main .without-comment-like-button span.tuto-content {
+  font-size: 21px;
+  line-height: 1.5;
+  letter-spacing: -0.003em;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-style: italic;
+}
+
+.tutorial-detail-main #like-helpful-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  top: 300px;
+  left: 100px;
+}
+
+blockquote {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.tutorial-form-container {
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.tutorial-form-container form {
+  width: 50%;
+}
+
+@media (max-width: 500px) {
+  .tutorial-form-container {
+    padding: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .tutorial-form-container form {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=tutorials.css.map */

@@ -24,15 +24,15 @@ class Tutorial(models.Model):
     def get_absolute_url(self):
         return reverse("tutorial_detail", args={self.pk})
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.image:
-            img = Image.open(self.image.path)
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     if self.image:
+    #         img = Image.open(self.image.path)
 
-            if img.height > 400 or img.width > 700:
-                output_size = (399, 680)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
+    #         if img.height > 600 or img.width > 900:
+    #             output_size = (440, 880)
+    #             img.thumbnail(output_size)
+    #             img.save(self.image.path)
 
 
 class Comments(models.Model):

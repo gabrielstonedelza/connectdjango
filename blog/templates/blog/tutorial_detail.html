@@ -5,69 +5,36 @@
 {{ project.project_title }}
 {% endblock %}
 {% block content%}
-<div class="container">
     <br>
     <div class="tutorial-detail-main">
-        
         <br>
-        {% if tutorial.image %}
+        <div class="without-comment-like-button">
+          {% if tutorial.image %}
+          <div class="detail-tuto-image">
             <img src="{{ tutorial.image.url }}" alt="">
-        {% endif %}
-        <h3>{{ tutorial.title }}</h3>
-        <div class="tutorial-author d-flex">
-          <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;">
-          <div class="other-details">
-            {% if tutorial.user == request.user %}
-              <a href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username}}</a>
-            {% else %}
-              <a href="{% url 'userprofilepost' tutorial.user.username %}">{{ tutorial.user.username}}</a>
-            {% endif %}
-            <span><button class="butt">Follow</button></span>
-            <br>
-            <small class="text-muted">{{ tutorial.date_posted|date:"M, D Y"}}</small>
-            <span class="user-social">
-              {% if tutorial.user.profile.your_facebook %}
-                <a target="_blank" href="{{ tutorial.user.profile.your_facebook }}">
-                  <img src="{% static 'blog/images/facebook.png' %}" alt="user's facebook">
-                </a>
-              {% endif %}
-              {% if tutorial.user.profile.your_instagram %}
-                <a target="_blank" href="{{ tutorial.user.profile.your_instagram }}">
-                  <img src="{% static 'blog/images/instagram.png' %}" alt="user's instagram">
-                </a>
-              {% endif %}
-              {% if tutorial.user.profile.your_twitter %}
-                <a target="_blank" href="{{ tutorial.user.profile.your_twitter }}">
-                  <img src="{% static 'blog/images/twitter.png' %}" alt="">
-                </a>
-              {% endif %}
-              {% if tutorial.user.profile.your_youtube %}
-                <a target="_blank" href="{{ tutorial.user.profile.your_youtube }}">
-                  <img src="{% static 'blog/images/youtube.png' %}" alt="">
-                </a>
-              {% endif %}
-              {% if tutorial.user.profile.your_medium %}
-              <a target="_blank" href="{{ tutorial.user.profile.your_medium }}">
-                <img src="{% static 'blog/images/medium.png' %}" alt="">
-              </a>
-            {% endif %}
-            {% if tutorial.user.profile.your_linkedin %}
-            <a target="_blank" href="{{ tutorial.user.profile.your_linkedin }}">
-              <img src="{% static 'blog/images/linkedin.png' %}" alt="">
-            </a>
-          {% endif %}
-          {% if tutorial.user.profile.your_github %}
-          <a target="_blank" href="{{ tutorial.user.profile.your_github }}">
-            <img src="{% static 'blog/images/github.png' %}" alt="">
-          </a>
-          {% endif %}
-          </span>
           </div>
+          {% endif %}
+          <h1>{{ tutorial.title }}</h1>
+          <br>
+          <div class="tutorial-author">
+            <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;">
+            <div class="other-details">
+              {% if tutorial.user == request.user %}
+                <a href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username}}</a>
+              {% else %}
+                <a href="{% url 'userprofilepost' tutorial.user.username %}">{{ tutorial.user.username}}</a>
+              {% endif %}
+             
+              <br>
+              <small class="text-muted">{{ tutorial.date_posted|date:"M, D Y"}}</small>
+            </div>
+          </div>
+          <br>
+          <span class="tuto-content">{{ tutorial.tutorial_content|safe }}</span>
+          <br>
+          <hr class="my-4">
         </div>
-        <p>{{ tutorial.tutorial_content|safe }}</p>
-        <br>
-        <hr class="my-4">
-        <div id="like-helpful-section" class="d-flex">
+        <div id="like-helpful-section" >
              <div id="likes_section">
                 {% include "blog/like_form.html" %}
             </div>
@@ -76,7 +43,6 @@
         </div>
 
     </div>
-</div>
 <br>
 
 <!-- To change the direction of the modal animation change .right class -->
