@@ -1,5 +1,5 @@
 
-{% if tutorials.count > 0  %}
+{% if tutorials  %}
 <ul id="search-results" class="list-group pt-2">
     {% for tutorial in tutorials %}
         <li class="list-group-item pt-1 d-flex">
@@ -10,7 +10,7 @@
 </ul>
 {% endif %}
 
-{% if blogs.count > 0 %}
+{% if blogs %}
 <ul id="search-results" class="list-group pt-2">
     {% for blog in blogs %}
     <li class="list-group-item pt-1 d-flex">

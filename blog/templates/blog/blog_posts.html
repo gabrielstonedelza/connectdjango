@@ -8,6 +8,9 @@ Blog Posts
 <div class="container">
     <br>
     <h2>Blogs</h2>
+    <div class="sticky">
+      <a title="Create new blog" href="{% url 'create_blog' %}" class="butt"><i class="fas fa-plus-circle fa-2x"></i></a>
+    </div>
     <br>
     <div class="main-home-tutorials-container">
     <div class="tutorial-container">
@@ -77,7 +80,7 @@ Blog Posts
     </div>
     <!-- users  -->
     <div class="users_to_follow">
-      <h4>For you to follow</h4>
+      <h4>Just for you</h4>
       {% for user in users %}
         <div class="user-container">
           <!-- user profile photo -->

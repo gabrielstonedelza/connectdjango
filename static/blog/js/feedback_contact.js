@@ -9,7 +9,7 @@ $(function () {
       dataType: "json",
       success: function (response) {
         $("#feedback_section").html(response["form"]);
-        $("textarea").val("");
+        $("input").val("");
       },
       error: function (rs, e) {
         console.log(rs.responseText);

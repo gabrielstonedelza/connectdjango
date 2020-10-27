@@ -73,14 +73,15 @@ def profile(request, username):
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
         "tutorials": tutorials,
-        "blogs": blogs 
+        "blogs": blogs
     }
     return render(request, "users/profile.html", context)
 
+
 @login_required
-def profile_followings(request,username):
+def profile_followings(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
-    
+
     following = myprofile.following.all()
 
     context = {
@@ -89,8 +90,9 @@ def profile_followings(request,username):
     }
     return render(request, "users/profile_followings.html", context)
 
+
 @login_required
-def profile_followers(request,username):
+def profile_followers(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
 
     followers = myprofile.followers.all()
@@ -101,6 +103,7 @@ def profile_followers(request,username):
 
     }
     return render(request, "users/profile_followers.html", context)
+
 
 @login_required
 def edit_profile(request, username):

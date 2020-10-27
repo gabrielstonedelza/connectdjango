@@ -132,6 +132,7 @@
   display: -ms-flexbox;
   display: flex;
   gap: 1rem;
+  justify-self: start;
 }
 
 .tutorial-detail-main .without-comment-like-button .tutorial-author .other-details a {
@@ -164,7 +165,7 @@ blockquote {
   gap: 1rem;
 }
 
-.tutorial-form-container {
+.tutorial-form-container, .blog-form-container {
   padding: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -181,12 +182,12 @@ blockquote {
           align-items: center;
 }
 
-.tutorial-form-container form {
+.tutorial-form-container form, .blog-form-container form {
   width: 50%;
 }
 
 @media (max-width: 500px) {
-  .tutorial-form-container {
+  .tutorial-form-container, .blog-form-container {
     padding: 20px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -202,7 +203,7 @@ blockquote {
         -ms-flex-align: center;
             align-items: center;
   }
-  .tutorial-form-container form {
+  .tutorial-form-container form, .blog-form-container form {
     width: 100%;
   }
 }

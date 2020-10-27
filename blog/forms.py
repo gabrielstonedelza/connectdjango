@@ -3,8 +3,7 @@ from .models import Tutorial, Comments, FeedBack, ContactUs, BlogPost
 
 
 class FeedbackForm(forms.ModelForm):
-    feedback = forms.CharField(label="", widget=forms.Textarea(
-        attrs={'class': 'form-control', 'placeholder': "let's hear from you"}))
+    feedback = forms.CharField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'your feedbacks really help us a lot',"id":"feedform"}))
 
     class Meta:
         model = FeedBack
@@ -33,6 +32,15 @@ class TutorialForm(forms.ModelForm):
         fields = ['title', 'tutorial_content', 'image']
 
 
+class TutorialUpdateForm(forms.ModelForm):
+    tutorial_content = forms.CharField(label="",
+                                       widget=forms.Textarea(attrs={"class": "form-control", "id": "tutorial_form"}))
+
+    class Meta:
+        model = Tutorial
+        fields = ['title', 'tutorial_content', 'image']
+
+
 class CommentsForm(forms.ModelForm):
     comment = forms.CharField(label="", widget=forms.TextInput(
         attrs={"class": "form-control", "id": "comment_form", "placeholder": "what do you think about this tutorial"}))
@@ -43,6 +51,14 @@ class CommentsForm(forms.ModelForm):
 
 
 class BlogPostForm(forms.ModelForm):
+    content = forms.CharField(label="", widget=forms.Textarea(attrs={"class": "form-control", "id": "blog_content"}))
+
+    class Meta:
+        model = BlogPost
+        fields = ['title', 'content', 'blog_image']
+
+
+class BlogUpdateForm(forms.ModelForm):
     content = forms.CharField(label="", widget=forms.Textarea(attrs={"class": "form-control", "id": "blog_content"}))
 
     class Meta:

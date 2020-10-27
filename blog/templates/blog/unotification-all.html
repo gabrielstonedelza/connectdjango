@@ -63,7 +63,8 @@
                             <br>
                         </li>
                     </a>
-                    {% elif u.notify_title == "Liked Tutorial" %}
+
+                    {% elif u.notify_title == "Follow Notice" %}
                     <a href="{% url 'notifications' %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
@@ -79,7 +80,7 @@
                             <br>
                         </li>
                     </a>
-                    {% elif u.notify_title == "Liked Blog" %}
+                    {% elif u.notify_title == "Follow Request Notice" %}
                     <a href="{% url 'notifications' %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">

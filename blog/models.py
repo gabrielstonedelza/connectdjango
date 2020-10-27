@@ -24,15 +24,15 @@ class Tutorial(models.Model):
     def get_absolute_url(self):
         return reverse("tutorial_detail", args={self.pk})
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     if self.image:
-    #         img = Image.open(self.image.path)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image:
+            img = Image.open(self.image.path)
 
-    #         if img.height > 600 or img.width > 900:
-    #             output_size = (440, 880)
-    #             img.thumbnail(output_size)
-    #             img.save(self.image.path)
+            if img.height > 600 or img.width > 900:
+                output_size = (680, 400)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
 
 
 class Comments(models.Model):
@@ -41,7 +41,6 @@ class Comments(models.Model):
     reply = models.ForeignKey("Comments", null=True, related_name="replies", on_delete=models.CASCADE)
     comment = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
-
 
 
 class FeedBack(models.Model):
@@ -78,15 +77,15 @@ class BlogPost(models.Model):
     def get_absolute_blog_post(self):
         return reverse("blogpost_detail", args={self.pk})
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     if self.blog_image:
-    #         img = Image.open(self.blog_image.path)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.blog_image:
+            img = Image.open(self.blog_image.path)
 
-    #         if img.height > 400 or img.width > 700:
-    #             output_size = (399, 680)
-    #             img.thumbnail(output_size)
-    #             img.save(self.blog_image.path)
+            if img.height > 400 or img.width > 700:
+                output_size = (680, 400)
+                img.thumbnail(output_size)
+                img.save(self.blog_image.path)
 
     def likes_count(self):
         return self.likes.count
@@ -103,7 +102,7 @@ class NotifyMe(models.Model):
     date_notified = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"New {self.notify_title} to {self.user}"
+        return f"New {self.notify_title} notification sent to  {self.user}"
 
     def get_absolute_notification_url(self):
         return reverse("notify_detail", args=self.pk)

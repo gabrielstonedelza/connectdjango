@@ -1,14 +1,15 @@
 {% load crispy_forms_tags %}
-<div id="showmessage_success"></div>
-<br>
-<div class="contact-form-box z-depth-1-half">
-    <form action="." method="post" id="contac_form">
+<div class="contact-stuff">
+
+    <div id="showmessage_success"></div>
+    <br>
+    <form action="." id="contac_form" method="post">
         {% csrf_token %}
         <div class="form-group">
             {{ form|crispy }}
         </div>
         <div class="form-group">
-            <button type="submit" class="butt">Submit</button>
+            <button class="butt" type="submit">Submit</button>
         </div>
     </form>
 </div>

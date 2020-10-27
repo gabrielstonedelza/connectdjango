@@ -40,6 +40,7 @@
         flex: 1;
         img {
           width: 100%;
+          height: 124.27px;
         }
       }
     }
@@ -145,7 +146,7 @@ blockquote{
 }
 
 // tutorial form
-.tutorial-form-container{
+.tutorial-form-container, .blog-form-container{
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -157,7 +158,7 @@ blockquote{
 }
 
 @media(max-width: 500px){
-    .tutorial-form-container{
+    .tutorial-form-container, .blog-form-container{
         padding: 20px;
         display: flex;
         flex-direction: column;
@@ -167,4 +168,10 @@ blockquote{
             width: 100%;
         }
     }
+}
+
+.sticky{
+  position: fixed;
+  top: 200px;
+  left: 80px;
 }

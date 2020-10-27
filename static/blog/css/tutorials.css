@@ -64,6 +64,7 @@
 
 .main-home-tutorials-container .tutorial-container .tutorial-list .tutorial-image img {
   width: 100%;
+  height: 124.27px;
 }
 
 .main-home-tutorials-container .users_to_follow .user-container {
@@ -165,7 +166,7 @@ blockquote {
   gap: 1rem;
 }
 
-.tutorial-form-container {
+.tutorial-form-container, .blog-form-container {
   padding: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -182,12 +183,12 @@ blockquote {
           align-items: center;
 }
 
-.tutorial-form-container form {
+.tutorial-form-container form, .blog-form-container form {
   width: 50%;
 }
 
 @media (max-width: 500px) {
-  .tutorial-form-container {
+  .tutorial-form-container, .blog-form-container {
     padding: 20px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -203,8 +204,14 @@ blockquote {
         -ms-flex-align: center;
             align-items: center;
   }
-  .tutorial-form-container form {
+  .tutorial-form-container form, .blog-form-container form {
     width: 100%;
   }
+}
+
+.sticky {
+  position: fixed;
+  top: 200px;
+  left: 80px;
 }
 /*# sourceMappingURL=tutorials.css.map */

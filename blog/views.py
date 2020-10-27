@@ -1,16 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import DeleteView, UpdateView
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
-from django.views.generic import CreateView
 from django.db.models import Q
 from users.models import Profile
-from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm)
-from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost,NotifyMe)
+from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm, BlogUpdateForm, TutorialUpdateForm)
+from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost, NotifyMe)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
@@ -40,9 +40,8 @@ def all_tutorial(request):
 
 @login_required
 def create_tutorial(request):
-    user_profile = get_object_or_404(Profile, user=request.user)
-    user_followers = user_profile.followers.all()
-    # message = f"New tutorial from {request.user}"
+    u_profile = get_object_or_404(Profile, user=request.user)
+    user_followers = u_profile.followers.all()
 
     ufollowers_emails = []
     for i in user_followers:
@@ -58,9 +57,6 @@ def create_tutorial(request):
             img = form.cleaned_data.get('image')
 
             Tutorial.objects.create(user=request.user, title=title, image=img, tutorial_content=t_content)
-            # for i in user_followers:
-            #     NotifyMe.objects.create(user=i, notify_title="New Tutorial", notify_alert=message,
-            #                             follower_sender=request.user)
             # send_my_mail(f"New Tutorial from {request.user.username}", settings.EMAIL_HOST_USER,
             #             ufollowers_emails, f"{request.user.username} just posted a tutorial '{title}'")
             return redirect('tutorials')
@@ -138,7 +134,6 @@ def like_tutorial(request, id):
     if not tutorial.likes.filter(id=request.user.id).exists():
         tutorial.likes.add(request.user)
         has_liked = True
-        
 
     else:
         tutorial.likes.remove(request.user)
@@ -152,6 +147,38 @@ def like_tutorial(request, id):
     if request.is_ajax():
         like = render_to_string("blog/like_form.html", context, request=request)
         return JsonResponse({"likes": like})
+
+
+@login_required
+def update_tutorial(request, id):
+    tutorial = get_object_or_404(Tutorial, id=id)
+    if request.method == "POST":
+        form = TutorialUpdateForm(request.POST, instance=tutorial)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Tutorial was updated.")
+            return redirect('tutorial_detail', tutorial.id)
+
+    else:
+        form = TutorialUpdateForm(instance=tutorial)
+
+    context = {
+        "form": form,
+        "tutorial": tutorial
+    }
+    return render(request, "blog/tutorial_update.html", context)
+
+
+class TutorialDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Tutorial
+    success_url = '/tutorials'
+
+    def test_func(self):
+        tutorial = self.get_object()
+        if self.request.user == tutorial.user:
+            return True
+        else:
+            return False
 
 
 @login_required
@@ -210,7 +237,7 @@ def like_blog(request, id):
     if not blog.likes.filter(id=request.user.id).exists():
         blog.likes.add(request.user)
         is_liked = True
-       
+
     else:
         blog.likes.remove(request.user)
         is_liked = False
@@ -230,7 +257,6 @@ def like_blog(request, id):
 def create_blog(request):
     user_profile = get_object_or_404(Profile, user=request.user)
     user_followers = user_profile.followers.all()
-    # message = f"New post from {request.user}"
 
     ufollowers_emails = []
     for i in user_followers:
@@ -244,9 +270,8 @@ def create_blog(request):
             blog_img = form.cleaned_data.get('blog_image')
 
             BlogPost.objects.create(user=request.user, title=title, content=content, blog_image=blog_img)
-            
-            send_my_mail(f"New Post from {request.user.username}", settings.EMAIL_HOST_USER,
-                        ufollowers_emails, f"{request.user.username} just posted a blog '{title}'")
+            # send_my_mail(f"New Post from {request.user.username}", settings.EMAIL_HOST_USER,
+            #             ufollowers_emails, f"{request.user.username} just posted a blog '{title}'")
             return redirect('all_blogs')
     else:
         form = BlogPostForm()
@@ -262,6 +287,37 @@ def create_blog(request):
 
 
 @login_required
+def update_blog(request, id):
+    blog = get_object_or_404(BlogPost, id=id)
+    if request.method == "POST":
+        form = BlogUpdateForm(request.POST, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('blogpost_detail', blog.id)
+
+    else:
+        form = BlogUpdateForm(instance=blog)
+
+    context = {
+        "form": form,
+        "blog": blog
+    }
+    return render(request, "blog/blog_update.html", context)
+
+
+class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = BlogPost
+    success_url = '/all_blogs'
+
+    def test_func(self):
+        blog = self.get_object()
+        if self.request.user == blog.user:
+            return True
+        else:
+            return False
+
+
+@login_required
 def search_queries(request):
     query = request.GET.get('q', None)
     if query is not None:
@@ -269,13 +325,13 @@ def search_queries(request):
             Q(title__icontains=query) |
             Q(user__username__icontains=query)
         )
-        blogs = BlogPost.objects.filter(
+        search_blogs = BlogPost.objects.filter(
             Q(title__icontains=query) |
             Q(user__username__icontains=query)
         )
 
     context = {
-        'blogs': blogs,
+        'blogs': search_blogs,
         'tutorials': tutorials,
     }
     if request.is_ajax():
@@ -290,13 +346,12 @@ def user_profile(request, username):
     my_notify = mynotifications(request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)
-    
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
     deUser = get_object_or_404(User, username=username)
-    
+
     tutorials = Tutorial.objects.filter(user=deUser.id).order_by('-date_posted')
     blogs = BlogPost.objects.filter(user=deUser.id).order_by('-date_posted')
 
@@ -330,46 +385,59 @@ def user_profile(request, username):
 
 
 @login_required
-def user_profile_following(request,username):
+def user_profile_following(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
-    
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
     deUser = get_object_or_404(User, username=username)
-    deuser_following = deUser.profile.following.all()
-    deuser_followers = deUser.profile.followers.all()
+    defollowing = deUser.profile.following.all()
+    defollowers = deUser.profile.followers.all()
+
+    df_count = deUser.profile.following.all().count
+    paginator = Paginator(defollowing, 10)
+    page = request.GET.get('page')
+    defollowing = paginator.get_page(page)
 
     context = {
         "following": following,
         "followers": followers,
-        "defollowing": deuser_following,
-        "defollowers": deuser_followers,
+        "defollowing": defollowing,
+        "defollowers": defollowers,
         "deuser": deUser,
+        "df_count": df_count
     }
     return render(request, "blog/deuserprofile_followings.html", context)
 
+
 @login_required
-def user_profile_followers(request,username):
+def user_profile_followers(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
-    
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
     deUser = get_object_or_404(User, username=username)
-    deuser_following = deUser.profile.following.all()
-    deuser_followers = deUser.profile.followers.all()
+    defollowing = deUser.profile.following.all()
+    defollowers = deUser.profile.followers.all()
+
+    dfs_count = deUser.profile.followers.all().count
+
+    paginator = Paginator(defollowers, 10)
+    page = request.GET.get('page')
+    defollowers = paginator.get_page(page)
 
     context = {
         "following": following,
         "followers": followers,
-        "defollowing": deuser_following,
-        "defollowers": deuser_followers,
+        "defollowing": defollowing,
+        "defollowers": defollowers,
         "deuser": deUser,
+        "dfs_count": dfs_count
     }
     return render(request, "blog/deuserprofile_followers.html", context)
+
 
 @login_required
 def user_notifications(request):

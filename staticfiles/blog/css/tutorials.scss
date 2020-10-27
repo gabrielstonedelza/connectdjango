@@ -112,6 +112,7 @@
     .tutorial-author {
       display: flex;
       gap: 1rem;
+      justify-self: start;
       // padding: 10px;
       .other-details {
         a {
@@ -144,7 +145,7 @@ blockquote{
 }
 
 // tutorial form
-.tutorial-form-container{
+.tutorial-form-container, .blog-form-container{
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -156,7 +157,7 @@ blockquote{
 }
 
 @media(max-width: 500px){
-    .tutorial-form-container{
+    .tutorial-form-container, .blog-form-container{
         padding: 20px;
         display: flex;
         flex-direction: column;

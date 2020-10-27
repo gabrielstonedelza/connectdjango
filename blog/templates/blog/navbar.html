@@ -1,8 +1,9 @@
 {% load static %}
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0C4B33;">
+  <div class="container">
     <!-- Navbar brand -->
-    <a id="mynav_bar_container" title="Home" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="{% url 'tutorials' %}">Connect Django <img src="{% static 'blog/images/connectdjangohome.png' %}" style="width: 20px;height: 20px;"></a>
+    <a id="mynav_bar_container" title="Home" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="{% url 'tutorials' %}"><img src="{% static 'blog/images/cdjango.jpg' %}" style="width: 45px;height: 45px;"></a>
   
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -44,8 +45,8 @@
             <a title="Post a question or tutorial" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false"><i class="fas fa-info-circle"></i></a>
             <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{% url 'feedbacks' %}">Feedbacks</a>
-              <a class="dropdown-item" href="{% url 'contact-us' %}">Contact Us</a>
+              <!-- <a class="dropdown-item" href="{% url 'feedbacks' %}">Feedbacks</a>
+              <a class="dropdown-item" href="{% url 'contact-us' %}">Contact Us</a> -->
               <a class="dropdown-item" href="{% url 'about-us' %}" title="About Connect Django">About CD</a>
             </div>
           </li>
@@ -58,6 +59,7 @@
 
     </ul>
     </div>
+  </div>
     <!-- Collapsible content -->
   </nav>
   <!--/.Navbar-->

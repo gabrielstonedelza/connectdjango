@@ -47,140 +47,39 @@ button.butt:hover {
   color: #000;
 }
 
-.user-profile-photo img {
-  width: 160px;
-  height: 160px;
-  border-radius: 80px;
-  border: solid #0c4b33 2px;
+.userpostprofile-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 20px;
 }
 
-.nav-tabs {
-  border-bottom: none;
+.userpostprofile-container .userpostprofile-details {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
 }
 
-.nav-tabs li a {
-  color: black;
-}
-
-.userprofile-tabs .for-postdetails a .likecomment {
-  display: none;
-  color: white;
-  font-weight: bold;
-  position: absolute;
-  z-index: 1;
-  margin-top: 110px;
-  margin-left: 80px;
-}
-
-.userprofile-tabs .for-postdetails a .likecomment .fa-heart, .userprofile-tabs .for-postdetails a .likecomment .fa-eye {
-  color: white;
-}
-
-.userprofile-tabs .for-postdetails a .upost-img-holder {
-  width: 256px;
-  height: 256px;
-}
-
-.userprofile-tabs .for-postdetails a .upost-img-holder .upost-img img {
-  position: relative;
-  width: 256px;
-  height: 256px;
-}
-
-.userprofile-tabs .for-postdetails a:hover .image-overlay {
-  width: 256px;
-  height: 256px;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1;
-}
-
-.userprofile-tabs .for-postdetails a:hover .likecomment {
-  display: block;
-}
-
-.userprofile-tabs .for-userprofile-questions ul, .userprofile-tabs .for-userprofile-tutorial ul {
-  list-style-type: none;
-}
-
-.profile-tabs .for-profilepost a .likecomment {
-  display: none;
-  color: white;
-  font-weight: bold;
-  position: absolute;
-  z-index: 1;
-  margin-top: 125px;
-  margin-left: 75px;
-}
-
-.profile-tabs .for-profilepost a .likecomment .fa-heart, .profile-tabs .for-profilepost a .likecomment .fa-eye {
-  color: white;
-}
-
-.profile-tabs .for-profilepost a .upost-img-holder {
-  width: 256px;
-  height: 256px;
-}
-
-.profile-tabs .for-profilepost a .upost-img-holder .upost-img img {
-  position: relative;
-  width: 256px;
-  height: 256px;
-}
-
-.profile-tabs .for-profilepost a:hover .image-overlay {
-  width: 256px;
-  height: 256px;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1;
-}
-
-.profile-tabs .for-profilepost a:hover .likecomment {
-  display: block;
-}
-
-.profile-tabs .for-profile-questions ul, .profile-tabs .for-profile-tutorial ul {
-  list-style-type: none;
-}
-
-#userprofile-followers-modal .modal-header, #userprofile-following-modal .modal-header {
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-}
-
-#userprofile-followers-modal .modal-body, #userprofile-following-modal .modal-body {
-  overflow: hidden;
-}
-
-#userprofile-followers-modal .modal-body ul, #userprofile-following-modal .modal-body ul {
-  padding: 10px;
-  height: 370px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
-#userprofile-followers-modal .modal-body ul li, #userprofile-following-modal .modal-body ul li {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-#userprofile-followers-modal .modal-body ul li a, #userprofile-following-modal .modal-body ul li a {
-  color: black;
-}
-
-#userprofile-followers-modal .modal-body ul li a img, #userprofile-following-modal .modal-body ul li a img {
-  width: 30px;
-  height: 30px;
+.userpostprofile-container .userpostprofile-details .userprofile-image img {
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
-  border: solid 2px #0C4B33;
+  border: solid #0c4b33 2px;
+}
+
+.userpostprofile-container .userpostprofile-posts {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 600px;
+          flex: 1 1 600px;
+  margin: 5px;
 }
 /*# sourceMappingURL=userpostprofile.css.map */

@@ -16,11 +16,12 @@
                 <span class="text-muted">{{ request.user.username }}</span>
                 <br>
                 <span class="text-muted">{{ request.user.profile.bio }}</span>
-                <br>
+                <hr class="my-4">
                 <a class="butt" href="{% url 'editprofile'  request.user.username %}">Edit Profile</a>
+                <hr class="my-4">
                 <div class="users-followings-followers">
-                    <a class="text-muted" href="{% url 'pfollowers' request.user.username  %}"><i class="fas fa-users"></i> {{followers_count}}Followers</a>
-                    <a class="text-muted" href="{% url 'pfollowing' request.user.username %}"><i class="fas fa-users"></i> {{ following_count }}Following</a>
+                    <a class="text-muted" href="{% url 'pfollowers' request.user.username  %}"><i class="fas fa-users"></i> {{followers_count}} Followers</a> |
+                    <a class="text-muted" href="{% url 'pfollowing' request.user.username %}"><i class="fas fa-users"></i> {{ following_count }} Following</a>
                 </div>
                 <br>
                 <div class="user-social">
@@ -56,7 +57,7 @@
                     {% endif %}
                     {% if request.user.profile.your_github %}
                     <a target="_blank" href="{{ request.user.profile.your_github }}">
-                        <i class="fab fa-github"></i>
+                      <img src="{% static 'blog/images/github.png' %}" alt="">
                     </a>
                     {% endif %}
                 </div>
@@ -65,24 +66,27 @@
         <div class="userpostprofile-posts">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" id="tutorials-tab" data-toggle="tab" href="#tutorials" role="tab" aria-controls="tutorials"
+                  <a class="nav-link active text-muted" id="tutorials-tab" data-toggle="tab" href="#tutorials" role="tab" aria-controls="tutorials"
                     aria-selected="true">Tutorials</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="blogs-tab" data-toggle="tab" href="#blogs" role="tab" aria-controls="blogs"
+                  <a class="nav-link text-muted" id="blogs-tab" data-toggle="tab" href="#blogs" role="tab" aria-controls="blogs"
                     aria-selected="false">Blogs</a>
                 </li>
               </ul>
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="tutorials" role="tabpanel" aria-labelledby="tutorials-tab">
+                  <br>
                    <div class="deusers-tutorials">
                        {% for tutorial in tutorials %}
                             <div class="deuser-tutos-container">
                                 <a href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
                                 <br>
-                                <span class="text-muted"><i class="fas fa-thumbs-up"></i>{{ tutorial.likes.count }}</span>
-                                <span class="text-muted"><i class="fas fa-eye"></i>{{ tutorial.views }}</span>
+                                <span class="text-muted mr-2"><i class="fas fa-thumbs-up"></i> {{ tutorial.likes.count }}</span>
+                                <span class="text-muted mr-2"><i class="fas fa-eye"></i> {{ tutorial.views }}</span>
                                 <span class="text-muted">last update {{ tutorial.date_posted|date:"M D Y"}}</span>
+                                <a href="{% url 'tutorial_update' tutorial.id %}" class="butt ml-3" style="color:white;">Update</a>
+                                <a href="{% url 'tutorial_delete' tutorial.pk %}" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
                             </div>
                             <br>
                             <hr class="my-4">
@@ -126,14 +130,17 @@
                   </nav>
                 </div>
                 <div class="tab-pane fade" id="blogs" role="tabpanel" aria-labelledby="blogs-tab">
+                  <br>
                   <div class="deusers-blog-container">
                     {% for blog in blogs %}
                     <div class="deuser-tutos-container">
                         <a href="{{ blog.get_absolute_blog_post }}">{{ blog.title }}</a>
                         <br>
-                        <span class="text-muted"><i class="fas fa-thumbs-up"></i>{{ blog.likes.count }}</span>
-                        <span class="text-muted"><i class="fas fa-eye"></i>{{ blog.views }}</span>
+                        <span class="text-muted mr-1"><i class="fas fa-thumbs-up"></i> {{ blog.likes.count }}</span>
+                        <span class="text-muted mr-1"><i class="fas fa-eye"></i> {{ blog.views }}</span>
                         <span class="text-muted">last update {{ blog.date_posted|date:"M D Y"}}</span>
+                        <a href="{% url 'blog_update' blog.id %}" class="butt ml-3" style="color:white;">Update</a>
+                        <a href="{% url 'blog_delete' blog.pk %}" class="butt ml-3" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
                     </div>
                     <br>
                     <hr class="my-4">
