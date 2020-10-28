@@ -17,7 +17,6 @@ urlpatterns = [
     path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('register/', uviews.register, name='register'),
     path('tutorial/new/', views.create_tutorial, name="tutorial_new"),
-    path('success/',views.success,name="success"),
     path('tutorials/', views.all_tutorial, name='tutorials'),
     path('tutorial/<int:id>/', views.tutorial_detail, name="tutorial_detail"),
     path('like-tutorial/<int:id>/', views.like_tutorial, name="tutorial_like"),

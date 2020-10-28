@@ -10,7 +10,7 @@ Notifications
     <div class="mynotifications">
         <div class="notifs">
             {% if notification %}
-            <ul class="">
+            <ul class="list-group">
                 {% for u in notification %}
                 {% if u.notify_title == "New Post" %}
                 <a href="{% url 'blogpost_detail' u.blog_id %}">
@@ -52,7 +52,7 @@ Notifications
                 <hr class="my-4">
                 {% elif u.notify_title == "Follow Notice" %}
                         <a href="{% url 'userprofilepost' u.follower_sender.username %}">
-                            <li class="">
+                            <li class="list-group-item">
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                          style="width:30px;height:30px;border-radius:50%;">

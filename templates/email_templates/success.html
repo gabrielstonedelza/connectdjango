@@ -1,11 +1,76 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to ConnectDjango</title>
 </head>
 <body>
-    <h2>Welcome to ConnectDjango</h2>
+    <style>
+        .mail-container{
+        background-color: rgba(8, 56, 2, 0.555);
+        padding: 20px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        line-height: 32px;
+        letter-spacing: -0.003em;
+        font-size: 21px;
+        color: blanchedalmond;
+        }
+        img{
+            width: 100%;
+        }
+        
+        #just-wink{
+            width: 40px;
+            height: 40px;
+        }
+    
+    </style>
+
+<div class="container">
+    <br>
+    <div class="mail-container">
+    <!-- <img src="{% static 'blog/images/connectdjango.jpg' %}" alt=""> -->
+    <br>
+    <h1 class="text-center mt-3 mb-3">Welcome to ConnectDjango</h1>
+    <br>
+    <p class="lead animated bounce infinite">Hi!</p>
+    <p>We are happy that you've joined us.Connect django is all about teaching and sharing knowledge with others.Since we have all been using django for a while now there are lots and lots of ways to structure the way our app works.There is the teaching and blogging.</p>
+    <br>
+    <h3>Teaching</h3>
+    <hr class="my-4">
+    <ul>
+        <li>what editor do you prefer?</li>
+        <li>how you configure your projects?</li>
+        <li>how you manage your static files?</li>
+        <li>how you link your models in order to make things simple and easy to use?</li>
+        <li>how do you connect your app to a frontend framework like React,Angular or Vue?</li>
+        <li>how do you prepare your project for production?</li>
+        <li>what services do you use?</li>
+    </ul>
+    <hr class="my-4">
+    <h3>Blogging</h3>
+    <br>
+    <ul>
+        <li>What can you say about django?</li>
+        <li>What makes you choose django from all the lists of backend frameworks out there?</li>
+        <li>Advantages and Disadvantages of using django</li>
+        <li>Django and frontend frameworks</li>
+    </ul>
+    <hr class="my-4">
+    <p>There you have it,let's keeping djangoing {{ name }}.</p>
+    <p class="badge badge-info">By the way we are accepting contributions from all developers,care to contribute?</p>
+    <p>Head over to <a href="https://github.com/gabrielstonedelza/connectdjango" target="_blank">our github repo</a> and read the documentation on how to contribute.</p>
+    <p>Thanks.</p>
+    <div class="connect-team">
+        <!-- <img src="{% static 'blog/images/cdjango.jpg' %}" alt="" style="width:150px;height:150px;border-radius:50%;"> -->
+        <span class="mr-2">ConnectDjango Team</span>
+    </div>
+    </div>
+    <br>
+</div>
+<br>
+
 </body>
 </html>
+

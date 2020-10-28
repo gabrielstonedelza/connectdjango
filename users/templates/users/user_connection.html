@@ -4,9 +4,12 @@
     {% if deuser in following.all %}
         <button title="Unfollow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Following</button>
     {% elif deuser in followers.all and not request.user in deuser.defollwers.all %}
-        <button title="Unfollow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow Back</button>
+        <button title="{{ deuser }} is following you,follow back" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow Back</button>
     {% else %}
         <button title="Follow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow</button>
     {% endif %}
 </form>
-
+<br>
+<span class="d-flex">
+    <span class="text-muted mr-2"><i class="fas fa-users"></i> {{ deuser.profile.followers.count }} followers</span> | <span class="text-muted ml-2"><i class="fas fa-users"></i> {{ deuser.profile.following.count }} following</span>
+</span>

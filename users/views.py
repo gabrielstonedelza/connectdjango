@@ -25,17 +25,12 @@ def register(request):
             else:
                 form.save()
                 username = form.cleaned_data.get('username')
-                send_my_mail(f"Welcome to ConnectDjango", settings.EMAIL_HOST_USER,
-                             useremail,
-                             "Thank you for joining Connect Django,we are happy to see you and we assure you that you "
-                             "will never regret it.<br>Here we help each other by answering posted questions and "
-                             "giving out some tutorials that you and i need to become a better Django "
-                             "developer.<br>Stay blessed and keep on djangoing.<br>Yours sincerely,"
-                             "<br>The ConnectDjango Team.")
+                send_my_mail("Welcome to ConnectDjango",settings.EMAIL_HOST_USER,f"{request.user.email}","", "email_templates/success.html")
                 messages.success(request, f'Your account is created {username},login now')
                 return redirect('login')
     else:
         form = UserRegistrationForm()
+
 
     context = {
         'form': form
@@ -151,6 +146,7 @@ def user_connection(request, id):
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
+
     deuser = get_object_or_404(User, id=id)
     message = f"{request.user} started following you"
 
@@ -171,6 +167,8 @@ def user_connection(request, id):
         "following": following,
         "followers": followers,
         "deuser": deuser,
+        "followingcounts": myprofile.my_following_count(),
+        "followerscounts": myprofile.my_followers_count()
     }
 
     if request.is_ajax():

@@ -73,7 +73,7 @@
                     </div>
                     <!-- other details -->
                     <div class="defollowing-other-details">
-                        <a href="{ url 'userprofilepost' user.username }">{{ user.profile.name }} <span class="text-muted ml-2">{{ user.username }}</span></a>
+                        <a href="{% url 'userprofilepost' user.username %}">{{ user.profile.name }} <span class="text-muted ml-2">{{ user.username }}</span></a>
                         <br>
                         {% if user.profile.bio %}
                             <span class="text-muted">{{ user.profile.bio }}</span>
