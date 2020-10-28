@@ -6,7 +6,7 @@ from PIL import Image
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.CharField(max_length=200, blank=True, default="I am a django developer")
+    bio = models.CharField(max_length=500, blank=True, default="I am a django developer")
     name = models.CharField(max_length=150, default="New User")
     profile_pic = models.ImageField(upload_to="profile_pics", blank=True, default='default.jpg')
     following = models.ManyToManyField(User, blank=True, related_name='following')

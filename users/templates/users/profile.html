@@ -13,9 +13,9 @@
                 <img src="{{ request.user.profile.profile_pic.url }}">
                 <!-- users full name -->
                 <h3>{{ request.user.profile.name }}</h3>
-                <span class="text-muted">{{ request.user.username }}</span>
+                <!-- <span class="text-muted">{{ request.user.username }}</span> -->
                 <br>
-                <span class="text-muted">{{ request.user.profile.bio }}</span>
+                <span class="text-muted">{{ request.user.profile.bio|slice:"100" }}.....</span>
                 <hr class="my-4">
                 <a class="butt" href="{% url 'editprofile'  request.user.username %}">Edit Profile</a>
                 <a class="butt ml-3" href="{% url 'logout' %}">Logout</a>
@@ -83,11 +83,13 @@
                             <div class="deuser-tutos-container">
                                 <a href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
                                 <br>
-                                <span class="text-muted mr-2"><i class="fas fa-thumbs-up"></i> {{ tutorial.likes.count }}</span>
-                                <span class="text-muted mr-2"><i class="fas fa-eye"></i> {{ tutorial.views }}</span>
-                                <span class="text-muted">last update {{ tutorial.date_posted|date:"M D Y"}}</span>
-                                <a href="{% url 'tutorial_update' tutorial.id %}" class="butt ml-3" style="color:white;">Update</a>
-                                <a href="{% url 'tutorial_delete' tutorial.pk %}" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
+                                <small class="text-muted mr-2"><i class="fas fa-thumbs-up"></i> {{ tutorial.likes.count }}</small>
+                                <small class="text-muted mr-2"><i class="fas fa-eye"></i> {{ tutorial.views }}</small>
+                                <small class="text-muted">last update {{ tutorial.date_posted|date:"M D Y"}}</small>
+                                <div class="update-delete">
+                                  <a href="{% url 'tutorial_update' tutorial.id %}" class="butt ml-3" style="color:white;">Update</a>
+                                  <a href="{% url 'tutorial_delete' tutorial.pk %}" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
+                                </div>
                             </div>
                             <br>
                             <hr class="my-4">
@@ -137,11 +139,13 @@
                     <div class="deuser-tutos-container">
                         <a href="{{ blog.get_absolute_blog_post }}">{{ blog.title }}</a>
                         <br>
-                        <span class="text-muted mr-1"><i class="fas fa-thumbs-up"></i> {{ blog.likes.count }}</span>
-                        <span class="text-muted mr-1"><i class="fas fa-eye"></i> {{ blog.views }}</span>
-                        <span class="text-muted">last update {{ blog.date_posted|date:"M D Y"}}</span>
-                        <a href="{% url 'blog_update' blog.id %}" class="butt ml-3" style="color:white;">Update</a>
-                        <a href="{% url 'blog_delete' blog.pk %}" class="butt ml-3" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
+                        <small class="text-muted mr-1"><i class="fas fa-thumbs-up"></i> {{ blog.likes.count }}</small>
+                        <small class="text-muted mr-1"><i class="fas fa-eye"></i> {{ blog.views }}</small>
+                        <small class="text-muted">last update {{ blog.date_posted|date:"M D Y"}}</small>
+                        <div class="update-delete">
+                          <a href="{% url 'blog_update' blog.id %}" class="butt ml-3" style="color:white;">Update</a>
+                          <a href="{% url 'blog_delete' blog.pk %}" class="butt ml-3" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
+                        </div>
                     </div>
                     <br>
                     <hr class="my-4">

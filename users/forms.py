@@ -26,7 +26,7 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
-    bio = forms.CharField(max_length=100)
+    # bio = forms.CharField(max_length=100)
 
     class Meta:
         model = Profile

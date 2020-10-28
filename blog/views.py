@@ -17,6 +17,7 @@ from django.conf import settings
 
 
 
+
 @login_required
 def all_tutorial(request):
     my_notify = mynotifications(request.user)
@@ -34,7 +35,8 @@ def all_tutorial(request):
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
-        "users": users
+        "users": users,
+
     }
     # send_my_mail("Hi",settings.EMAIL_HOST_USER,f"{request.user.email}",context,"email_templates/success.html")
 
@@ -99,8 +101,7 @@ def tutorial_detail(request, id):
                 comment_qs = Comments.objects.get(id=reply_id)
             comment = Comments.objects.create(tutorial=tutorial, user=request.user, comment=comment, reply=comment_qs)
             comment.save()
-            # NotifyMe.objects.create(user=tutorial.user, notify_title="New Comment", notify_alert=message,
-            #                             follower_sender=request.user,tuto_id=tutorial)
+ 
 
     else:
         form = CommentsForm()

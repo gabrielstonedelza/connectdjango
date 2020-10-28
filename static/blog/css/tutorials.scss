@@ -69,8 +69,13 @@
 
 @media (max-width: 500px) {
   .main-home-tutorials-container {
+
     .tutorial-container {
+      flex: 1;
       .tutorial-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         .userimage-name {
           .other {
             span {
@@ -79,6 +84,13 @@
             a {
               font-size: 18px;
             }
+          }
+        }
+        .tutorial-image {
+          flex: 1;
+          img {
+            width: 100%;
+            // height: 300px;
           }
         }
       }
@@ -102,6 +114,9 @@
     place-items: center;
     padding: 20px;
     max-width: 680px;
+    h1{
+      padding: 10px;
+    }
     .detail-tuto-image {
       
       img {
@@ -140,6 +155,25 @@
   }
 }
 
+@media(max-width: 500px){
+  .tutorial-detail-main{
+    .without-comment-like-button{
+      h1{
+        font-size: 25px;
+        padding: 10px;
+      }
+
+      span.tuto-content {
+        font-size: 18px;
+        line-height: 1.5;
+        letter-spacing: -0.003em;
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        font-style: italic;
+      }
+    }
+  }
+}
+
 blockquote{
     display: flex;
     gap: 1rem;
@@ -156,6 +190,7 @@ blockquote{
         width: 50%;
     }
 }
+
 
 @media(max-width: 500px){
     .tutorial-form-container, .blog-form-container{

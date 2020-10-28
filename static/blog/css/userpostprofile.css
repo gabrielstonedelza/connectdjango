@@ -69,6 +69,17 @@ button.butt:hover {
           justify-content: center;
 }
 
+.userpostprofile-container .userpostprofile-details .userprofile-image h3 {
+  font-weight: bold;
+  padding: 10px;
+}
+
+.userpostprofile-container .userpostprofile-details .userprofile-image a.userprofile-username {
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
 .userpostprofile-container .userpostprofile-details .userprofile-image img {
   width: 200px;
   height: 200px;
@@ -96,6 +107,22 @@ button.butt:hover {
   padding: 10px;
 }
 
+.userpostprofile-container .userpostprofile-posts .just-bio {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 10px;
+  border: solid 2px silver;
+  border-radius: 10px;
+}
+
+.userpostprofile-container .userpostprofile-posts .deuser-tutos-container .update-delete {
+  float: right;
+}
+
 .userpostprofile-container .userpostprofile-posts .deuser-tutos-container a {
   font-weight: bold;
   color: black;
@@ -117,6 +144,13 @@ button.butt:hover {
 .userpostprofile-container .userpostprofile-posts .defollowing-container .defollowing-other-details a {
   font-weight: bold;
   color: black;
+}
+
+@media (max-width: 500px) {
+  .userpostprofile-container .userpostprofile-details .userprofile-image h3 {
+    font-size: 25px;
+    padding: 10px;
+  }
 }
 
 .mynotifications {

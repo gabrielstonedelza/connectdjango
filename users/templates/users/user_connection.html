@@ -11,5 +11,5 @@
 </form>
 <br>
 <span class="d-flex">
-    <span class="text-muted mr-2"><i class="fas fa-users"></i> {{ deuser.profile.followers.count }} followers</span> | <span class="text-muted ml-2"><i class="fas fa-users"></i> {{ deuser.profile.following.count }} following</span>
+    <a href="{% url 'deuser_followers' deuser.username  %}" class="text-muted mr-2"><i class="fas fa-users"></i> {{ deuser.profile.followers.count }} followers</a> | <a href="{% url 'deuser_followings' deuser.username  %}" class="text-muted ml-2"><i class="fas fa-users"></i> {{ deuser.profile.following.count }} following</a>
 </span>

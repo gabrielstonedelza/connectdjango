@@ -20,16 +20,12 @@
                     <a href="{% url 'userprofilepost' deuser.username %}" class="text-muted">{{ deuser.username }}</a>
                 {% endif %}
                 <br>
-                <span class="text-muted">{{ deuser.profile.bio }}</span>
+                <span class="text-muted">{{ deuser.profile.bio|slice:"100" }}..... </span>
                 <br>
                 <span class="ml-2" id="connection_section">
                     {% include "users/user_connection.html" %}
                 </span>
                 <br>
-                <!-- <div class="users-followings-followers">
-                    <a class="text-muted" href="{% url 'deuser_followers' deuser.username  %}"><i class="fas fa-users"></i> {{defollowers.count}}   Followers</a> | 
-                    <a class="text-muted" href="{% url 'deuser_followings' deuser.username %}"><i class="fas fa-users"></i> {{ defollowing.count }} Following</a>
-                </div> -->
                 <div class="user-social">
                     {% if deuser.profile.your_facebook %}
                     <a target="_blank" href="{{ deuser.profile.your_facebook }}">
@@ -70,6 +66,13 @@
             </div>
         </div>
         <div class="userpostprofile-posts">
+        <!-- just bio -->
+            <div class="just-bio">
+                <span>
+                    {{ deuser.profile.bio }}
+                </span>
+            </div>
+            <br>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active text-muted" id="tutorials-tab" data-toggle="tab" href="#tutorials" role="tab" aria-controls="tutorials"

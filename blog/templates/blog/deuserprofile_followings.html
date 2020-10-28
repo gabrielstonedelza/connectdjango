@@ -19,16 +19,12 @@
                     <a href="{% url 'userprofilepost' deuser.username %}" class="text-muted">{{ deuser.username }}</a>
                 {% endif %}
                 <br>
-                <span class="text-muted">{{ deuser.profile.bio }}</span>
+                <span class="text-muted">{{ deuser.profile.bio|slice:"100" }}.....</span>
                 <br>
                 <span class="ml-2" id="connection_section">
                     {% include "users/user_connection.html" %}
                 </span>
                 <br>
-                <div class="users-followings-followers">
-                    <a class="text-muted" href="{% url 'deuser_followers' deuser.username  %}"><i class="fas fa-users"></i> {{defollowers.count}} Followers</a> |
-                    <a class="text-muted" href="{% url 'deuser_followings' deuser.username %}"><i class="fas fa-users"></i> {{ df_count }} Following</a>
-                </div>
                 <br>
                 <div class="user-social">
                     {% if deuser.profile.your_facebook %}
@@ -81,7 +77,7 @@
                         <a href="{% url 'userprofilepost' user.username %}">{{ user.profile.name }} <span class="text-muted ml-2">{{ user.username }}</span></a>
                         <br>
                         {% if user.profile.bio %}
-                            <span class="text-muted">{{ user.profile.bio }}</span>
+                            <span class="text-muted">{{ user.profile.bio|slice:"100" }}...</span>
                         {% endif %}
                         <br>
                         {% if user.profile.your_organization %}
