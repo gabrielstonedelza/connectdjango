@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,eAAe,CAAA;EACX,gBAAgB,EAAE,qBAAqB;EACvC,OAAO,EAAE,IAAI;EAIb,WAAW,EAAE,yDAAyD;EACtE,WAAW,EAAE,IAAI;EACjB,cAAc,EAAE,QAAQ;EACxB,SAAS,EAAE,IAAI;EACf,KAAK,EAAE,cAAc;CAMxB;;AAhBD,AAGI,eAHW,CAGX,GAAG,CAAA;EACC,KAAK,EAAE,IAAI;CACd;;AALL,AAYI,eAZW,CAYX,UAAU,CAAA;EACN,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CACf",
+    "sources": [
+        "email_styles.scss"
+    ],
+    "names": [],
+    "file": "email_styles.css"
+}

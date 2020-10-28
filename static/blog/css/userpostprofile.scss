@@ -64,3 +64,17 @@
     }
   }
 }
+
+// notifications
+.mynotifications{
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  padding: 20px;
+  .notifs{
+    ul{
+      list-style-type: none;
+    }
+  }
+}

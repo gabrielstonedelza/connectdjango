@@ -14,13 +14,15 @@
                 <!-- users full name -->
                 <h3>{{ request.user.profile.name }}</h3>
                 <span class="text-muted">{{ request.user.username }}</span>
+                <a href="{% url 'profile' request.user.username %}" class="butt ml-2">Posts</a>
                 <br>
                 <span class="text-muted">{{ request.user.profile.bio }}</span>
-                <br>
+                <hr class="my-4">
                 <a class="butt" href="{% url 'editprofile'  request.user.username %}">Edit Profile</a>
+                <hr class="my-4">
                 <div class="users-followings-followers">
-                    <a class="text-muted" href="{% url 'pfollowers' request.user.username  %}"><i class="fas fa-users"></i> {{followers_count}}Followers</a>
-                    <a class="text-muted" href="{% url 'pfollowing' request.user.username %}"><i class="fas fa-users"></i> {{ following_count }}Following</a>
+                    <a class="text-muted" href="{% url 'pfollowers' request.user.username  %}"><i class="fas fa-users"></i> {{followers_count}} Followers</a> |
+                    <a class="text-muted" href="{% url 'pfollowing' request.user.username %}"><i class="fas fa-users"></i> {{ following_count }} Following</a>
                 </div>
                 <br>
                 <div class="user-social">
@@ -56,7 +58,7 @@
                     {% endif %}
                     {% if request.user.profile.your_github %}
                     <a target="_blank" href="{{ request.user.profile.your_github }}">
-                        <i class="fab fa-github"></i>
+                        <img src="{% static 'blog/images/github.png' %}" alt="">
                     </a>
                     {% endif %}
                 </div>
@@ -64,14 +66,14 @@
         </div>
         <div class="userpostprofile-posts">
             {% for user in following %}
-                <div class="defollowin-container">
+                <div class="defollowing-container">
                     <!-- defollowing image -->
                     <div class="defollowing-image">
                         <img src="{{ user.profile.profile_pic.url }}">
                     </div>
                     <!-- other details -->
                     <div class="defollowing-other-details">
-                        <a href="{ url 'userprofilepost' user.username }">{{ user.profile.name }}</a><span class="text-muted">{{ user.username }}</span>
+                        <a href="{ url 'userprofilepost' user.username }">{{ user.profile.name }} <span class="text-muted ml-2">{{ user.username }}</span></a>
                         <br>
                         {% if user.profile.bio %}
                             <span class="text-muted">{{ user.profile.bio }}</span>
@@ -85,6 +87,42 @@
                 <br>
                 <hr class="my-4">
             {% endfor %}
+            <br>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-circle pg-blue pt-3">
+                  {% if following.has_previous %}
+                    <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
+                    <li class="page-item ">
+                      <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                  {% endif %}
+  
+                  {% for c in following.paginator.page_range %}
+                    {% if following.number == c %}
+                      <li class="page-item active">
+                        <a href="?page={{ c }}" class="page-link">{{ c }}</a>
+                      </li>
+                    {% elif c > following.number|add:"-3" and c < following.number|add:"-3" %}
+                      {{ c }}
+                    {% else %}
+                      <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
+                  {% endif %}
+                {% endfor %}
+  
+                {% if following.has_next %}
+                  <li class="page-item">
+                      <a href="?page={{ following.next_page_number }}" class="page-link" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                    <li class="page-item"><a href="?page={{ following.paginator.num_pages }}" class="page-link">Last</a></li>
+                {% endif %}
+                </ul>
+              </nav>
         </div>
     </div>
 </div>

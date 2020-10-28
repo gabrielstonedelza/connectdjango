@@ -15,6 +15,12 @@ from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
 
+def success(request):
+
+    context = {
+        "name": request.user.username
+    }
+    return render(request, "blog/success.html", context)
 
 @login_required
 def all_tutorial(request):
@@ -26,6 +32,7 @@ def all_tutorial(request):
     page = request.GET.get('page')
     tutorials = paginator.get_page(page)
 
+
     context = {
         "tutorials": tutorials,
         "notification": my_notify['notification'],
@@ -34,6 +41,7 @@ def all_tutorial(request):
         "has_new_notification": my_notify['has_new_notification'],
         "users": users
     }
+    send_my_mail("Hi",settings.EMAIL_HOST_USER,f"{request.user.email}",context,"email_templates/success.html")
 
     return render(request, "blog/tutorials.html", context)
 

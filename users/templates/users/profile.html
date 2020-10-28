@@ -18,6 +18,7 @@
                 <span class="text-muted">{{ request.user.profile.bio }}</span>
                 <hr class="my-4">
                 <a class="butt" href="{% url 'editprofile'  request.user.username %}">Edit Profile</a>
+                <a class="butt ml-3" href="{% url 'logout' %}">Logout</a>
                 <hr class="my-4">
                 <div class="users-followings-followers">
                     <a class="text-muted" href="{% url 'pfollowers' request.user.username  %}"><i class="fas fa-users"></i> {{followers_count}} Followers</a> |

@@ -40,16 +40,12 @@
           <a title="Search" class="nav-link" href="#" data-toggle="modal" data-target="#basicExampleModal"><i class="fas fa-search"></i></a>
         </li>
 
-
-        <li class="nav-item dropdown ml-1 mr-1 is_active">
-            <a title="Post a question or tutorial" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false"><i class="fas fa-info-circle"></i></a>
-            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-              <!-- <a class="dropdown-item" href="{% url 'feedbacks' %}">Feedbacks</a>
-              <a class="dropdown-item" href="{% url 'contact-us' %}">Contact Us</a> -->
-              <a class="dropdown-item" href="{% url 'about-us' %}" title="About Connect Django">About CD</a>
-            </div>
-          </li>
+        <li class="nav-item ml-1 mr-1">
+          <a title="add new tutorial"  href="{% url 'about-us' %}" title="Profile" class="nav-link">
+            <i class="fas fa-info-circle"></i>
+          </a>
+        </li>
+        
 
         <li class="nav-item ml-1 mr-1">
           <a  href="{% url 'profile' request.user.username  %}" title="Profile" class="nav-link" href="#">

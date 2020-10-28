@@ -83,10 +83,15 @@ def profile_followings(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
 
     following = myprofile.following.all()
+    paginator = Paginator(following, 15)
+    page = request.GET.get('page')
+    following = paginator.get_page(page)
 
     context = {
         "following": following,
-        "myprofile": myprofile
+        "myprofile": myprofile,
+        "following_count": myprofile.my_following_count(),
+        "followers_count": myprofile.my_followers_count(),
     }
     return render(request, "users/profile_followings.html", context)
 
@@ -96,10 +101,15 @@ def profile_followers(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
 
     followers = myprofile.followers.all()
+    paginator = Paginator(followers, 15)
+    page = request.GET.get('page')
+    followers = paginator.get_page(page)
 
     context = {
         "myprofile": myprofile,
         "followers": followers,
+        "following_count": myprofile.my_following_count(),
+        "followers_count": myprofile.my_followers_count(),
 
     }
     return render(request, "users/profile_followers.html", context)
