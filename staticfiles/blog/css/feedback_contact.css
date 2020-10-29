@@ -47,126 +47,48 @@ button.butt:hover {
   color: #000;
 }
 
-.main-feedback-container {
+.main-feedback-container, .contact-stuff {
+  padding: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 2rem;
-  -ms-flex-flow: wrap;
-      flex-flow: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
 }
 
-.main-feedback-container .feedback-form-box {
-  padding: 10px;
-}
-
-.main-feedback-container .all_feedbacks_section {
+.main-feedback-container .feed-user-image, .contact-stuff .feed-user-image {
   -webkit-box-flex: 2;
       -ms-flex: 2;
           flex: 2;
-  padding: 10px;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
 }
 
-@media (max-width: 500px) {
-  .main-feedback-container {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 20px;
-  }
-  .main-feedback-container .feedback-form-box {
-    padding: 10px;
-  }
-  .main-feedback-container .all_feedbacks_section {
-    padding: 10px;
-  }
-}
-
-#feedback_section .feedback-form-box {
-  padding: 20px;
-  border-radius: 20px;
-}
-
-#feedback_section form textarea {
-  resize: none;
-}
-
-#feedback_section .all_feedbacks_setion ul {
-  list-style-type: none;
+.main-feedback-container .feed-user-image img, .contact-stuff .feed-user-image img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 textarea {
   resize: none;
 }
 
-.all_tutorials ul li .userimg-name img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.main-contact-form {
+.mysocial {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 2rem;
-  -ms-flex-flow: wrap;
-      flex-flow: wrap;
-  padding: 20px;
+  gap: 1rem;
+  margin-left: 20px;
 }
 
-.main-contact-form #contact_form_section .contact-form-box {
-  padding: 20px;
-  border-radius: 20px;
-}
-
-.main-contact-form #contact_form_section form textarea {
-  resize: none;
-}
-
-.main-contact-form .mysocial {
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-.main-contact-form .mysocial .for_our_facebook a img, .main-contact-form .mysocial .for_our_instagram a img {
-  width: 100px;
-  height: 100px;
-}
-
-@media (max-width: 500px) {
-  .main-contact-form {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    gap: 2rem;
-    -ms-flex-flow: wrap;
-        flex-flow: wrap;
-    padding: 20px;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-  }
-  .main-contact-form #contact_form_section {
-    padding: 10px;
-  }
-  .main-contact-form #contact_form_section .contact-form-box {
-    padding: 20px;
-    border-radius: 20px;
-  }
-  .main-contact-form #contact_form_section form textarea {
-    resize: none;
-  }
-  .main-contact-form .mysocial .for_our_facebook a img, .main-contact-form .mysocial .for_our_instagram a img {
-    width: 40px;
-    height: 40px;
-  }
+.mysocial a img {
+  width: 30px;
+  height: 30px;
 }
 /*# sourceMappingURL=feedback_contact.css.map */

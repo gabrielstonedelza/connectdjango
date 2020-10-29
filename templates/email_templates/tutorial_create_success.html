@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="container">
+    <br>
+    <div class="mail-container" style="background:rgba(8, 56, 2, 0.555);padding: 20px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;line-height: 32px;letter-spacing: -0.003em;font-size: 21px;color: blanchedalmond;border-radius: 10px;">
+    <!-- <img src="{% static 'blog/images/connectdjango.jpg' %}" alt=""> -->
+    <br>
+    <h1 class="text-center mt-3 mb-3" style="text-align:center;text-transform: capitalize;">{{ creator }} added a new tutorial</h1>
+    <br>
+    <p class="lead animated bounce infinite">Hi! {{ name }}</p>
+    <p>{{ creator }} just posted a new tutorial with the title of  '{{ title }}'.</p>
+    <a style="color:black;font-weight: bold;" href="https://connectdjango.com/" target="_blank">Login to read tutorial</a>
+    <p>You are getting this alert because you are following {{ creator }}</p>
+    <br>
+    
+    <p>Thanks {{ name }}.</p>
+    <div class="connect-team">
+        <span class="mr-2">ConnectDjango Team</span>
+    </div>
+    </div>
+    <br>
+</div>
+<br>
+
+</body>
+</html>
+

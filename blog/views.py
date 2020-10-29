@@ -38,7 +38,7 @@ def all_tutorial(request):
         "name": request.user.username,
 
     }
-    send_my_mail(f"Welcome {request.user.username}", settings.EMAIL_HOST_USER, request.user.email, context, "email_templates/success.html")
+    
 
     return render(request, "blog/tutorials.html", context)
 
@@ -62,8 +62,8 @@ def create_tutorial(request):
             img = form.cleaned_data.get('image')
 
             Tutorial.objects.create(user=request.user, title=title, image=img, tutorial_content=t_content)
-            # send_my_mail(f"New Tutorial from {request.user.username}", settings.EMAIL_HOST_USER,
-            #             ufollowers_emails, f"{request.user.username} just posted a tutorial '{title}'")
+            for ff in user_followers:
+                send_my_mail(f"New tutorial from {request.user.username}", settings.EMAIL_HOST_USER, ff.email, {"name":ff.username,"title": title,"creator": request.user.username}, "email_templates/tutorial_create_success.html")
             return redirect('tutorials')
     else:
         form = TutorialForm()
@@ -274,8 +274,8 @@ def create_blog(request):
             blog_img = form.cleaned_data.get('blog_image')
 
             BlogPost.objects.create(user=request.user, title=title, content=content, blog_image=blog_img)
-            # send_my_mail(f"New Post from {request.user.username}", settings.EMAIL_HOST_USER,
-            #             ufollowers_emails, f"{request.user.username} just posted a blog '{title}'")
+            for ff in user_followers:
+                send_my_mail(f"New blog from {request.user.username}", settings.EMAIL_HOST_USER, ff.email, {"name":ff.username,"title": title,"creator": request.user.username}, "email_templates/blog_create_success.html")
             return redirect('all_blogs')
     else:
         form = BlogPostForm()
@@ -391,6 +391,7 @@ def user_profile(request, username):
 @login_required
 def user_profile_following(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
+    my_notify = mynotifications(request.user)
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
@@ -410,7 +411,11 @@ def user_profile_following(request, username):
         "defollowing": defollowing,
         "defollowers": defollowers,
         "deuser": deUser,
-        "df_count": df_count
+        "df_count": df_count,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
     return render(request, "blog/deuserprofile_followings.html", context)
 
@@ -418,7 +423,8 @@ def user_profile_following(request, username):
 @login_required
 def user_profile_followers(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
-
+    my_notify = mynotifications(request.user)
+    
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
@@ -438,7 +444,11 @@ def user_profile_followers(request, username):
         "defollowing": defollowing,
         "defollowers": defollowers,
         "deuser": deUser,
-        "dfs_count": dfs_count
+        "dfs_count": dfs_count,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
     return render(request, "blog/deuserprofile_followers.html", context)
 

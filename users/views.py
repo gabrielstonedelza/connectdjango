@@ -16,6 +16,8 @@ from blog.models import BlogPost, Tutorial
 
 
 def register(request):
+    username = ''
+    useremail = ''
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -25,16 +27,17 @@ def register(request):
             else:
                 form.save()
                 username = form.cleaned_data.get('username')
-                send_my_mail("Welcome to ConnectDjango", settings.EMAIL_HOST_USER, f"{request.user.email}",
-                             "email_templates/success.html")
+                send_my_mail(f"Welcome to ConnectDjango {username}", settings.EMAIL_HOST_USER, useremail, {"name":username}, "email_templates/success.html")
                 messages.success(request, f'Your account is created {username},login now')
                 return redirect('login')
     else:
         form = UserRegistrationForm()
 
     context = {
-        'form': form
+        'form': form,
+        "name": username
     }
+    
 
     return render(request, "users/register.html", context)
 
@@ -76,6 +79,7 @@ def profile(request, username):
 @login_required
 def profile_followings(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
+    my_notify = mynotifications(request.user)
 
     following = myprofile.following.all()
     paginator = Paginator(following, 15)
@@ -87,6 +91,10 @@ def profile_followings(request, username):
         "myprofile": myprofile,
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
     return render(request, "users/profile_followings.html", context)
 
@@ -94,6 +102,7 @@ def profile_followings(request, username):
 @login_required
 def profile_followers(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
+    my_notify = mynotifications(request.user)
 
     followers = myprofile.followers.all()
     paginator = Paginator(followers, 15)
@@ -105,7 +114,10 @@ def profile_followers(request, username):
         "followers": followers,
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
-
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
     return render(request, "users/profile_followers.html", context)
 
@@ -153,6 +165,7 @@ def user_connection(request, id):
         myprofile.following.add(deuser)
         NotifyMe.objects.create(user=deuser, notify_title="Follow Request Notice", notify_alert=message,
                                 follower_sender=request.user)
+        send_my_mail(f"{request.user.username} started following you", settings.EMAIL_HOST_USER, deuser.email, {"name":deuser.username,"follower": request.user.username}, "email_templates/following_success.html")
 
     else:
         myprofile.following.remove(deuser)
@@ -182,6 +195,7 @@ def profile_following(request, id):
     myprofile = get_object_or_404(Profile, user=request.user)
     user = get_object_or_404(User, id=id)
 
+    my_notify = mynotifications(request.user)
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
@@ -197,6 +211,10 @@ def profile_following(request, id):
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
         "user": user,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     if request.is_ajax():
@@ -211,6 +229,7 @@ def profile_connection_followers(request, id):
     myprofile = get_object_or_404(Profile, user=request.user)
     user = get_object_or_404(User, id=id)
     users = User.objects.exclude(id=request.user.id)
+    my_notify = mynotifications(request.user)
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
@@ -235,7 +254,11 @@ def profile_connection_followers(request, id):
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
         "user": user,
-        "users": users
+        "users": users,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
     }
 
     if request.is_ajax():

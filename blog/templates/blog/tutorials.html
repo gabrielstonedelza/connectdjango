@@ -75,7 +75,7 @@ All Tutorials
     </div>
     <!-- users  -->
     <div class="users_to_follow">
-      <h4>Just for you</h4>
+      <h4>Who to follow</h4>
       {% for user in users %}
         <div class="user-container">
           <!-- user profile photo -->
@@ -84,7 +84,7 @@ All Tutorials
             <a href="{% url 'userprofilepost' user.username %}">
               {{ user.username }}
               <br>
-              <small class="text-muted">{{ user.profile.bio }}</small>
+              <small class="text-muted">{{ user.profile.bio|slice:"80" }}</small>
             </a>
           </div>
         </div>

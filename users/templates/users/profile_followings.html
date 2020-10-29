@@ -15,7 +15,7 @@
                 <h3>{{ request.user.profile.name }}</h3>
                 <!-- <span class="text-muted">{{ request.user.username }}</span> -->
                 <a href="{% url 'profile' request.user.username %}" class="butt">Posts</a>
-                <br>
+                <hr class="my-4">
                 <span class="text-muted">{{ request.user.profile.bio|slice:"100" }}..... </span>
                 <hr class="my-4">
                 <a class="butt" href="{% url 'editprofile'  request.user.username %}">Edit Profile</a>
@@ -76,7 +76,7 @@
                         <a href="{% url 'userprofilepost' user.username %}">{{ user.profile.name }} <span class="text-muted ml-2">{{ user.username }}</span></a>
                         <br>
                         {% if user.profile.bio %}
-                            <span class="text-muted">{{ user.profile.bio|slice:"100" }...}</span>
+                            <span class="text-muted">{{ user.profile.bio|slice:"100" }}...</span>
                         {% endif %}
                         <br>
                         {% if user.profile.your_organization %}
