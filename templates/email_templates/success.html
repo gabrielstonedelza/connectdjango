@@ -29,12 +29,12 @@
 
 <div class="container">
     <br>
-    <div class="mail-container">
+    <div class="mail-container" style="background:rgba(8, 56, 2, 0.555);">
     <!-- <img src="{% static 'blog/images/connectdjango.jpg' %}" alt=""> -->
     <br>
     <h1 class="text-center mt-3 mb-3">Welcome to ConnectDjango</h1>
     <br>
-    <p class="lead animated bounce infinite">Hi!</p>
+    <p class="lead animated bounce infinite">Hi! {{ name }}</p>
     <p>We are happy that you've joined us.Connect django is all about teaching and sharing knowledge with others.Since we have all been using django for a while now there are lots and lots of ways to structure the way our app works.There is the teaching and blogging.</p>
     <br>
     <h3>Teaching</h3>
@@ -61,7 +61,7 @@
     <p>There you have it,let's keeping djangoing {{ name }}.</p>
     <p class="badge badge-info">By the way we are accepting contributions from all developers,care to contribute?</p>
     <p>Head over to <a href="https://github.com/gabrielstonedelza/connectdjango" target="_blank">our github repo</a> and read the documentation on how to contribute.</p>
-    <p>Thanks.</p>
+    <p>Thanks {{ name }}.</p>
     <div class="connect-team">
         <!-- <img src="{% static 'blog/images/cdjango.jpg' %}" alt="" style="width:150px;height:150px;border-radius:50%;"> -->
         <span class="mr-2">ConnectDjango Team</span>

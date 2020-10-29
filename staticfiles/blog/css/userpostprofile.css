@@ -69,17 +69,95 @@ button.butt:hover {
           justify-content: center;
 }
 
+.userpostprofile-container .userpostprofile-details .userprofile-image h3 {
+  font-weight: bold;
+  padding: 10px;
+}
+
+.userpostprofile-container .userpostprofile-details .userprofile-image a.userprofile-username {
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
 .userpostprofile-container .userpostprofile-details .userprofile-image img {
-  width: 260px;
-  height: 260px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  border: solid #0c4b33 2px;
+}
+
+.userpostprofile-container .userpostprofile-details .userprofile-image .user-social {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.userpostprofile-container .userpostprofile-details .userprofile-image .user-social a img {
+  width: 25px;
+  height: 25px;
 }
 
 .userpostprofile-container .userpostprofile-posts {
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 600px;
-          flex: 1 1 600px;
+      -ms-flex: 1 1 580px;
+          flex: 1 1 580px;
   margin: 5px;
+  padding: 10px;
+}
+
+.userpostprofile-container .userpostprofile-posts .just-bio {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 10px;
+  border: solid 2px silver;
+  border-radius: 10px;
+}
+
+.userpostprofile-container .userpostprofile-posts .deuser-tutos-container .update-delete {
+  float: right;
+}
+
+.userpostprofile-container .userpostprofile-posts .deuser-tutos-container a {
+  font-weight: bold;
+  color: black;
+}
+
+.userpostprofile-container .userpostprofile-posts .defollowing-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.userpostprofile-container .userpostprofile-posts .defollowing-container .defollowing-image img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.userpostprofile-container .userpostprofile-posts .defollowing-container .defollowing-other-details a {
+  font-weight: bold;
+  color: black;
+}
+
+@media (max-width: 500px) {
+  .userpostprofile-container .userpostprofile-details .userprofile-image h3 {
+    font-size: 25px;
+    padding: 10px;
+  }
+}
+
+.mynotifications {
+  padding: 20px;
+}
+
+.mynotifications .notifs ul {
+  list-style-type: none;
 }
 /*# sourceMappingURL=userpostprofile.css.map */

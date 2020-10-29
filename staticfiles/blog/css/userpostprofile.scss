@@ -13,19 +13,101 @@
     justify-content: center;
 
     .userprofile-image{
-      
-  
+      h3{
+        font-weight: bold;
+        padding: 10px;
+      }
+
+      a.userprofile-username{
+        font-weight: bold;
+        text-transform: capitalize;
+        font-size: 20px;
+      }
       img{
-        width: 260px;
-        height: 260px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
-        border: solid #0c4b33 2px;
+        // border: solid #0c4b33 2px;
+      }
+      .user-social{
+        display: flex;
+        flex-wrap: wrap;
+        a{
+          img{
+            width: 25px;
+            height: 25px;
+          }
+        }
       }
     }
   }
 
   .userpostprofile-posts{
-    flex: 1 1 600px;
+    flex: 1 1 580px;
     margin: 5px;
+    // border-left: solid 3px silver;
+    padding: 10px;
+
+    .just-bio{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px;
+      border: solid 2px silver;
+      border-radius: 10px;
+    }
+    .deuser-tutos-container{
+      .update-delete{
+        float: right;
+      }
+      a{
+        font-weight: bold;
+        color: black;
+      }
+    }
+    .defollowing-container{
+      display: flex;
+      gap: 1rem;
+      .defollowing-image{
+        img{
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
+      .defollowing-other-details{
+        a{
+          font-weight: bold;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+
+@media(max-width: 500px){
+  .userpostprofile-container{
+    .userpostprofile-details{
+      .userprofile-image{
+        h3{
+          font-size: 25px;
+          padding: 10px;
+        }
+      }
+    }
+  }
+}
+// notifications
+.mynotifications{
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  padding: 20px;
+  .notifs{
+    ul{
+      list-style-type: none;
+    }
   }
 }

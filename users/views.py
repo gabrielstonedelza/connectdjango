@@ -25,12 +25,12 @@ def register(request):
             else:
                 form.save()
                 username = form.cleaned_data.get('username')
-                send_my_mail("Welcome to ConnectDjango",settings.EMAIL_HOST_USER,f"{request.user.email}","", "email_templates/success.html")
+                send_my_mail("Welcome to ConnectDjango", settings.EMAIL_HOST_USER, f"{request.user.email}",
+                             "email_templates/success.html")
                 messages.success(request, f'Your account is created {username},login now')
                 return redirect('login')
     else:
         form = UserRegistrationForm()
-
 
     context = {
         'form': form
@@ -145,7 +145,6 @@ def user_connection(request, id):
     myprofile = get_object_or_404(Profile, user=request.user)
     following = myprofile.following.all()
     followers = myprofile.followers.all()
-
 
     deuser = get_object_or_404(User, id=id)
     message = f"{request.user} started following you"

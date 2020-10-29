@@ -4,7 +4,7 @@ from django.conf import settings
 from django.template.loader import get_template
 
 
-def send_my_mail(subject,email_from,email_to, context, html_template):
+def send_my_mail(subject, email_from, email_to, context, html_template):
     html_temp_path = html_template
     context = context
     email_html_template = get_template(html_temp_path).render(context)

@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0C4B33;">
   <div class="container">
     <!-- Navbar brand -->
-    <a id="mynav_bar_container" title="Home" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="{% url 'tutorials' %}"><img src="{% static 'blog/images/cdjango.jpg' %}" style="width: 45px;height: 45px;"></a>
+    <a id="mynav_bar_container" title="Go to tutorials" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="{% url 'tutorials' %}"><img src="{% static 'blog/images/cdjango.jpg' %}" style="width: 45px;height: 45px;"></a>
   
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -41,14 +41,14 @@
         </li>
 
         <li class="nav-item ml-1 mr-1">
-          <a title="add new tutorial"  href="{% url 'about-us' %}" title="Profile" class="nav-link">
+          <a title="about us"  href="{% url 'about-us' %}" title="Profile" class="nav-link">
             <i class="fas fa-info-circle"></i>
           </a>
         </li>
         
 
         <li class="nav-item ml-1 mr-1">
-          <a  href="{% url 'profile' request.user.username  %}" title="Profile" class="nav-link" href="#">
+          <a  href="{% url 'profile' request.user.username  %}" title="Your profile" class="nav-link" href="#">
             <img style="width: 25px;height: 25px;border-radius: 50%;" class="z-depth-1-half" src="{{ request.user.profile.profile_pic.url }}" alt="">
           </a>
         </li>

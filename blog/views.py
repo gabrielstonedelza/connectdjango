@@ -9,13 +9,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
-from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm, BlogUpdateForm, TutorialUpdateForm)
+from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm, BlogUpdateForm,
+                    TutorialUpdateForm)
 from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost, NotifyMe)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
-
-
+import imghdr
 
 
 @login_required
@@ -28,7 +28,6 @@ def all_tutorial(request):
     page = request.GET.get('page')
     tutorials = paginator.get_page(page)
 
-
     context = {
         "tutorials": tutorials,
         "notification": my_notify['notification'],
@@ -36,9 +35,10 @@ def all_tutorial(request):
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
         "users": users,
+        "name": request.user.username,
 
     }
-    # send_my_mail("Hi",settings.EMAIL_HOST_USER,f"{request.user.email}",context,"email_templates/success.html")
+    send_my_mail(f"Welcome {request.user.username}", settings.EMAIL_HOST_USER, request.user.email, context, "email_templates/success.html")
 
     return render(request, "blog/tutorials.html", context)
 
@@ -101,7 +101,7 @@ def tutorial_detail(request, id):
                 comment_qs = Comments.objects.get(id=reply_id)
             comment = Comments.objects.create(tutorial=tutorial, user=request.user, comment=comment, reply=comment_qs)
             comment.save()
- 
+
 
     else:
         form = CommentsForm()

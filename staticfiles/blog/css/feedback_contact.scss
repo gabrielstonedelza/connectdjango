@@ -1,134 +1,42 @@
 @import "./variables";
 
-.main-feedback-container{
+.main-feedback-container, .contact-stuff{
+  padding: 20px;
   display: flex;
-  gap: 2rem;
-  flex-flow: wrap;
+  flex-direction: column;
 
-  .feedback-form-box{
-    padding: 10px;
-    // height: auto;
-  }
-  .all_feedbacks_section{
+  width: 80%;
+
+  .feed-user-image{
     flex: 2;
-    padding: 10px;
-    flex-wrap: wrap;
-  }
-}
-
-@media(max-width: 500px){
-  .main-feedback-container{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 20px;
-  
-    .feedback-form-box{
-      // flex: 1;
-      padding: 10px;
-    }
-    .all_feedbacks_section{
-      // flex: 2;
-      padding: 10px;
+    display: flex;
+    gap: 1rem;
+    img{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
     }
   }
 }
 
 
-// feedback
-#feedback_section {
-  .feedback-form-box {
-    padding: 20px;
-    border-radius: 20px;
-  }
-  form {
-    textarea {
-      resize: none;
-    }
-  }
-  .all_feedbacks_setion {
-    ul {
-      list-style-type: none;
-    }
-  }
-}
+
+
 
 textarea {
   resize: none;
 }
-.all_tutorials {
-  ul {
-    li {
-      .userimg-name {
-        img {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
-  }
-}
 
-// contact
-.main-contact-form{
+
+.mysocial{
   display: flex;
-  gap: 2rem;
-  flex-flow: wrap;
-  padding: 20px;
-  #contact_form_section {
-    .contact-form-box {
-      padding: 20px;
-      border-radius: 20px;
-    }
-    form {
-      textarea {
-        resize: none;
-      }
-    }
-  }
-  .mysocial{
-    flex-wrap: wrap;
-    .for_our_facebook, .for_our_instagram{
-      a{
-        img{
-          width: 100px;
-          height: 100px;
-        }
-      }
-    }
-  }
-}
+  gap: 1rem;
+  margin-left: 20px;
 
-@media(max-width: 500px){
-  .main-contact-form{
-    display: flex;
-    gap: 2rem;
-    flex-flow: wrap;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-    #contact_form_section {
-      padding: 10px;
-      .contact-form-box {
-        padding: 20px;
-        border-radius: 20px;
-      }
-      form {
-        textarea {
-          resize: none;
-        }
-      }
-    }
-    .mysocial{
-      .for_our_facebook, .for_our_instagram{
-        a{
-          img{
-            width: 40px;
-            height: 40px;
-          }
-        }
-      }
+  a{
+    img{
+      width: 30px;
+      height: 30px;
     }
   }
 }
