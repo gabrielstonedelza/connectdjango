@@ -19,6 +19,19 @@ import imghdr
 
 
 @login_required
+def news_letter(request):
+    all_users = User.objects.exclude(id=request.user.id)
+   
+
+    for i in all_users:
+        if i.email:
+            send_my_mail(f"Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name":i.username}, "email_templates/success.html")
+    messages.success(request,"Newsletter sent")
+
+    return render(request, "blog/newsletter.html")
+
+
+@login_required
 def all_tutorial(request):
     my_notify = mynotifications(request.user)
     tutorials = Tutorial.objects.all().order_by('-date_posted')
@@ -85,7 +98,6 @@ def tutorial_detail(request, id):
     tutorial = get_object_or_404(Tutorial, id=id)
     has_liked = False
 
-    # message = f"{request.user.username} commented on your tutorial '{tutorial.title}'"
     if tutorial.likes.filter(id=request.user.id).exists():
         has_liked = True
 
@@ -424,7 +436,7 @@ def user_profile_following(request, username):
 def user_profile_followers(request, username):
     myprofile = get_object_or_404(Profile, user=request.user)
     my_notify = mynotifications(request.user)
-    
+
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 

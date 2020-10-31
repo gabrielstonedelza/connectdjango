@@ -16,6 +16,7 @@ urlpatterns = [
         template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('register/', uviews.register, name='register'),
+    path('newsletter/', views.news_letter, name='newsletter'),
     path('tutorial/new/', views.create_tutorial, name="tutorial_new"),
     path('tutorials/', views.all_tutorial, name='tutorials'),
     path('tutorial/<int:id>/', views.tutorial_detail, name="tutorial_detail"),
