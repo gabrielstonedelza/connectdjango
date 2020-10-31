@@ -1,8 +1,8 @@
 # ![connectdjango](connectdjango.jpg)
 # *Connect Django*
 
-### Connectdjango is a platform where django developers share their experiences with others developers 
-### As developers we are always learning new ways to structure and work with our projects
+### Connectdjango is a platform where django developers share their experiences with others developers. 
+### As developers we are always learning new ways to structure our projects and write clean code.
 ### There are two parts to connectdjango,that is :
 
 
