@@ -387,7 +387,6 @@ def user_profile(request, username):
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
-
         "following": following,
         "followers": followers,
         "defollowing": deuser_following,

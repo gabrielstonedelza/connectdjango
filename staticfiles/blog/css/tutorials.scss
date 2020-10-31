@@ -1,12 +1,13 @@
 .main-home-tutorials-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 75% auto;
+  // display: flex;
+  // flex-wrap: wrap;
   gap: 1.5rem;
   padding: 20px;
 
   .tutorial-container {
-    flex: 1 1 250px;
+    columns: 600px 2;
     margin: 5px;
     .tutorial-list {
       display: flex;
@@ -48,6 +49,8 @@
 
   // user container
   .users_to_follow {
+    columns: 150px 1;
+    flex-wrap: wrap;
     .user-container {
       display: flex;
       gap: 1rem;
@@ -69,7 +72,8 @@
 
 @media (max-width: 500px) {
   .main-home-tutorials-container {
-
+    display: grid;
+    grid-template-columns: 1fr;
     .tutorial-container {
       flex: 1;
       .tutorial-list {

@@ -157,6 +157,7 @@ def user_connection(request, id):
     myprofile = get_object_or_404(Profile, user=request.user)
     following = myprofile.following.all()
     followers = myprofile.followers.all()
+    is_following = False
 
     deuser = get_object_or_404(User, id=id)
     message = f"{request.user} started following you"
@@ -190,79 +191,3 @@ def user_connection(request, id):
         })
 
 
-@login_required
-def profile_following(request, id):
-    myprofile = get_object_or_404(Profile, user=request.user)
-    user = get_object_or_404(User, id=id)
-
-    my_notify = mynotifications(request.user)
-    following = myprofile.following.all()
-    followers = myprofile.followers.all()
-
-    if myprofile.following.filter(id=user.id).exists():
-        myprofile.following.remove(user)
-
-        if user.profile.followers.filter(id=request.user.id).exists():
-            user.profile.followers.remove(request.user)
-
-    context = {
-        "following": following,
-        "followers": followers,
-        "following_count": myprofile.my_following_count(),
-        "followers_count": myprofile.my_followers_count(),
-        "user": user,
-        "notification": my_notify['notification'],
-        "unread_notification": my_notify['unread_notification'],
-        "u_notify_count": my_notify['u_notify_count'],
-        "has_new_notification": my_notify['has_new_notification'],
-    }
-
-    if request.is_ajax():
-        pconnection = render_to_string("users/profile_connection.html", context, request=request)
-        return JsonResponse({
-            "results": pconnection
-        })
-
-
-@login_required
-def profile_connection_followers(request, id):
-    myprofile = get_object_or_404(Profile, user=request.user)
-    user = get_object_or_404(User, id=id)
-    users = User.objects.exclude(id=request.user.id)
-    my_notify = mynotifications(request.user)
-
-    following = myprofile.following.all()
-    followers = myprofile.followers.all()
-
-    if not myprofile.following.filter(id=user.id).exists():
-        myprofile.following.add(user)
-        notify_message = f"{request.user} started following you."
-        NotifyMe.objects.create(user=user, notify_title="Follow Notice", notify_alert=notify_message,
-                                follower_sender=request.user)
-
-    else:
-        myprofile.following.remove(user)
-
-    if not user.profile.followers.filter(id=request.user.id).exists():
-        user.profile.followers.add(request.user)
-    else:
-        user.profile.followers.remove(request.user)
-
-    context = {
-        "following": following,
-        "followers": followers,
-        "following_count": myprofile.my_following_count(),
-        "followers_count": myprofile.my_followers_count(),
-        "user": user,
-        "users": users,
-        "notification": my_notify['notification'],
-        "unread_notification": my_notify['unread_notification'],
-        "u_notify_count": my_notify['u_notify_count'],
-        "has_new_notification": my_notify['has_new_notification'],
-    }
-
-    if request.is_ajax():
-        pconnectionfollowers = render_to_string("users/profile_connection_followers.html", context, request=request)
-        return JsonResponse({
-            "results": pconnectionfollowers
-        })
