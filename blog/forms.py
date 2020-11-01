@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tutorial, Comments, FeedBack, ContactUs, BlogPost
+from .models import Tutorial, Comments, FeedBack, ContactUs, BlogPost, ImproveTuto, ImproveTutoComments
 
 
 class FeedbackForm(forms.ModelForm):
@@ -64,3 +64,24 @@ class BlogUpdateForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = ['title', 'content', 'blog_image']
+
+class ImproveTutoForm(forms.ModelForm):
+    title = forms.CharField(label="", widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "title"}))
+    can_be_modified = forms.CharField(label="",
+                                       widget=forms.Textarea(attrs={"class": "form-control", "id": "can_be_improved_form"}))
+
+    improvement_or_change = forms.CharField(label="",
+                                       widget=forms.Textarea(attrs={"class": "form-control", "id": "improvement_or_change_form"}))
+
+    class Meta:
+        model = ImproveTuto
+        fields = ['title', 'can_be_modified', 'improvement_or_change']
+
+
+class ImproveTutoCommentsForm(forms.ModelForm):
+    comment = forms.CharField(label="", widget=forms.TextInput(
+        attrs={"class": "form-control", "id": "comment_form", "placeholder": "comment"}))
+
+    class Meta:
+        model = ImproveTutoComments
+        fields = ['comment']

@@ -38,10 +38,32 @@ class Tutorial(models.Model):
 class Comments(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    reply = models.ForeignKey("Comments", null=True, related_name="replies", on_delete=models.CASCADE)
     comment = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
 
+class ImproveTuto(models.Model):
+    tuto = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150, default="")
+    can_be_modified = models.TextField(help_text="Which or part of this tutorial can be improved or changed?")
+    improvement_or_change = models.TextField(help_text="What is your modification?")
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.tuto.title
+
+    def get_absolut_improvement(self):
+        return reverse("improve_tuto_detail",args={self.pk})
+
+
+class ImproveTutoComments(models.Model):
+    improvetutocomment = models.ForeignKey(ImproveTuto, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.improvetutocomment.title
 
 class FeedBack(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

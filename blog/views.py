@@ -10,8 +10,8 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
 from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm, BlogUpdateForm,
-                    TutorialUpdateForm)
-from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost, NotifyMe)
+                    TutorialUpdateForm, ImproveTutoForm, ImproveTutoCommentsForm)
+from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost, NotifyMe, ImproveTuto, ImproveTutoComments)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
@@ -101,22 +101,33 @@ def tutorial_detail(request, id):
     if tutorial.likes.filter(id=request.user.id).exists():
         has_liked = True
 
-    comments = Comments.objects.filter(tutorial=tutorial, reply=None).order_by('-date_posted')
+    comments = Comments.objects.filter(tutorial=tutorial).order_by('-date_posted')
     comments_count = comments.count()
+
+    improvements = ImproveTuto.objects.filter(tuto=tutorial).order_by('-date_posted')
+
+    # comment form 
     if request.method == 'POST':
         form = CommentsForm(request.POST)
         if form.is_valid():
             comment = request.POST.get('comment')
-            reply_id = request.POST.get('comment_id')
-            comment_qs = None
-            if reply_id:
-                comment_qs = Comments.objects.get(id=reply_id)
-            comment = Comments.objects.create(tutorial=tutorial, user=request.user, comment=comment, reply=comment_qs)
+           
+            comment = Comments.objects.create(tutorial=tutorial, user=request.user, comment=comment)
             comment.save()
-
 
     else:
         form = CommentsForm()
+
+    # improvement form
+    if request.method == "POST":
+        improvement_form = ImproveTutoForm(request.POST)
+        if improvement_form.is_valid():
+            title = improvement_form.cleaned_data.get('title')
+            can_be_modified = improvement_form.cleaned_data.get('can_be_modified')
+            improvement_or_change = improvement_form.cleaned_data.get('improvement_or_change')
+            ImproveTuto.objects.create(tuto=tutorial, user=request.user,title=title, can_be_modified=can_be_modified, improvement_or_change=improvement_or_change)
+            messages.success(request, f"Notification is sent to {tutorial.user.username} about this suggested improvement,thank you {request.user.username}.")
+            return redirect('tutorial_detail', tutorial.id)
 
     if tutorial:
         tutorial.views += 1
@@ -133,6 +144,7 @@ def tutorial_detail(request, id):
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
+        "improvements": improvements
     }
 
     if request.is_ajax():
@@ -368,6 +380,8 @@ def user_profile(request,username):
 
     # user's username
     deuser = get_object_or_404(User, username=username)
+    df_count = deuser.profile.following.all().count
+    dfs_count = deuser.profile.followers.all().count
 
     tutorials = Tutorial.objects.filter(user=deuser.id).order_by('-date_posted')
     blogs = BlogPost.objects.filter(user=deuser.id).order_by('-date_posted')
@@ -395,6 +409,8 @@ def user_profile(request,username):
         "deuser": deuser,
         "tutorials": tutorials,
         "blogs": blogs,
+        "df_count": df_count,
+        "dfs_count": dfs_count,
     }
 
     return render(request, "blog/userpostprofile.html", context)

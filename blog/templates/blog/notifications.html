@@ -63,6 +63,45 @@ Notifications
 
                         </a>
                     <hr class="my-4">
+                    {% elif u.notify_title == "New suggested improvement" %}
+                        <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-between">
+                                    <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
+                                         style="width:50px;height:50px;border-radius:50%;">
+                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         </span>
+                                </div>
+                            </li>
+
+                        </a>
+                    <hr class="my-4">
+                    {% elif u.notify_title == "New tutorial comment" %}
+                        <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-between">
+                                    <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
+                                         style="width:50px;height:50px;border-radius:50%;">
+                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         </span>
+                                </div>
+                            </li>
+
+                        </a>
+                    <hr class="my-4">
+                    {% elif u.notify_title == "New comment on your improvement" %}
+                        <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-between">
+                                    <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
+                                         style="width:50px;height:50px;border-radius:50%;">
+                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         </span>
+                                </div>
+                            </li>
+
+                        </a>
+                    <hr class="my-4">
                 {% endif %}
                 {% endfor %}
             </ul>
