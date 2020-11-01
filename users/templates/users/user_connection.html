@@ -1,15 +1,16 @@
 {% load crispy_forms_tags %}
-<form action="{% url 'connection' deuser.id %}" method="POST" id="connection_form">
+<form action="{% url 'connection' id=deuser.id %}" method="POST" id="connection_form">
     {% csrf_token %}
     {% if deuser in following.all %}
         <button title="Unfollow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Following</button>
     {% elif deuser in followers.all and not request.user in deuser.defollwers.all %}
-        <button title="{{ deuser }} is following you,follow back" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow Back</button>
+        <button title="Unfollow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow Back</button>
     {% else %}
         <button title="Follow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow</button>
     {% endif %}
 </form>
 <br>
-<span class="d-flex">
-    <a href="{% url 'deuser_followers' deuser.username  %}" class="text-muted mr-2"><i class="fas fa-users"></i> {{ deuser.profile.followers.count }} followers</a> | <a href="{% url 'deuser_followings' deuser.username  %}" class="text-muted ml-2"><i class="fas fa-users"></i> {{ deuser.profile.following.count }} following</a>
-</span>
+<div class="span d-flex">
+    <a class="text-muted mr-2" href="{% url 'deuser_followers' deuser.username %}"><i class="fas fa-users"></i> {{ dfs_count }} followers</a> |
+    <a class="text-muted ml-2" href="{% url 'deuser_followings' deuser.username %}"><i class="fas fa-users"></i> {{ df_count }} following</a>
+</div>

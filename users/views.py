@@ -157,16 +157,19 @@ def user_connection(request, id):
     myprofile = get_object_or_404(Profile, user=request.user)
     following = myprofile.following.all()
     followers = myprofile.followers.all()
-    is_following = False
 
     deuser = get_object_or_404(User, id=id)
     message = f"{request.user} started following you"
 
+    df_count = deuser.profile.following.all().count
+    dfs_count = deuser.profile.followers.all().count
+
+    deuser_following = deuser.profile.following.all()
+    deuser_followers = deuser.profile.followers.all()
+
     if not myprofile.following.filter(id=deuser.id).exists():
         myprofile.following.add(deuser)
-        NotifyMe.objects.create(user=deuser, notify_title="Follow Request Notice", notify_alert=message,
-                                follower_sender=request.user)
-        send_my_mail(f"{request.user.username} started following you", settings.EMAIL_HOST_USER, deuser.email, {"name":deuser.username,"follower": request.user.username}, "email_templates/following_success.html")
+        NotifyMe.objects.create(user=deuser, notify_title="Follow Request Notice", notify_alert=message, follower_sender=request.user)
 
     else:
         myprofile.following.remove(deuser)
@@ -180,8 +183,10 @@ def user_connection(request, id):
         "following": following,
         "followers": followers,
         "deuser": deuser,
-        "followingcounts": myprofile.my_following_count(),
-        "followerscounts": myprofile.my_followers_count()
+        "defollowing": deuser_following,
+        "defollowers": deuser_followers,
+        "df_count": df_count,
+        "dfs_count": dfs_count,
     }
 
     if request.is_ajax():

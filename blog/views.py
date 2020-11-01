@@ -358,7 +358,7 @@ def search_queries(request):
 
 
 @login_required
-def user_profile(request, username):
+def user_profile(request,username):
     my_notify = mynotifications(request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)
@@ -366,10 +366,11 @@ def user_profile(request, username):
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
-    deUser = get_object_or_404(User, username=username)
+    # user's username
+    deuser = get_object_or_404(User, username=username)
 
-    tutorials = Tutorial.objects.filter(user=deUser.id).order_by('-date_posted')
-    blogs = BlogPost.objects.filter(user=deUser.id).order_by('-date_posted')
+    tutorials = Tutorial.objects.filter(user=deuser.id).order_by('-date_posted')
+    blogs = BlogPost.objects.filter(user=deuser.id).order_by('-date_posted')
 
     paginator = Paginator(tutorials, 15)
     page = request.GET.get('page')
@@ -379,8 +380,8 @@ def user_profile(request, username):
     page = request.GET.get('page')
     blogs = paginator.get_page(page)
 
-    deuser_following = deUser.profile.following.all()
-    deuser_followers = deUser.profile.followers.all()
+    deuser_following = deuser.profile.following.all()
+    deuser_followers = deuser.profile.followers.all()
 
     context = {
         "notification": my_notify['notification'],
@@ -391,9 +392,9 @@ def user_profile(request, username):
         "followers": followers,
         "defollowing": deuser_following,
         "defollowers": deuser_followers,
-        "deuser": deUser,
+        "deuser": deuser,
         "tutorials": tutorials,
-        "blogs": blogs
+        "blogs": blogs,
     }
 
     return render(request, "blog/userpostprofile.html", context)
@@ -412,6 +413,8 @@ def user_profile_following(request, username):
     defollowers = deUser.profile.followers.all()
 
     df_count = deUser.profile.following.all().count
+    dfs_count = deUser.profile.followers.all().count
+
     paginator = Paginator(defollowing, 10)
     page = request.GET.get('page')
     defollowing = paginator.get_page(page)
@@ -423,6 +426,7 @@ def user_profile_following(request, username):
         "defollowers": defollowers,
         "deuser": deUser,
         "df_count": df_count,
+        "dfs_count": dfs_count,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -444,6 +448,7 @@ def user_profile_followers(request, username):
     defollowers = deUser.profile.followers.all()
 
     dfs_count = deUser.profile.followers.all().count
+    df_count = deUser.profile.following.all().count
 
     paginator = Paginator(defollowers, 10)
     page = request.GET.get('page')
@@ -456,6 +461,7 @@ def user_profile_followers(request, username):
         "defollowers": defollowers,
         "deuser": deUser,
         "dfs_count": dfs_count,
+        "df_count": df_count,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],

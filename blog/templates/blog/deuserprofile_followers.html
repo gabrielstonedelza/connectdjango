@@ -16,7 +16,7 @@
                 {% if deuser == request.user %}
                     <span class="text-muted ">{{ deuser.username }}</span>
                 {% else %}
-                    <a href="{% url 'userprofilepost' deuser.username %}" class="text-muted userprofile-username mb-3">{{ deuser.username }}</a>
+                    <a href="{% url 'userprofilepost' user.username %}" class="text-muted userprofile-username mb-3">{{ deuser.username }}</a>
                 {% endif %}
                 <br>
                 <span class="text-muted">{{ deuser.profile.bio|slice:"100" }}.....</span>
