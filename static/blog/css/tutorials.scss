@@ -141,12 +141,25 @@
         }
       }
     }
-    span.tuto-content {
-      font-size: 21px;
-      line-height: 1.5;
-      letter-spacing: -0.003em;
-      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-      font-style: italic;
+    .old-tobe-improved{
+
+      span.tuto-content {
+        font-size: 21px;
+        line-height: 1.5;
+        letter-spacing: -0.003em;
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        font-style: italic;
+      }
+      .need-improvement{
+        padding: 10px;
+        border: solid 2px red;
+        border-radius: 10px;
+      }
+      .de-change{
+        padding: 10px;
+        border: solid 2px green;
+        border-radius: 10px;
+      }
     }
 
     // suggested improvements

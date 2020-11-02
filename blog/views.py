@@ -428,10 +428,12 @@ def user_profile(request,username):
     following = myprofile.following.all()
     followers = myprofile.followers.all()
 
+
     # user's username
     deuser = get_object_or_404(User, username=username)
     df_count = deuser.profile.following.all().count
     dfs_count = deuser.profile.followers.all().count
+    user_contribution_stats = ImproveTuto.objects.filter(user=deuser)
 
     tutorials = Tutorial.objects.filter(user=deuser.id).order_by('-date_posted')
     blogs = BlogPost.objects.filter(user=deuser.id).order_by('-date_posted')

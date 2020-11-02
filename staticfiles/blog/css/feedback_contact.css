@@ -47,48 +47,42 @@ button.butt:hover {
   color: #000;
 }
 
-.main-feedback-container, .contact-stuff {
-  padding: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 80%;
-}
-
-.main-feedback-container .feed-user-image, .contact-stuff .feed-user-image {
-  -webkit-box-flex: 2;
-      -ms-flex: 2;
-          flex: 2;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1rem;
-}
-
-.main-feedback-container .feed-user-image img, .contact-stuff .feed-user-image img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
 textarea {
   resize: none;
 }
 
-.mysocial {
+.face .eyes {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 1rem;
-  margin-left: 20px;
 }
 
-.mysocial a img {
-  width: 30px;
-  height: 30px;
+.face .eyes .eye {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  display: block;
+  background: #fff;
+  margin: 0 8px;
+  border-radius: 50%;
+}
+
+.face .eyes .eye::before {
+  content: '';
+  position: absolute;
+  padding: 5px;
+  top: 50%;
+  left: 10px;
+  width: 12.5px;
+  height: 12.5px;
+  background: #333;
+  border-radius: 50%;
+}
+
+@media (max-width: 500px) {
+  .face {
+    display: none;
+  }
 }
 /*# sourceMappingURL=feedback_contact.css.map */

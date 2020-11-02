@@ -93,9 +93,9 @@
                                 <br>
                                 <div>
 
-                                  <span class="text-muted"><i class="fas fa-thumbs-up mr-1"></i>{{ tutorial.likes.count }}</span>
-                                  <span class="text-muted mr-1"><i class="fas fa-eye"></i> {{ tutorial.views }}</span>
-                                  <span class="text-muted">last update {{ tutorial.date_posted|date:"M D Y"}}</span>
+                                  <span class="text-muted mr-1"><i class="fas fa-thumbs-up mr-1"></i>{{ tutorial.likes.count }}</span> |
+                                  <span class="text-muted mr-1"><i class="fas fa-eye"></i> {{ tutorial.views }}</span> |
+                                  <span class="text-muted ml-1">last update {{ tutorial.date_posted|date:"M D Y"}}</span>
                                 </div>
                             </div>
                             <br>
@@ -146,8 +146,8 @@
                     <div class="deuser-tutos-container">
                         <a href="{{ blog.get_absolute_blog_post }}">{{ blog.title }}</a>
                         <br>
-                        <span class="text-muted mr-1"><i class="fas fa-thumbs-up"></i> {{ blog.likes.count }}</span>
-                        <span class="text-muted mr-1"><i class="fas fa-eye"></i> {{ blog.views }}</span>
+                        <span class="text-muted mr-1"><i class="fas fa-thumbs-up"></i> {{ blog.likes.count }}</span> |
+                        <span class="text-muted mr-1"><i class="fas fa-eye"></i> {{ blog.views }}</span> |
                         <span class="text-muted">last update {{ blog.date_posted|date:"M D Y"}}</span>
                     </div>
                     <br>

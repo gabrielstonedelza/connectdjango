@@ -18,8 +18,9 @@
           <h1>{{ improvement.title }}</h1>
           <br>
           <div class="tutorial-author">
-            <img src="{{ improvement.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;">
+            <img src="{{ improvement.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;margin-bottom:10px">
             <br>
+            
             <div class="other-details">
               {% if improvement.user == request.user %}
                 <a href="{% url 'profile' improvement.user.username %}">{{ improvement.user.username}}</a>
@@ -32,9 +33,17 @@
             </div>
           </div>
           <br>
-          <span class="tuto-content">{{ improvement.can_be_modified|safe }}</span>
-          <br>
-          <span class="tuto-content">{{ improvement.improvement_or_change|safe }}</span>
+          <div class="old-tobe-improved">
+            <h3 class="mb-2"> Needed change</h3>
+            <div title="needed improvement or change" class="need-improvement">
+              <span class="tuto-content">{{ improvement.can_be_modified|safe }}</span>
+            </div>
+            <br>
+            <h3 class="mb-2">Change</h3>
+            <div title="the improvement or change" class="de-change">
+              <span class="tuto-content">{{ improvement.improvement_or_change|safe }}</span>
+            </div>
+          </div>
           <br>
           <hr class="my-4">
         </div>
