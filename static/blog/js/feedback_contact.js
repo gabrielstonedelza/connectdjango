@@ -1,11 +1,40 @@
 $(function () {
 
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+} 
+const csrftoken = getCookie('csrftoken');
+
+$.ajaxSetup({
+  beforeSend:(xhr) =>{
+    xhr.setRequestHeader("X-CSRFTOKEN",  csrftoken)
+  }
+})
+
+
   $(document).on("submit", "#feedback_form", function (event) {
     event.preventDefault();
+
+    const feedback = document.getElementById("feedform");
+
     $.ajax({
       type: "POST",
       url: $(this).attr("action"),
-      data: $(this).serialize(),
+      data: {
+        "feedback": feedback.value
+      },
       dataType: "json",
       success: function (response) {
         $("#feedback_section").html(response["form"]);
@@ -17,18 +46,24 @@ $(function () {
     });
   });
 
-  setTimeout(function () {
-    $(".alert").slideUp(3000);
-  }, 5000);
-
 //   for contact form
-$(document).on("submit", "#contac_form", function (event) {
+$(document).on("submit", "#contact_form", function (event) {
     event.preventDefault();
     message = "Thank you for contacting us we will get back to you soon"
+
+    const name = document.getElementById('contact_name')
+    const email = document.getElementById('contact_email')
+    const subject = document.getElementById('subject')
+    const cmessage = document.getElementById('contact_message')
     $.ajax({
       type: "POST",
       url: $(this).attr("action"),
-      data: $(this).serialize(),
+      data: {
+        "name": name.value,
+        "email": email.value,
+        "subject": subject.value,
+        "message": cmessage.value
+      },
       dataType: "json",
       success: function (response) {
         $("#contact_form_section").html(response["form"]);

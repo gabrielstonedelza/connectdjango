@@ -45,6 +45,7 @@ class ImproveTuto(models.Model):
     tuto = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150, default="")
+    views = models.IntegerField(default=0)
     can_be_modified = models.TextField(help_text="Which or part of this tutorial can be improved or changed?")
     improvement_or_change = models.TextField(help_text="What is your modification?")
     date_posted = models.DateTimeField(auto_now_add=True)
@@ -121,6 +122,7 @@ class NotifyMe(models.Model):
     read = models.BooleanField(default=False)
     blog_id = models.IntegerField(blank=True, default=0)
     tuto_id = models.IntegerField(blank=True, default=0)
+    improvement_id = models.IntegerField(blank=True, default=0)
     date_notified = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -18,6 +18,12 @@ from django.conf import settings
 import imghdr
 
 
+def csrf_failure(request, reason=""):
+
+    return render(request,"blog/403_csrf.html")
+    
+
+
 @login_required
 def news_letter(request):
     all_users = User.objects.exclude(id=request.user.id)
@@ -93,6 +99,46 @@ def create_tutorial(request):
 
 
 @login_required
+def tutorial_improvements(request,id):
+    # tutorial = get_object_or_404(Tutorial, id=tutorial_id)
+    improvement = get_object_or_404(ImproveTuto, id=id)
+    comments = ImproveTutoComments.objects.filter(improvetutocomment=improvement).order_by('-date_posted')
+    my_notify = mynotifications(request.user)
+
+    if improvement:
+        improvement.views +=1
+        improvement.save()
+    # comment form 
+    if request.method == 'POST':
+        form = ImproveTutoCommentsForm(request.POST)
+        if form.is_valid():
+            comment = request.POST.get('comment')
+           
+            comment = ImproveTutoComments.objects.create(improvetutocomment=improvement, user=request.user, comment=comment)
+            comment.save()
+
+    else:
+        form = ImproveTutoCommentsForm()
+
+    context = {
+        # "tutorial": tutorial,
+        "improvement": improvement,
+        "form": form,
+        "comments": comments,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
+    }
+
+    if request.is_ajax():
+        comment = render_to_string("blog/improvement_comment_form.html", context, request=request)
+        return JsonResponse({"comments": comment})
+
+    return render(request, "blog/improvement_detail.html", context)
+    
+
+@login_required
 def tutorial_detail(request, id):
     my_notify = mynotifications(request.user)
     tutorial = get_object_or_404(Tutorial, id=id)
@@ -129,6 +175,9 @@ def tutorial_detail(request, id):
             messages.success(request, f"Notification is sent to {tutorial.user.username} about this suggested improvement,thank you {request.user.username}.")
             return redirect('tutorial_detail', tutorial.id)
 
+    else:
+        improvement_form = ImproveTutoForm()
+
     if tutorial:
         tutorial.views += 1
         tutorial.save()
@@ -139,6 +188,7 @@ def tutorial_detail(request, id):
         "likes_count": tutorial.likes_count(),
         "comments": comments,
         "form": form,
+        "improvement_form": improvement_form,
         "comments_count": comments_count,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
@@ -513,3 +563,57 @@ def user_notifications(request):
 @login_required
 def about_cd(request):
     return render(request, "blog/about_connectdjango.html")
+
+
+@login_required
+def feed_backs(request):
+    all_feedbacks = FeedBack.objects.all().order_by('-date_posted')
+
+    paginator = Paginator(all_feedbacks, 10)
+    page = request.GET.get('page')
+    all_feedbacks = paginator.get_page(page)
+
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.cleaned_data.get('feedback')
+            FeedBack.objects.create(user=request.user, feedback=feedback)
+    else:
+        form = FeedbackForm()
+
+    context = {
+        "all_feedbacks": all_feedbacks,
+        "form": form
+    }
+
+    if request.is_ajax():
+        feedback = render_to_string("blog/my_feedbacks.html", context, request=request)
+        return JsonResponse({"form": feedback})
+
+    return render(request, "blog/feedback.html", context)
+
+
+def contact_us(request):
+    if request.method == "POST":
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            subject = form.cleaned_data.get('subject')
+            message = form.cleaned_data.get('message')
+
+            ContactUs.objects.create(name=name, email=email, subject=subject, message=message)
+            send_my_mail(f"New contact message from {name}", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER, {"name":name,"email": email,"subject": subject,"message":message}, "email_templates/contact_success.html")
+
+    else:
+        form = ContactUsForm()
+
+    context = {
+        "form": form
+    }
+
+    if request.is_ajax():
+        conform = render_to_string("blog/contact_form.html", context, request=request)
+        return JsonResponse({"form": conform})
+
+    return render(request, "blog/contact.html", context)

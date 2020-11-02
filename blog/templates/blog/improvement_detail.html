@@ -1,0 +1,71 @@
+{% extends "blog/base_with_nav.html"%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{ improvement.title }}
+{% endblock %}
+{% block content%}
+    <br>
+    <div class="tutorial-detail-main">
+        <br>
+        <div class="without-comment-like-button">
+          {% if tutorial.image %}
+          <div class="detail-tuto-image">
+            <img src="{{ tutorial.image.url }}" alt="">
+          </div>
+          <br>
+          {% endif %}
+          <h1>{{ improvement.title }}</h1>
+          <br>
+          <div class="tutorial-author">
+            <img src="{{ improvement.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;">
+            <br>
+            <div class="other-details">
+              {% if improvement.user == request.user %}
+                <a href="{% url 'profile' improvement.user.username %}">{{ improvement.user.username}}</a>
+              {% else %}
+                <a href="{% url 'userprofilepost' improvement.user.username %}">{{ improvement.user.username}}</a>
+              {% endif %}
+             
+              <br>
+              <small class="text-muted">{{ improvement.date_posted|date:"M, D Y"}}</small>
+            </div>
+          </div>
+          <br>
+          <span class="tuto-content">{{ improvement.can_be_modified|safe }}</span>
+          <br>
+          <span class="tuto-content">{{ improvement.improvement_or_change|safe }}</span>
+          <br>
+          <hr class="my-4">
+        </div>
+        <div id="like-helpful-section" >
+            <a title="comments" class="ml-3" href="#" data-toggle="modal" data-target="#commentImprovementModal"><i class="fas fa-comment fa-2x text-muted"></i></a>
+            <span class="text-muted ml-1">{{ comments.count }}</span>
+        </div>
+
+    </div>
+<br>
+
+<!-- To change the direction of the modal animation change .right class -->
+<div class="modal fade right" id="commentImprovementModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-side modal-top-right" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Comments</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="improvement_comments_section">
+          {% include "blog/improvement_comment_form.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<br>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Feedbacks
+{% endblock %}
+{% block content %}
+<div class="container mt-3">
+    <br>
+    <h3 class="text-center mb-3">Feedbacks</h3>
+    <br>
+    <div id="feedback_section">
+        {% include "blog/my_feedbacks.html" %}
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

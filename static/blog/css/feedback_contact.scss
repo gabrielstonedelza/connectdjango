@@ -1,42 +1,42 @@
 @import "./variables";
 
-.main-feedback-container, .contact-stuff{
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-
-  width: 80%;
-
-  .feed-user-image{
-    flex: 2;
-    display: flex;
-    gap: 1rem;
-    img{
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-    }
-  }
-}
-
-
-
-
-
 textarea {
   resize: none;
 }
 
+.face {
+  // position: relative;
 
-.mysocial{
-  display: flex;
-  gap: 1rem;
-  margin-left: 20px;
+  .eyes{
+    position: relative;
+    // top: -30;
+    display: flex;
+    .eye{
+      position: relative;
+      width: 25px;
+      height: 25px;
+      display: block;
+      background: #fff;
+      margin: 0 8px;
+      border-radius: 50%;
 
-  a{
-    img{
-      width: 30px;
-      height: 30px;
+      &::before{
+        content: '';
+        position: absolute;
+        padding: 5px;
+        top: 50%;
+        left: 10px;
+        width: 12.5px;
+        height: 12.5px;
+        background: #333;
+        border-radius: 50%;
+      }
     }
+  }
+}
+
+@media(max-width: 500px){
+  .face{
+    display: none;
   }
 }

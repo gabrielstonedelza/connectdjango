@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
-{{ project.project_title }}
+{{ tutorial.title }}
 {% endblock %}
 {% block content%}
     <br>
@@ -34,13 +34,38 @@
           <span class="tuto-content">{{ tutorial.tutorial_content|safe }}</span>
           <br>
           <hr class="my-4">
+          <br>
+          <h3 class="mb-3">Suggested improvements about tutorial</h3>
+          <br>
+          <div class="for-suggested-improvements">
+            <ul class="">
+              {% for improvement in improvements %}
+                <li class="">
+                  <img src="{{ improvement.user.profile.profile_pic.url}}" alt="">
+                  <div>
+                    <a  class="text-muted" href="{{ improvement.get_absolut_improvement }}"> {{ improvement.title }}</a>
+                    <br>
+                    <span class="text-muted"><i class="fas fa-eye"></i> {{ improvement.views }}</span> |
+                    <span class="text-muted">{{ improvement.date_posted }}</span>
+                  </div>
+                </li>
+                <hr class="my-4">
+              {% empty %}
+                <li>No suggestions available for this tutorial</li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
         <div id="like-helpful-section" >
-             <div id="likes_section">
-                {% include "blog/like_form.html" %}
-            </div>
-            <a class="ml-3" href="#" data-toggle="modal" data-target="#sideModalTR"><i class="fas fa-comment fa-2x"></i></a>
-            <span class="text-muted ml-1 mt-2">{{ comments.count }}</span>
+          <div class="some-button">
+            <div id="likes_section">
+               {% include "blog/like_form.html" %}
+             </div>
+           <a title="comments" class="" href="#" data-toggle="modal" data-target="#sideModalTR"><i class="fas fa-comment text-muted"></i> <span class="text-muted">{{ comments.count }}</span></a>
+  
+           <a title="suggest improvements for this tutorial" class="" href="#" data-toggle="modal" data-target="#improvemntSideModal"><i class="fas fa-edit text-muted"></i> <span class="text-muted">{{ improvements.count }}</span></a>
+           
+          </div>
         </div>
 
     </div>
@@ -49,8 +74,6 @@
 <!-- To change the direction of the modal animation change .right class -->
 <div class="modal fade right" id="sideModalTR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-
-  <!-- Add class .modal-side and then add class .modal-top-right (or other classes from list above) to set a position to the modal -->
   <div class="modal-dialog modal-side modal-top-right" role="document">
 
     <div class="modal-content">
@@ -66,6 +89,35 @@
     </div>
   </div>
 </div>
+<br>
+
+<!-- tutorial improvement form -->
+<div class="modal fade right" id="improvemntSideModal" tabindex="-1" role="dialog" aria-labelledby="improvementModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-side modal-top-right" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="improvementModal">Suggest Improvement</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="improvement_section" style="overflow:hidden;overflow-x: hidden;">
+          <form method="POST" style="overflow-x: hidden;height:400px;overflow:scroll;">
+            {% csrf_token %}
+            <div class="form-group">
+              {{ improvement_form|crispy }}
+            </div>
+            <div class="form-group">
+              <button class="butt" type="submit">Save</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
 <br>
 {% endblock %}
 

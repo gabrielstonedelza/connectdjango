@@ -49,7 +49,8 @@ def alert_tutorial_comment(sender,created,instance,**kwargs):
     message = f"{instance.user} commented on your tutorial '{instance.tutorial.title}'"
 
     if created:
-        NotifyMe.objects.create(user=tutorial_user, notify_title=title, notify_alert=message, follower_sender=instance.user, tuto_id=instance.tutorial.id)
+        if not instance.tutorial.user:
+            NotifyMe.objects.create(user=tutorial_user, notify_title=title, notify_alert=message, follower_sender=instance.user, tuto_id=instance.tutorial.id)
 
 
 @receiver(post_save, sender=ImproveTutoComments)
@@ -59,4 +60,5 @@ def alert_tutorial_improvement_comment(sender,created,instance,**kwargs):
     message = f"{instance.user} commented on your improvement '{instance.improvetutocomment.title}'"
 
     if created:
-        NotifyMe.objects.create(user=tutorial_user, notify_title=title, notify_alert=message, follower_sender=instance.user, tuto_id=instance.improvetutocomment.tuto.id)
+        if not instance.improvetutocomment.user:
+            NotifyMe.objects.create(user=tutorial_user, notify_title=title, notify_alert=message, follower_sender=instance.user, improvement_id=instance.improvetutocomment.id)

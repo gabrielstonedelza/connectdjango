@@ -20,6 +20,7 @@ urlpatterns = [
     path('tutorial/new/', views.create_tutorial, name="tutorial_new"),
     path('tutorials/', views.all_tutorial, name='tutorials'),
     path('tutorial/<int:id>/', views.tutorial_detail, name="tutorial_detail"),
+    path('tutorial/improvement/<int:id>/', views.tutorial_improvements, name="improve_tuto_detail"),
     path('like-tutorial/<int:id>/', views.like_tutorial, name="tutorial_like"),
     path('tutorial/<int:id>/update/', views.update_tutorial, name='tutorial_update'),
     path('tutorial/<int:pk>/delete/', TutorialDeleteView.as_view(), name='tutorial_delete'),
@@ -30,6 +31,8 @@ urlpatterns = [
     path('blog/<int:id>/update/', views.update_blog, name='blog_update'),
     path('blog/<int:pk>/delete/', BlogDeleteView.as_view(), name='blog_delete'),
 
+    path('feedbacks/', views.feed_backs, name="feedbacks"),
+    path('contact-us/', views.contact_us, name="contact-us"),
     path('about-us/', views.about_cd, name="about-us"),
 
     path('notifications/', views.user_notifications, name='notifications'),

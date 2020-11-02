@@ -1,0 +1,114 @@
+nav #mynav_bar_container svg {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(2) {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(3) {
+  stroke-dasharray: 396.8915100097656;
+  stroke-dashoffset: 396.8915100097656;
+  -webkit-animation: line-anim 2s ease forwards 0.3s;
+          animation: line-anim 2s ease forwards 0.3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(4) {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(5) {
+  stroke-dasharray: 422.05364990234375;
+  stroke-dashoffset: 422.05364990234375;
+  -webkit-animation: line-anim 2s ease forwards 0.6s;
+          animation: line-anim 2s ease forwards 0.6s;
+}
+
+nav #mynav_bar_container svg path:nth-child(6) {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(7) {
+  stroke-dasharray: 735.725830078125;
+  stroke-dashoffset: 735.725830078125;
+  -webkit-animation: line-anim 2s ease forwards 0.9s;
+          animation: line-anim 2s ease forwards 0.9s;
+}
+
+nav #mynav_bar_container svg path:nth-child(8) {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(9) {
+  stroke-dasharray: 459.45977783203125;
+  stroke-dashoffset: 459.45977783203125;
+  -webkit-animation: line-anim 2s ease forwards 1.2s;
+          animation: line-anim 2s ease forwards 1.2s;
+}
+
+nav #mynav_bar_container svg path:nth-child(10) {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(11) {
+  stroke-dasharray: 609.1118774414062;
+  stroke-dashoffset: 609.1118774414062;
+  -webkit-animation: line-anim 2s ease forwards 1.5s;
+          animation: line-anim 2s ease forwards 1.5s;
+}
+
+nav #mynav_bar_container svg path:nth-child(12) {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+nav #mynav_bar_container svg path:nth-child(13) {
+  stroke-dasharray: 526.2647094726562;
+  stroke-dashoffset: 526.2647094726562;
+  -webkit-animation: line-anim 2s ease forwards 1.8s;
+          animation: line-anim 2s ease forwards 1.8s;
+}
+
+nav #mynav_bar_container svg path:nth-child(14) {
+  -webkit-animation: fill 0.5s ease forwards 3s;
+          animation: fill 0.5s ease forwards 3s;
+}
+
+@-webkit-keyframes line-anim {
+  to {
+    stroke-dasharray: 0;
+    fill: white;
+  }
+}
+
+@keyframes line-anim {
+  to {
+    stroke-dasharray: 0;
+    fill: white;
+  }
+}
+
+@-webkit-keyframes fill {
+  from {
+    fill: transparent;
+  }
+  to {
+    fill: white;
+  }
+}
+
+@keyframes fill {
+  from {
+    fill: transparent;
+  }
+  to {
+    fill: white;
+  }
+}
+/*# sourceMappingURL=forsvg.css.map */

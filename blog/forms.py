@@ -11,12 +11,11 @@ class FeedbackForm(forms.ModelForm):
 
 
 class ContactUsForm(forms.ModelForm):
-    name = forms.CharField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'name'}))
-    email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}))
-    subject = forms.CharField(label="",
-                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'subject'}))
+    name = forms.CharField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'name',"id":"contact_name"}))
+    email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email',"id":"contact_email"}))
+    subject = forms.CharField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'subject',"id":"subject"}))
     message = forms.CharField(label="", widget=forms.Textarea(
-        attrs={'class': 'form-control', 'placeholder': 'enter your message'}))
+        attrs={'class': 'form-control', 'placeholder': 'enter your message',"id":"contact_message"}))
 
     class Meta:
         model = ContactUs
@@ -43,7 +42,7 @@ class TutorialUpdateForm(forms.ModelForm):
 
 class CommentsForm(forms.ModelForm):
     comment = forms.CharField(label="", widget=forms.TextInput(
-        attrs={"class": "form-control", "id": "comment_form", "placeholder": "what do you think about this tutorial"}))
+        attrs={"class": "form-control", "id": "main_comment_form", "placeholder": "what do you think about this tutorial"}))
 
     class Meta:
         model = Comments
@@ -66,12 +65,11 @@ class BlogUpdateForm(forms.ModelForm):
         fields = ['title', 'content', 'blog_image']
 
 class ImproveTutoForm(forms.ModelForm):
-    title = forms.CharField(label="", widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "title"}))
-    can_be_modified = forms.CharField(label="",
-                                       widget=forms.Textarea(attrs={"class": "form-control", "id": "can_be_improved_form"}))
+    title = forms.CharField(label="", widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "title of your improvement"}))
+    can_be_modified = forms.CharField(label="",widget=forms.Textarea(attrs={"class": "form-control", "id": "can_be_improved_form","placeholder":"Which or part of this tutorial can be improved or changed?"}))
 
     improvement_or_change = forms.CharField(label="",
-                                       widget=forms.Textarea(attrs={"class": "form-control", "id": "improvement_or_change_form"}))
+                                       widget=forms.Textarea(attrs={"class": "form-control", "id": "improvement_or_change_form","placeholder":"What is your modification?"}))
 
     class Meta:
         model = ImproveTuto

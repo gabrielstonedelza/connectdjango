@@ -10,7 +10,7 @@ Notifications
     <div class="mynotifications">
         <div class="notifs">
             {% if notification %}
-            <ul class="list-group">
+            <ul class="">
                 {% for u in notification %}
                 {% if u.notify_title == "New Post" %}
                 <a href="{% url 'blogpost_detail' u.blog_id %}">
@@ -65,11 +65,11 @@ Notifications
                     <hr class="my-4">
                     {% elif u.notify_title == "New suggested improvement" %}
                         <a href="{% url 'tutorial_detail' u.tuto_id %}">
-                            <li class="list-group-item">
+                            <li class="">
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                          style="width:50px;height:50px;border-radius:50%;">
-                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         <span class="font-bold text-muted">'{{ u.notify_alert }}' <br><small class="text-muted">{{ u.date_notified }}</small>
                                          </span>
                                 </div>
                             </li>
@@ -78,24 +78,24 @@ Notifications
                     <hr class="my-4">
                     {% elif u.notify_title == "New tutorial comment" %}
                         <a href="{% url 'tutorial_detail' u.tuto_id %}">
-                            <li class="list-group-item">
+                            <li class="">
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                          style="width:50px;height:50px;border-radius:50%;">
-                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         <span class="font-bold text-muted">'{{ u.notify_alert }}' <br><small class="text-muted">{{ u.date_notified }}</small>
                                          </span>
                                 </div>
                             </li>
 
                         </a>
                     <hr class="my-4">
-                    {% elif u.notify_title == "New comment on your improvement" %}
-                        <a href="{% url 'tutorial_detail' u.tuto_id %}">
-                            <li class="list-group-item">
+                    {% elif u.notify_title == "New comment on your improvement " %}
+                        <a href="{% url 'improve_tuto_detail' u.improvement_id %}">
+                            <li class="">
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                          style="width:50px;height:50px;border-radius:50%;">
-                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         <span class="font-bold text-muted">'{{ u.notify_alert }}' <br><small class="text-muted">{{ u.date_notified }}</small>
                                          </span>
                                 </div>
                             </li>

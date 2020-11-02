@@ -118,11 +118,10 @@
     place-items: center;
     padding: 20px;
     max-width: 680px;
-    h1{
+    h1 {
       padding: 10px;
     }
     .detail-tuto-image {
-      
       img {
         width: 100%;
         height: 339.59;
@@ -149,20 +148,48 @@
       font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
       font-style: italic;
     }
+
+    // suggested improvements
+    .for-suggested-improvements{
+      ul{
+        list-style-type: none;
+        li{
+          display: flex;
+          gap: 1rem;
+          img{
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+          }
+          a{
+            font-weight: bold;
+          }
+        }
+
+      }
+    }
   }
 
-  #like-helpful-section{
+  #like-helpful-section {
+    position: fixed;
+    top: 300px;
+    left: 100px;
+    .some-button {
       display: flex;
-      position: fixed;
-      top: 300px;
-      left: 100px;
+      flex-direction: column;
+      gap: 1rem;
+      .fa-edit,
+      .fa-comment {
+        font-size: 20px;
+      }
+    }
   }
 }
 
-@media(max-width: 500px){
-  .tutorial-detail-main{
-    .without-comment-like-button{
-      h1{
+@media (max-width: 500px) {
+  .tutorial-detail-main {
+    .without-comment-like-button {
+      h1 {
         font-size: 25px;
         padding: 10px;
       }
@@ -178,39 +205,51 @@
   }
 }
 
-blockquote{
-    display: flex;
-    gap: 1rem;
+blockquote {
+  display: flex;
+  gap: 1rem;
 }
 
 // tutorial form
-.tutorial-form-container, .blog-form-container{
+.tutorial-form-container,
+.blog-form-container, .contact-form-box {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  form {
+    width: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .tutorial-form-container,
+  .blog-form-container, .contact-form-box {
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    form{
-        width: 50%;
+    form {
+      width: 100%;
     }
+  }
 }
 
-
-@media(max-width: 500px){
-    .tutorial-form-container, .blog-form-container{
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        form{
-            width: 100%;
-        }
-    }
-}
-
-.sticky{
+.sticky {
   position: fixed;
   top: 200px;
   left: 80px;
+}
+
+.modal-body {
+  overflow: hidden;
+  .comment-section {
+    overflow-x: hidden;
+    overflow: scroll;
+    padding: 10px;
+    height: 370px;
+  }
+  // 
 }

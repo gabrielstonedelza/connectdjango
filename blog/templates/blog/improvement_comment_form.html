@@ -1,15 +1,15 @@
 
 {% load crispy_forms_tags%}
-<form  class="comment-form" action=".">
+<form action="." class="improvement-comment-form"  id="improvement_comment_form" >
 {% csrf_token %}
-<fieldset class="form-group">
+<div class="form-group">
   {{ form|crispy}}
-</fieldset>
+</div>
 <!-- <button type="submit" class="butt">Comment</button> -->
 </form>
 <hr>
 <!--comments section  -->
-<div class="comment-section">
+<div class="comment-section" >
 {% for comment in comments %}
 <blockquote class="blockquote">
     <img src="{{ comment.user.profile.profile_pic.url }}" alt="" style="width: 50px;height:50px;border-radius:25px;float: left;">
