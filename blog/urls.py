@@ -32,7 +32,6 @@ urlpatterns = [
     path('blog/<int:pk>/delete/', BlogDeleteView.as_view(), name='blog_delete'),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
-    path('contact-us/', views.contact_us, name="contact-us"),
     path('about-us/', views.about_cd, name="about-us"),
 
     path('notifications/', views.user_notifications, name='notifications'),

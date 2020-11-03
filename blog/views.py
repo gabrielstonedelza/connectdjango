@@ -595,27 +595,3 @@ def feed_backs(request):
     return render(request, "blog/feedback.html", context)
 
 
-def contact_us(request):
-    if request.method == "POST":
-        form = ContactUsForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data.get('name')
-            email = form.cleaned_data.get('email')
-            subject = form.cleaned_data.get('subject')
-            message = form.cleaned_data.get('message')
-
-            ContactUs.objects.create(name=name, email=email, subject=subject, message=message)
-            send_my_mail(f"New contact message from {name}", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER, {"name":name,"email": email,"subject": subject,"message":message}, "email_templates/contact_success.html")
-
-    else:
-        form = ContactUsForm()
-
-    context = {
-        "form": form
-    }
-
-    if request.is_ajax():
-        conform = render_to_string("blog/contact_form.html", context, request=request)
-        return JsonResponse({"form": conform})
-
-    return render(request, "blog/contact.html", context)
