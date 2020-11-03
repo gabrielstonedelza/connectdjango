@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load static %}
 {% block title %}
 Login-Home
 {% endblock %}
@@ -7,12 +8,15 @@ Login-Home
 {% load crispy_forms_tags %}
 <div class="container mt">
   <div class="home-main-container">
-      <div class="with-connect">
-          <h3 class="text-center">Connect django</h3>
-          <p class="animated bounce text-center">Teach,learn and blog</p>
-          <img src="{% static 'blog/images/11.png' %}" alt="" style="width:30px;height:30px;">
+      <div class="with-connect" id="teach-and-blog">
+
+          <div class="cycle-slideshow" >
+            <br>
+            <img src="{% static 'blog/images/teacher2.gif' %}" alt="">
+            <img src="{% static 'blog/images/bloggin.gif' %}" alt="">
+          </div>
       </div> 
-      <div class="with-connect-form">
+      <div class="with-connect-form animated bounceInLeft">
           <div class="z-depth-1-half">
               <form method="post">
                   {% csrf_token %}
@@ -47,5 +51,6 @@ Login-Home
       </div>
   </div>
 </div>
+
 
 {% endblock %}

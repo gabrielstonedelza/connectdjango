@@ -7,7 +7,7 @@ Blog Posts
 <br>
 <div class="container">
     <br>
-    <h2>Blogs</h2>
+    <h2>Stories for you</h2>
     <div class="sticky">
       <a title="Create new blog" href="{% url 'create_blog' %}" class="butt"><i class="fas fa-plus-circle fa-2x"></i></a>
     </div>
@@ -89,7 +89,7 @@ Blog Posts
             <a href="{% url 'userprofilepost' user.username %}">
               {{ user.username }}
               <br>
-              <small class="text-muted">{{ user.profile.bio|slice:"80" }}</small>
+              <small class="text-muted">{{ user.profile.bio|slice:"50" }}</small>
             </a>
           </div>
         </div>
