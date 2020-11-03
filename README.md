@@ -1,17 +1,17 @@
 # ![connectdjango](connectdjango.jpg)
 # *Connect Django*
 
-### Connectdjango is a platform where django developers share their experiences with others developers. 
-### As developers we are always learning new ways to structure our projects and write clean code.
-### There are two parts to connectdjango,that is :
+ Connectdjango is a platform where django developers share their experiences with others developers. 
+ As developers we are always learning new ways to structure our projects and write clean code.
+ There are two parts to connectdjango,that is :
 
 
-### Teaching by posting tutorials about how to get things done in django
-### And there is blogging where we talk about  how and why we prefer django to other frameworks
+ Teaching by posting tutorials about how to get things done in django
+ And there is blogging where we talk about  how and why we prefer django to other frameworks
 
 ___
 
-![django tutorials](download.jpeg)
+![django tutorials](teacher2.gif)
 ## Teaching:
 * what editor do you prefer?
 * How do you install and use dependencies?
@@ -23,7 +23,7 @@ ___
 * what services do you use?
 
 ___
-![blogging about django](Blogging.jpg)
+![blogging about django](bloggin.gif)
 ## Blogging
 * What can you say about django?
 * What makes you choose django from all the lists of backend frameworks out there?
@@ -31,11 +31,11 @@ ___
 * Django and frontend frameworks
 
 ___
-### Follow us on 
-### [instagram](https://www.instagram.com/connectdjango/)
-### [facebook](https://www.facebook.com/connect.django/)
+ Follow us on 
+ [instagram](https://www.instagram.com/connectdjango/)
+ [facebook](https://www.facebook.com/connect.django/)
 
 ___
 ## LICENSE
 ___
-### MIT LICENSE
+ MIT LICENSE
