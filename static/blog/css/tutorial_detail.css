@@ -1,0 +1,99 @@
+.tutorial-detail-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 15px;
+}
+
+.tutorial-detail-main .without-comment-like-button {
+  width: 65%;
+}
+
+.tutorial-detail-main .without-comment-like-button .detail-tuto-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.tutorial-detail-main .without-comment-like-button .tutorial-author {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tutorial-detail-main .without-comment-like-button .tutorial-author .other-details {
+  padding: 10px;
+}
+
+.tutorial-detail-main .without-comment-like-button .tutorial-author .other-details a {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #000;
+}
+
+.tutorial-detail-main .without-comment-like-button .tutorial_detail_content {
+  background: #d3d3d3;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul {
+  list-style-type: none;
+}
+
+.tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul li img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+#like-helpful-section {
+  position: fixed;
+  top: 300px;
+  left: 100px;
+}
+
+#like-helpful-section .some-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+}
+
+#like-helpful-section .some-button .fa-edit,
+#like-helpful-section .some-button .fa-comment {
+  font-size: 20px;
+}
+
+@media (max-width: 568px) {
+  .tutorial-detail-main .without-comment-like-button {
+    width: 100%;
+  }
+  .tutorial-detail-main .without-comment-like-button h1 {
+    font-size: 20px;
+  }
+}
+/*# sourceMappingURL=tutorial_detail.css.map */

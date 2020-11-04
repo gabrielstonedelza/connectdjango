@@ -1,0 +1,126 @@
+.improvement-detail-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 15px;
+}
+
+.improvement-detail-main .without-comment-like-button {
+  width: 65%;
+}
+
+.improvement-detail-main .without-comment-like-button .detail-tuto-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.improvement-detail-main .without-comment-like-button .tutorial-author {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.improvement-detail-main .without-comment-like-button .tutorial-author .other-details {
+  padding: 10px;
+}
+
+.improvement-detail-main .without-comment-like-button .tutorial-author .other-details a {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: #000;
+}
+
+.improvement-detail-main .without-comment-like-button .tutorial_detail_content {
+  background: #d3d3d3;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.improvement-detail-main .without-comment-like-button .for-suggested-improvements ul {
+  list-style-type: none;
+}
+
+.improvement-detail-main .without-comment-like-button .for-suggested-improvements ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+}
+
+.improvement-detail-main .without-comment-like-button .for-suggested-improvements ul li img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.improvement-detail-main .old-tobe-improved {
+  padding: 10px;
+}
+
+.improvement-detail-main .old-tobe-improved h3 {
+  font-size: 20px;
+}
+
+.improvement-detail-main .old-tobe-improved .need-improvement {
+  padding: 10px;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  border: solid 2px red;
+}
+
+.improvement-detail-main .old-tobe-improved .de-change {
+  padding: 10px;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  border: solid 2px green;
+  border-radius: 10px;
+}
+
+#like-helpful-section {
+  position: fixed;
+  top: 300px;
+  left: 100px;
+}
+
+#like-helpful-section .some-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+}
+
+#like-helpful-section .some-button .fa-edit,
+#like-helpful-section .some-button .fa-comment {
+  font-size: 20px;
+}
+
+@media (max-width: 568px) {
+  .improvement-detail-main .without-comment-like-button {
+    width: 100%;
+  }
+  .improvement-detail-main .without-comment-like-button h1 {
+    font-size: 20px;
+  }
+}
+
+.fa-comment {
+  font-size: 25px;
+}
+/*# sourceMappingURL=improvement_detail.css.map */

@@ -102,119 +102,9 @@
   }
 }
 
-// tutorial detail
-.tutorial-detail-main {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-
-  .without-comment-like-button {
-    // justify-content: center;
-    display: grid;
-    place-items: center;
-    padding: 20px;
-    max-width: 680px;
-    h1 {
-      padding: 10px;
-    }
-    .detail-tuto-image {
-      img {
-        width: 100%;
-        height: 339.59;
-      }
-    }
-
-    .tutorial-author {
-      display: flex;
-      gap: 1rem;
-      justify-self: start;
-      // padding: 10px;
-      .other-details {
-        a {
-          text-transform: capitalize;
-          font-weight: bold;
-          color: #000;
-        }
-      }
-    }
-    .old-tobe-improved{
-
-      span.tuto-content {
-        font-size: 21px;
-        line-height: 1.5;
-        letter-spacing: -0.003em;
-        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-        font-style: italic;
-      }
-      .need-improvement{
-        padding: 10px;
-        border: solid 2px red;
-      }
-      .de-change{
-        padding: 10px;
-        border: solid 2px green;
-        border-radius: 10px;
-      }
-    }
-
-    // suggested improvements
-    .for-suggested-improvements{
-      ul{
-        list-style-type: none;
-        li{
-          display: flex;
-          gap: 1rem;
-          img{
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-          }
-          a{
-            font-weight: bold;
-          }
-        }
-
-      }
-    }
-  }
-
-  #like-helpful-section {
-    position: fixed;
-    top: 300px;
-    left: 100px;
-    .some-button {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      .fa-edit,
-      .fa-comment {
-        font-size: 20px;
-      }
-    }
-  }
-}
-
-@media (max-width: 500px) {
-  .tutorial-detail-main {
-    .without-comment-like-button {
-      h1 {
-        font-size: 25px;
-        padding: 10px;
-      }
-
-      span.tuto-content {
-        font-size: 18px;
-        line-height: 1.5;
-        letter-spacing: -0.003em;
-        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-        font-style: italic;
-      }
-    }
-  }
+hr {
+  border: solid 1px silver;
+  width: 100%;
 }
 
 blockquote {
@@ -224,7 +114,8 @@ blockquote {
 
 // tutorial form
 .tutorial-form-container,
-.blog-form-container, .contact-form-box {
+.blog-form-container,
+.contact-form-box {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -237,7 +128,8 @@ blockquote {
 
 @media (max-width: 500px) {
   .tutorial-form-container,
-  .blog-form-container, .contact-form-box {
+  .blog-form-container,
+  .contact-form-box {
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -263,5 +155,5 @@ blockquote {
     padding: 10px;
     height: 370px;
   }
-  // 
+  //
 }

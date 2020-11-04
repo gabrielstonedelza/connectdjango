@@ -6,7 +6,11 @@
 {% endblock %}
 {% block content%}
     <br>
-    <div class="tutorial-detail-main">
+    <div id="like-helpful-section" >
+      <!-- <a title="comments" class="butt" href="#" data-toggle="modal" data-target="#commentImprovementModal"><i class="fas fa-comment fa-2x"></i><span class="text-white">{{ comments.count }}</span></a> -->
+      <a title="comments" class="butt" href="#" data-toggle="modal" data-target="#commentImprovementModal"><i class="fas fa-comment"></i> <span class="text-white">{{ comments.count }}</span></a>
+    </div>
+    <div class="improvement-detail-main">
         <br>
         <div class="without-comment-like-button">
           {% if tutorial.image %}
@@ -32,6 +36,7 @@
               <small class="text-muted">{{ improvement.date_posted|date:"M, D Y"}}</small>
             </div>
           </div>
+          <hr>
           <br>
           <div class="old-tobe-improved">
             <h3 class="mb-2"> Needed change</h3>
@@ -47,11 +52,7 @@
           <br>
           <hr class="my-4">
         </div>
-        <div id="like-helpful-section" >
-            <a title="comments" class="ml-3" href="#" data-toggle="modal" data-target="#commentImprovementModal"><i class="fas fa-comment fa-2x text-muted"></i></a>
-            <span class="text-muted ml-1">{{ comments.count }}</span>
-        </div>
-
+        
     </div>
 <br>
 

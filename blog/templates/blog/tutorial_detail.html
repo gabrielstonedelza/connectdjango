@@ -5,6 +5,17 @@
 {{ tutorial.title }}
 {% endblock %}
 {% block content%}
+<div id="like-helpful-section" >
+  <div class="some-button">
+    <div id="likes_section">
+       {% include "blog/like_form.html" %}
+     </div>
+   <a title="comments" class="butt" href="#" data-toggle="modal" data-target="#sideModalTR"><i class="fas fa-comment "></i> <span class="text-white">{{ comments.count }}</span></a>
+
+   <a title="suggest improvements for this tutorial" class="butt" href="#" data-toggle="modal" data-target="#improvemntSideModal"><i class="fas fa-edit"></i> <span class="text-white">{{ improvements.count }}</span></a>
+   
+  </div>
+</div>
     <br>
     <div class="tutorial-detail-main">
         <br>
@@ -25,17 +36,17 @@
               {% else %}
                 <a href="{% url 'userprofilepost' tutorial.user.username %}">{{ tutorial.user.username}}</a>
               {% endif %}
-             
               <br>
               <small class="text-muted">{{ tutorial.date_posted|date:"M, D Y"}}</small>
             </div>
           </div>
+          <hr class="my-4">
           <br>
           <div class="tutorial_detail_content">
-            <span class="tuto-content">{{ tutorial.tutorial_content|safe }}</span>
+            <p class="tuto-content">{{ tutorial.tutorial_content|safe }}</p>
           </div>
           <hr class="my-4">
-          <h3 class="mb-3">Suggested improvements about tutorial</h3>
+          <h5 class="mb-3">Suggested changes to  tutorial</h5>
           <br>
           <div class="for-suggested-improvements">
             <ul class="">
@@ -56,17 +67,7 @@
             </ul>
           </div>
         </div>
-        <div id="like-helpful-section" >
-          <div class="some-button">
-            <div id="likes_section">
-               {% include "blog/like_form.html" %}
-             </div>
-           <a title="comments" class="" href="#" data-toggle="modal" data-target="#sideModalTR"><i class="fas fa-comment text-muted"></i> <span class="text-muted">{{ comments.count }}</span></a>
-  
-           <a title="suggest improvements for this tutorial" class="" href="#" data-toggle="modal" data-target="#improvemntSideModal"><i class="fas fa-edit text-muted"></i> <span class="text-muted">{{ improvements.count }}</span></a>
-           
-          </div>
-        </div>
+        
 
     </div>
 <br>
