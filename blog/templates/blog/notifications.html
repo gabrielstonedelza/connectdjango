@@ -18,7 +18,7 @@ Notifications
                         <div class="d-flex justify-between">
                             <img alt="" class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}"
                                  style="width:50px;height:50px;border-radius:50%;">
-                            <span style="font-weight:bold;" class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                            <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
                             </span>
                         </div>
                     </li>
@@ -31,7 +31,7 @@ Notifications
                         <div class="d-flex justify-between">
                             <img alt="" class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}"
                                  style="width:50px;height:50px;border-radius:50%;">
-                            <span style="font-weight:bold;" class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
+                            <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
                                 </span>
                         </div>
                     </li>
@@ -43,9 +43,9 @@ Notifications
                         <div class="d-flex justify-between">
                             <img alt="" class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}"
                                  style="width:50px;height:50px;border-radius:50%;">
-                            <a style="font-weight:bold;" class="text-muted" href="{% url 'userprofilepost' u.follower_sender.username %}">{{ u.follower_sender }} is
+                            <a class="text-muted" href="{% url 'userprofilepost' u.follower_sender.username %}">{{ u.follower_sender }} is
                                 following you
-                                <br><small class="text-muted">{{ u.date_notified }}</small></a>
+                                <br><small class="font-bold text-muted">{{ u.date_notified }}</small></a>
                         </div>
                     </li>
                 </a>
@@ -69,7 +69,7 @@ Notifications
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                          style="width:50px;height:50px;border-radius:50%;">
-                                         <span class="font-bold text-muted">'{{ u.notify_alert }}' <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
                                          </span>
                                 </div>
                             </li>
@@ -82,7 +82,7 @@ Notifications
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                          style="width:50px;height:50px;border-radius:50%;">
-                                         <span class="font-bold text-muted">'{{ u.notify_alert }}' <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
                                          </span>
                                 </div>
                             </li>
@@ -95,7 +95,7 @@ Notifications
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""
                                          style="width:50px;height:50px;border-radius:50%;">
-                                         <span class="font-bold text-muted">'{{ u.notify_alert }}' <br><small class="text-muted">{{ u.date_notified }}</small>
+                                         <span class="font-bold text-muted">{{ u.notify_alert }} <br><small class="text-muted">{{ u.date_notified }}</small>
                                          </span>
                                 </div>
                             </li>
