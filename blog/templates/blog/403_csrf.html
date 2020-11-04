@@ -1,12 +1,25 @@
-{% extends "blog/base_with_nav.html"%}
+{% extends "blog/base.html"%}
 {% block title %}
-Error Occured
+Error 
 {% endblock %}
 {% load static %}
-{% block content %}
-
+{% block content%}
+<br>
 <div class="container">
     <br>
-    <h3>Sorry something went wrong</h3>
+    <div class="error-container">
+        <br>
+        <h3 class="text-center">Something went wrong</h3>
+        <br>
+        <div class="error-png animated bounceInLeft" style="display:flex;justify-content:center;align-items:center;">
+            <div>
+                <img src="{% static 'blog/images/unhappy.png'  %}" alt="" style="width:100;height:100px;">
+            <br>
+                <br>
+            <small class="text-muted font-weight-bold"><a href="{% url 'login' %}">Go to login</a></small>
+            </div>
+
+        </div>
+    </div>
 </div>
 {% endblock %}

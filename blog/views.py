@@ -15,26 +15,21 @@ from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost, NotifyMe
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
-import imghdr
 
 
 def csrf_failure(request, reason=""):
-
-    
-
-    return render(request,"blog/403_csrf.html")
-    
+    return render(request, "blog/403_csrf.html")
 
 
 @login_required
 def news_letter(request):
     all_users = User.objects.exclude(id=request.user.id)
-   
 
     for i in all_users:
         if i.email:
-            send_my_mail(f"Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name":i.username}, "email_templates/success.html")
-    messages.success(request,"Newsletter sent")
+            send_my_mail(f"Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name": i.username},
+                         "email_templates/success.html")
+    messages.success(request, "Newsletter sent")
 
     return render(request, "blog/newsletter.html")
 
@@ -59,7 +54,6 @@ def all_tutorial(request):
         "name": request.user.username,
 
     }
-    
 
     return render(request, "blog/tutorials.html", context)
 
@@ -84,7 +78,9 @@ def create_tutorial(request):
 
             Tutorial.objects.create(user=request.user, title=title, image=img, tutorial_content=t_content)
             for ff in user_followers:
-                send_my_mail(f"New tutorial from {request.user.username}", settings.EMAIL_HOST_USER, ff.email, {"name":ff.username,"title": title,"creator": request.user.username}, "email_templates/tutorial_create_success.html")
+                send_my_mail(f"New tutorial from {request.user.username}", settings.EMAIL_HOST_USER, ff.email,
+                             {"name": ff.username, "title": title, "creator": request.user.username},
+                             "email_templates/tutorial_create_success.html")
             return redirect('tutorials')
     else:
         form = TutorialForm()
@@ -101,22 +97,23 @@ def create_tutorial(request):
 
 
 @login_required
-def tutorial_improvements(request,id):
+def tutorial_improvements(request, id):
     # tutorial = get_object_or_404(Tutorial, id=tutorial_id)
     improvement = get_object_or_404(ImproveTuto, id=id)
     comments = ImproveTutoComments.objects.filter(improvetutocomment=improvement).order_by('-date_posted')
     my_notify = mynotifications(request.user)
 
     if improvement:
-        improvement.views +=1
+        improvement.views += 1
         improvement.save()
     # comment form 
     if request.method == 'POST':
         form = ImproveTutoCommentsForm(request.POST)
         if form.is_valid():
             comment = request.POST.get('comment')
-           
-            comment = ImproveTutoComments.objects.create(improvetutocomment=improvement, user=request.user, comment=comment)
+
+            comment = ImproveTutoComments.objects.create(improvetutocomment=improvement, user=request.user,
+                                                         comment=comment)
             comment.save()
 
     else:
@@ -138,7 +135,7 @@ def tutorial_improvements(request,id):
         return JsonResponse({"comments": comment})
 
     return render(request, "blog/improvement_detail.html", context)
-    
+
 
 @login_required
 def tutorial_detail(request, id):
@@ -159,7 +156,7 @@ def tutorial_detail(request, id):
         form = CommentsForm(request.POST)
         if form.is_valid():
             comment = request.POST.get('comment')
-           
+
             comment = Comments.objects.create(tutorial=tutorial, user=request.user, comment=comment)
             comment.save()
 
@@ -173,8 +170,10 @@ def tutorial_detail(request, id):
             title = improvement_form.cleaned_data.get('title')
             can_be_modified = improvement_form.cleaned_data.get('can_be_modified')
             improvement_or_change = improvement_form.cleaned_data.get('improvement_or_change')
-            ImproveTuto.objects.create(tuto=tutorial, user=request.user,title=title, can_be_modified=can_be_modified, improvement_or_change=improvement_or_change)
-            messages.success(request, f"Notification is sent to {tutorial.user.username} about this suggested improvement,thank you {request.user.username}.")
+            ImproveTuto.objects.create(tuto=tutorial, user=request.user, title=title, can_be_modified=can_be_modified,
+                                       improvement_or_change=improvement_or_change)
+            messages.success(request,
+                             f"Notification is sent to {tutorial.user.username} about this suggested improvement,thank you {request.user.username}.")
             return redirect('tutorial_detail', tutorial.id)
 
     else:
@@ -233,7 +232,7 @@ def like_tutorial(request, id):
 def update_tutorial(request, id):
     tutorial = get_object_or_404(Tutorial, id=id)
     if request.method == "POST":
-        form = TutorialUpdateForm(request.POST,request.FILES, instance=tutorial)
+        form = TutorialUpdateForm(request.POST, request.FILES, instance=tutorial)
         if form.is_valid():
             form.save()
             messages.success(request, f"Tutorial was updated.")
@@ -247,7 +246,6 @@ def update_tutorial(request, id):
         "tutorial": tutorial
     }
     return render(request, "blog/tutorial_update.html", context)
-
 
 
 @login_required
@@ -340,7 +338,9 @@ def create_blog(request):
 
             BlogPost.objects.create(user=request.user, title=title, content=content, blog_image=blog_img)
             for ff in user_followers:
-                send_my_mail(f"New blog from {request.user.username}", settings.EMAIL_HOST_USER, ff.email, {"name":ff.username,"title": title,"creator": request.user.username}, "email_templates/blog_create_success.html")
+                send_my_mail(f"New blog from {request.user.username}", settings.EMAIL_HOST_USER, ff.email,
+                             {"name": ff.username, "title": title, "creator": request.user.username},
+                             "email_templates/blog_create_success.html")
             return redirect('all_blogs')
     else:
         form = BlogPostForm()
@@ -399,14 +399,13 @@ def search_queries(request):
 
 
 @login_required
-def user_profile(request,username):
+def user_profile(request, username):
     my_notify = mynotifications(request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
-
 
     # user's username
     deuser = get_object_or_404(User, username=username)
@@ -575,5 +574,3 @@ def feed_backs(request):
         return JsonResponse({"form": feedback})
 
     return render(request, "blog/feedback.html", context)
-
-
