@@ -4,11 +4,9 @@
     <form action="{% url 'like_blog' blog.id %}" method="POST" id="like_blog_form">
         {% csrf_token %}
         {% if is_liked %}
-            <button type="submit" class="butt" id="like_blog_button" value="{{ blog.id }}"><i class="fas fa-thumbs-up"></i></button>
+            <button type="submit" class="butt" id="like_blog_button" value="{{ blog.id }}"><i class="fas fa-thumbs-up"></i> <span class="ml-2 mt-1">{{ likes_count }}</span></button>
         {% else %}
-            <button type="submit" class="butt" id="like_blog_button" value="{{ blog.id }}"><i class="far fa-thumbs-up"></i></button>
+            <button type="submit" class="butt" id="like_blog_button" value="{{ blog.id }}"><i class="far fa-thumbs-up"></i> <span class="ml-2 mt-1">{{ likes_count }}</span></button>
         {% endif %}
     </form>
-    
-    <span class="ml-2 mt-1">{{ likes_count }}</span>
 </div>

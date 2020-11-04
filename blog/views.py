@@ -231,7 +231,7 @@ def like_tutorial(request, id):
 def update_tutorial(request, id):
     tutorial = get_object_or_404(Tutorial, id=id)
     if request.method == "POST":
-        form = TutorialUpdateForm(request.POST, instance=tutorial)
+        form = TutorialUpdateForm(request.POST,request.FILES, instance=tutorial)
         if form.is_valid():
             form.save()
             messages.success(request, f"Tutorial was updated.")
@@ -368,7 +368,7 @@ def create_blog(request):
 def update_blog(request, id):
     blog = get_object_or_404(BlogPost, id=id)
     if request.method == "POST":
-        form = BlogUpdateForm(request.POST, instance=blog)
+        form = BlogUpdateForm(request.POST, request.FILES, instance=blog)
         if form.is_valid():
             form.save()
             return redirect('blogpost_detail', blog.id)
@@ -433,7 +433,6 @@ def user_profile(request,username):
     deuser = get_object_or_404(User, username=username)
     df_count = deuser.profile.following.all().count
     dfs_count = deuser.profile.followers.all().count
-    user_contribution_stats = ImproveTuto.objects.filter(user=deuser)
 
     tutorials = Tutorial.objects.filter(user=deuser.id).order_by('-date_posted')
     blogs = BlogPost.objects.filter(user=deuser.id).order_by('-date_posted')
