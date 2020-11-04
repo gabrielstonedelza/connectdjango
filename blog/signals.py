@@ -49,7 +49,7 @@ def alert_tutorial_comment(sender,created,instance,**kwargs):
     message = f"{instance.user} commented on your tutorial '{instance.tutorial.title}'"
 
     if created:
-        if not instance.tutorial.user:
+        if not instance.user == instance.tutorial.user:
             NotifyMe.objects.create(user=tutorial_user, notify_title=title, notify_alert=message, follower_sender=instance.user, tuto_id=instance.tutorial.id)
 
 

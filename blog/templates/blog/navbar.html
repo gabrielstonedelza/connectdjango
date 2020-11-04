@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0C4B33;">
     <!-- Navbar brand -->
     <a id="mynav_bar_container" title="Go to tutorials" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="{% url 'tutorials' %}">
-      <svg width="250" height="30" viewBox="0 0 891 185" fill="none" xmlns="http://www.w3.org/2000/svg" id="svg_logo">
+      <svg width="200" height="30" viewBox="0 0 891 185" fill="none" xmlns="http://www.w3.org/2000/svg" id="svg_logo">
       <mask id="path-1-outside-1" maskUnits="userSpaceOnUse" x="0.791992" y="0.76799" width="890" height="184" fill="black">
       <rect fill="white" x="0.791992" y="0.76799" width="890" height="184"/>
       <path d="M91.04 92.168C91.52 91.592 92.336 91.304 93.488 91.304C94.736 91.304 95.744 91.736 96.512 92.6C97.28 93.464 97.664 95.096 97.664 97.496C97.664 99.896 96.848 103.112 95.216 107.144C93.68 111.08 91.376 115.064 88.304 119.096C85.232 123.032 80.96 126.296 75.488 128.888C70.112 131.48 64.064 132.776 57.344 132.776C41.792 132.776 29.312 127.784 19.904 117.8C10.496 107.72 5.79199 93.416 5.79199 74.888C5.79199 56.264 10.208 42.296 19.04 32.984C27.968 23.576 39.632 18.872 54.032 18.872C63.344 18.872 70.64 21.272 75.92 26.072C81.2 30.872 83.84 36.2 83.84 42.056C83.84 44.456 83.12 46.376 81.68 47.816C80.24 49.256 78.8 49.976 77.36 49.976C74.672 49.976 72.848 49.4 71.888 48.248C72.464 46.808 72.752 45.032 72.752 42.92C72.752 37.736 71.072 33.608 67.712 30.536C64.448 27.464 59.648 25.928 53.312 25.928C43.808 25.928 35.696 30.488 28.976 39.608C22.352 48.632 19.04 60.632 19.04 75.608C19.04 90.584 22.736 102.68 30.128 111.896C37.52 121.016 46.4 125.576 56.768 125.576C67.136 125.576 75.44 122.456 81.68 116.216C87.92 109.88 91.04 101.864 91.04 92.168Z"/>
@@ -83,7 +83,7 @@
           </div>
         </li>
         
-        {% if request.user.username == "gabby" %}
+        {% if request.user.username == "gabrielstone" %}
           <li class="nav-item ml-1 mr-1">
             <a title="send newsletter"  href="{% url 'newsletter' %}" title="Profile" class="nav-link">
               <i class="fas fa-envelope"></i>

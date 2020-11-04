@@ -31,10 +31,10 @@
             </div>
           </div>
           <br>
-          <span class="tuto-content">{{ tutorial.tutorial_content|safe }}</span>
-          <br>
+          <div class="tutorial_detail_content">
+            <span class="tuto-content">{{ tutorial.tutorial_content|safe }}</span>
+          </div>
           <hr class="my-4">
-          <br>
           <h3 class="mb-3">Suggested improvements about tutorial</h3>
           <br>
           <div class="for-suggested-improvements">
@@ -119,5 +119,28 @@
 </div>
 <br>
 <br>
+
+<script>
+  CKEDITOR.replace( 'can_be_improved_form',
+ {
+     entities: false,
+     basicEntities: false,
+     entities_greek: false,
+     entities_latin: false,
+     htmlDecodeOutput:true,
+ }
+);
+</script>
+<script>
+  CKEDITOR.replace( 'improvement_or_change_form',
+ {
+     entities: false,
+     basicEntities: false,
+     entities_greek: false,
+     entities_latin: false,
+     htmlDecodeOutput:true,
+ }
+);
+</script>
 {% endblock %}
 
