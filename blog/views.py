@@ -20,6 +20,8 @@ import imghdr
 
 def csrf_failure(request, reason=""):
 
+    
+
     return render(request,"blog/403_csrf.html")
     
 
