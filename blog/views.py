@@ -247,17 +247,6 @@ def update_tutorial(request, id):
     return render(request, "blog/tutorial_update.html", context)
 
 
-class TutorialDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Tutorial
-    success_url = '/tutorials'
-
-    def test_func(self):
-        tutorial = self.get_object()
-        if self.request.user == tutorial.user:
-            return True
-        else:
-            return False
-
 
 @login_required
 def blogs(request):
@@ -383,18 +372,6 @@ def update_blog(request, id):
     return render(request, "blog/blog_update.html", context)
 
 
-class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = BlogPost
-    success_url = '/all_blogs'
-
-    def test_func(self):
-        blog = self.get_object()
-        if self.request.user == blog.user:
-            return True
-        else:
-            return False
-
-
 @login_required
 def search_queries(request):
     query = request.GET.get('q', None)
@@ -436,6 +413,8 @@ def user_profile(request,username):
 
     tutorials = Tutorial.objects.filter(user=deuser.id).order_by('-date_posted')
     blogs = BlogPost.objects.filter(user=deuser.id).order_by('-date_posted')
+    tuto_count = tutorials.count()
+    blog_count = blogs.count()
 
     paginator = Paginator(tutorials, 15)
     page = request.GET.get('page')
@@ -462,6 +441,8 @@ def user_profile(request,username):
         "blogs": blogs,
         "df_count": df_count,
         "dfs_count": dfs_count,
+        'tuto_count': tuto_count,
+        'blog_count': blog_count
     }
 
     return render(request, "blog/userpostprofile.html", context)

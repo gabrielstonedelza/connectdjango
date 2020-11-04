@@ -7,6 +7,11 @@
   padding: 20px;
 }
 
+.main-home-tutorials-container hr {
+  border: solid 1px silver;
+  width: 100%;
+}
+
 .main-home-tutorials-container .tutorial-container {
   -webkit-columns: 600px 2;
           columns: 600px 2;
@@ -126,11 +131,6 @@
   .main-home-tutorials-container .tutorial-container .tutorial-list .tutorial-image img {
     width: 100%;
   }
-}
-
-hr {
-  border: solid 1px silver;
-  width: 100%;
 }
 
 blockquote {

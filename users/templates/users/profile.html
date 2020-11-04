@@ -68,11 +68,11 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active text-muted" id="tutorials-tab" data-toggle="tab" href="#tutorials" role="tab" aria-controls="tutorials"
-                    aria-selected="true">Tutorials</a>
+                    aria-selected="true">Tutorials <span class="badge badge-info ml-1">{{ tuto_count }}</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link text-muted" id="blogs-tab" data-toggle="tab" href="#blogs" role="tab" aria-controls="blogs"
-                    aria-selected="false">Blogs</a>
+                    aria-selected="false">Blogs <span class="badge badge-info ml-1">{{ blog_count }}</span></a>
                 </li>
               </ul>
               <div class="tab-content" id="myTabContent">
@@ -88,7 +88,7 @@
                                 <small class="text-muted">last update {{ tutorial.date_posted|date:"M D Y"}}</small>
                                 <div class="update-delete">
                                   <a href="{% url 'tutorial_update' tutorial.id %}" class="butt ml-3" style="color:white;">Update</a>
-                                  <a href="{% url 'tutorial_delete' tutorial.pk %}" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
+                                  
                                 </div>
                             </div>
                             <br>
@@ -144,7 +144,7 @@
                         <small class="text-muted">last update {{ blog.date_posted|date:"M D Y"}}</small>
                         <div class="update-delete">
                           <a href="{% url 'blog_update' blog.id %}" class="butt ml-3" style="color:white;">Update</a>
-                          <a href="{% url 'blog_delete' blog.pk %}" class="butt ml-3" class="butt ml-3" style="background-color:red;color:white;">Delete</a>
+                          
                         </div>
                     </div>
                     <br>

@@ -52,6 +52,8 @@ def profile(request, username):
     followers = myprofile.followers.all()
     tutorials = Tutorial.objects.filter(user=request.user)
     blogs = BlogPost.objects.filter(user=request.user)
+    tuto_count = tutorials.count()
+    blog_count = blogs.count()
 
     paginator = Paginator(tutorials, 15)
     page = request.GET.get('page')
@@ -71,7 +73,9 @@ def profile(request, username):
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
         "tutorials": tutorials,
-        "blogs": blogs
+        "blogs": blogs,
+        'tuto_count': tuto_count,
+        'blog_count': blog_count
     }
     return render(request, "users/profile.html", context)
 

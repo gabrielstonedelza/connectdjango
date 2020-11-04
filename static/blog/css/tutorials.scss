@@ -6,6 +6,11 @@
   gap: 1.5rem;
   padding: 20px;
 
+  hr {
+    border: solid 1px silver;
+    width: 100%;
+  }
+
   .tutorial-container {
     columns: 600px 2;
     margin: 5px;
@@ -102,10 +107,7 @@
   }
 }
 
-hr {
-  border: solid 1px silver;
-  width: 100%;
-}
+
 
 blockquote {
   display: flex;
