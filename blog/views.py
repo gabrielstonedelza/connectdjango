@@ -9,9 +9,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
-from .forms import (FeedbackForm, ContactUsForm, TutorialForm, CommentsForm, BlogPostForm, BlogUpdateForm,
+from .forms import (FeedbackForm,TutorialForm, CommentsForm, BlogPostForm, BlogUpdateForm,
                     TutorialUpdateForm, ImproveTutoForm, ImproveTutoCommentsForm)
-from .models import (Tutorial, Comments, FeedBack, ContactUs, BlogPost, NotifyMe, ImproveTuto, ImproveTutoComments)
+from .models import (Tutorial, Comments, FeedBack, BlogPost, NotifyMe, ImproveTuto, ImproveTutoComments)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings

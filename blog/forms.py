@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tutorial, Comments, FeedBack, ContactUs, BlogPost, ImproveTuto, ImproveTutoComments
+from .models import Tutorial, Comments, FeedBack, BlogPost, ImproveTuto, ImproveTutoComments
 
 
 class FeedbackForm(forms.ModelForm):
@@ -8,18 +8,6 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model = FeedBack
         fields = ['feedback']
-
-
-class ContactUsForm(forms.ModelForm):
-    name = forms.CharField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'name',"id":"contact_name"}))
-    email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email',"id":"contact_email"}))
-    subject = forms.CharField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'subject',"id":"subject"}))
-    message = forms.CharField(label="", widget=forms.Textarea(
-        attrs={'class': 'form-control', 'placeholder': 'enter your message',"id":"contact_message"}))
-
-    class Meta:
-        model = ContactUs
-        fields = ['name', 'email', 'subject', 'message']
 
 
 class TutorialForm(forms.ModelForm):

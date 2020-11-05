@@ -76,16 +76,6 @@ class FeedBack(models.Model):
         return f"{self.user.username} gave a feedback"
 
 
-class ContactUs(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
-    subject = models.CharField(max_length=100)
-    message = models.TextField()
-
-    def __str__(self):
-        return f"{self.name} wrote {self.subject}"
-
-
 class BlogPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
