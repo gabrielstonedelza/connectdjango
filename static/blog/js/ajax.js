@@ -9,7 +9,6 @@ $(function(){
             data: formData,
             success: function (response) {
                 $("#results_section").html(response['form'])
-                // console.log($("results_section").html(response['form']))
             },
             error: function (rs, e) {
                 console.log(rs.responseText);
