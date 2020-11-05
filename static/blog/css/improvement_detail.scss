@@ -11,6 +11,9 @@
     width: 65%;
 
     .detail-tuto-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       img {
         max-width: 100%;
         height: auto;
@@ -73,7 +76,7 @@
 
 #like-helpful-section {
   position: fixed;
-  top: 300px;
+  top: 280px;
   left: 100px;
   .some-button {
     display: flex;
@@ -87,7 +90,7 @@
 }
 
 // media queries
-@media (max-width: 568px) {
+@media (max-width: 700px) {
   .improvement-detail-main {
     .without-comment-like-button {
       width: 100%;
@@ -96,8 +99,19 @@
       }
     }
   }
+
+  #like-helpful-section {
+    position: fixed;
+    top: 280px;
+    left: 50px;
+    .some-button {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .fa-edit,
+      .fa-comment {
+        font-size: 18px;
+      }
+    }
+  }
 }
-// .fa-comment{
-//     font-size: 25px;
-//     padding: 5px;
-// }

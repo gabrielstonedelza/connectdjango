@@ -163,6 +163,16 @@ blockquote {
   width: 50%;
 }
 
+.sticky {
+  position: fixed;
+  top: 200px;
+  left: 80px;
+}
+
+.sticky .fa-plus-circle {
+  font-size: 20px;
+}
+
 @media (max-width: 500px) {
   .tutorial-form-container,
   .blog-form-container,
@@ -187,12 +197,14 @@ blockquote {
   .contact-form-box form {
     width: 100%;
   }
-}
-
-.sticky {
-  position: fixed;
-  top: 200px;
-  left: 80px;
+  .sticky {
+    position: fixed;
+    top: 200px;
+    left: 50px;
+  }
+  .sticky .fa-plus-circle {
+    font-size: 20px;
+  }
 }
 
 .modal-body {

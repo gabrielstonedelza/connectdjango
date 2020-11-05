@@ -9,8 +9,12 @@
 
   .without-comment-like-button {
     width: 65%;
-    
+
     .detail-tuto-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       img {
         max-width: 100%;
         height: auto;
@@ -31,8 +35,9 @@
 
     .tutorial_detail_content {
       background: #d3d3d3;
-      padding: 10px;
+      padding: 20px;
       border-radius: 10px;
+      width: 100%;
     }
 
     .for-suggested-improvements {
@@ -54,7 +59,7 @@
 
 #like-helpful-section {
   position: fixed;
-  top: 300px;
+  top: 280px;
   left: 100px;
   .some-button {
     display: flex;
@@ -67,15 +72,28 @@
   }
 }
 
-
 // media queries
-@media(max-width: 568px){
-    .tutorial-detail-main{
-        .without-comment-like-button{
-            width: 100%;
-            h1{
-                font-size: 20px;
-            }
-        }
+@media (max-width: 700px) {
+  .tutorial-detail-main {
+    .without-comment-like-button {
+      width: 100%;
+      h1 {
+        font-size: 20px;
+      }
     }
+  }
+  #like-helpful-section {
+    position: fixed;
+    top: 280px;
+    left: 50px;
+    .some-button {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .fa-edit,
+      .fa-comment {
+        font-size: 18px;
+      }
+    }
+  }
 }

@@ -22,6 +22,18 @@
   width: 65%;
 }
 
+.tutorial-detail-main .without-comment-like-button .detail-tuto-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .tutorial-detail-main .without-comment-like-button .detail-tuto-image img {
   max-width: 100%;
   height: auto;
@@ -45,8 +57,9 @@
 
 .tutorial-detail-main .without-comment-like-button .tutorial_detail_content {
   background: #d3d3d3;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
+  width: 100%;
 }
 
 .tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul {
@@ -68,7 +81,7 @@
 
 #like-helpful-section {
   position: fixed;
-  top: 300px;
+  top: 280px;
   left: 100px;
 }
 
@@ -88,12 +101,31 @@
   font-size: 20px;
 }
 
-@media (max-width: 568px) {
+@media (max-width: 700px) {
   .tutorial-detail-main .without-comment-like-button {
     width: 100%;
   }
   .tutorial-detail-main .without-comment-like-button h1 {
     font-size: 20px;
+  }
+  #like-helpful-section {
+    position: fixed;
+    top: 280px;
+    left: 50px;
+  }
+  #like-helpful-section .some-button {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 1rem;
+  }
+  #like-helpful-section .some-button .fa-edit,
+  #like-helpful-section .some-button .fa-comment {
+    font-size: 18px;
   }
 }
 /*# sourceMappingURL=tutorial_detail.css.map */
