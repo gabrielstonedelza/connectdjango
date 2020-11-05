@@ -47,37 +47,5 @@ $.ajaxSetup({
   });
 
 //   for contact form
-$(document).on("submit", "#contact_form", function (event) {
-    event.preventDefault();
-    message = "Thank you for contacting us we will get back to you soon"
-
-    const name = document.getElementById('contact_name')
-    const email = document.getElementById('contact_email')
-    const subject = document.getElementById('subject')
-    const cmessage = document.getElementById('contact_message')
-    $.ajax({
-      type: "POST",
-      url: $(this).attr("action"),
-      data: {
-        "name": name.value,
-        "email": email.value,
-        "subject": subject.value,
-        "message": cmessage.value
-      },
-      dataType: "json",
-      success: function (response) {
-        $("#contact_form_section").html(response["form"]);
-        $("textarea").val("");
-        $("input").val("");
-        $("#showmessage_success").html(message)
-        setTimeout(function () {
-            $("#showmessage_success").slideUp(3000);
-          }, 5000);
-      },
-      error: function (rs, e) {
-        console.log(rs.responseText);
-      },
-    });
-  });
 
 });

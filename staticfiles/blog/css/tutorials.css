@@ -7,6 +7,11 @@
   padding: 20px;
 }
 
+.main-home-tutorials-container hr {
+  border: solid 1px silver;
+  width: 100%;
+}
+
 .main-home-tutorials-container .tutorial-container {
   -webkit-columns: 600px 2;
           columns: 600px 2;
@@ -42,13 +47,11 @@
 }
 
 .main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other span {
-  font-weight: bold;
   text-transform: capitalize;
 }
 
 .main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other a {
-  font-size: 25px;
-  font-weight: bold;
+  font-size: 20px;
 }
 
 .main-home-tutorials-container .tutorial-container .tutorial-list .tutorial-image {
@@ -128,122 +131,6 @@
   }
 }
 
-.tutorial-detail-main {
-  padding: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.tutorial-detail-main .without-comment-like-button {
-  display: -ms-grid;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  max-width: 680px;
-}
-
-.tutorial-detail-main .without-comment-like-button h1 {
-  padding: 10px;
-}
-
-.tutorial-detail-main .without-comment-like-button .detail-tuto-image img {
-  width: 100%;
-  height: 339.59;
-}
-
-.tutorial-detail-main .without-comment-like-button .tutorial-author {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1rem;
-  justify-self: start;
-}
-
-.tutorial-detail-main .without-comment-like-button .tutorial-author .other-details a {
-  text-transform: capitalize;
-  font-weight: bold;
-  color: #000;
-}
-
-.tutorial-detail-main .without-comment-like-button span.tuto-content {
-  font-size: 21px;
-  line-height: 1.5;
-  letter-spacing: -0.003em;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  font-style: italic;
-}
-
-.tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul {
-  list-style-type: none;
-}
-
-.tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul li {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1rem;
-}
-
-.tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul li img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-}
-
-.tutorial-detail-main .without-comment-like-button .for-suggested-improvements ul li a {
-  font-weight: bold;
-}
-
-.tutorial-detail-main #like-helpful-section {
-  position: fixed;
-  top: 300px;
-  left: 100px;
-}
-
-.tutorial-detail-main #like-helpful-section .some-button {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  gap: 1rem;
-}
-
-.tutorial-detail-main #like-helpful-section .some-button .fa-edit,
-.tutorial-detail-main #like-helpful-section .some-button .fa-comment {
-  font-size: 20px;
-}
-
-@media (max-width: 500px) {
-  .tutorial-detail-main .without-comment-like-button h1 {
-    font-size: 25px;
-    padding: 10px;
-  }
-  .tutorial-detail-main .without-comment-like-button span.tuto-content {
-    font-size: 18px;
-    line-height: 1.5;
-    letter-spacing: -0.003em;
-    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-    font-style: italic;
-  }
-}
-
 blockquote {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -252,7 +139,8 @@ blockquote {
 }
 
 .tutorial-form-container,
-.blog-form-container, .contact-form-box {
+.blog-form-container,
+.contact-form-box {
   padding: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -270,13 +158,25 @@ blockquote {
 }
 
 .tutorial-form-container form,
-.blog-form-container form, .contact-form-box form {
+.blog-form-container form,
+.contact-form-box form {
   width: 50%;
+}
+
+.sticky {
+  position: fixed;
+  top: 200px;
+  left: 80px;
+}
+
+.sticky .fa-plus-circle {
+  font-size: 20px;
 }
 
 @media (max-width: 500px) {
   .tutorial-form-container,
-  .blog-form-container, .contact-form-box {
+  .blog-form-container,
+  .contact-form-box {
     padding: 20px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -293,15 +193,18 @@ blockquote {
             align-items: center;
   }
   .tutorial-form-container form,
-  .blog-form-container form, .contact-form-box form {
+  .blog-form-container form,
+  .contact-form-box form {
     width: 100%;
   }
-}
-
-.sticky {
-  position: fixed;
-  top: 200px;
-  left: 80px;
+  .sticky {
+    position: fixed;
+    top: 200px;
+    left: 50px;
+  }
+  .sticky .fa-plus-circle {
+    font-size: 20px;
+  }
 }
 
 .modal-body {
