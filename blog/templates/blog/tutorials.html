@@ -16,12 +16,12 @@ All Tutorials
                 <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="">
                 <div class="other">
                   {% if tutorial.user == request.user %}
-                    <a style="color:black" href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username }}</a>
+                    <a style="text-transform: capitalize;color:black"  href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username }}</a>
                   {% else %}
-                    <a style="color:black" href="{% url 'userprofilepost' tutorial.user.username %}">{{ tutorial.user.username }}</a>
+                    <a style="text-transform: capitalize;color:black"  href="{% url 'userprofilepost' tutorial.user.username %}">{{ tutorial.user.username }}</a>
                   {% endif %}
                   <br>
-                    <a class="text-muted" href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
+                    <a style="text-transform: capitalize;font-weight: bold;" class="text-muted" href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
                     <br>
                     <span class="text-muted mr-2"><i class="fas fa-thumbs-up mr-2"></i>{{ tutorial.likes.count }}</span>  |
                     <span class="text-muted ml-2 mr-1"><i class="fas fa-eye"></i> {{ tutorial.views }}</span>  |
@@ -31,6 +31,8 @@ All Tutorials
               <div class="tutorial-image">
                 {% if tutorial.image %}
                   <img src="{{ tutorial.image.url }}" alt="">
+                {% else %}
+                <p class="mt-4 text-center animated rubberBand">No image provided</p>
                 {% endif %}
               </div>
             </div>
