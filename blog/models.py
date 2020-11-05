@@ -7,6 +7,7 @@ from PIL import Image
 class Tutorial(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
+    subtitle = models.CharField(max_length=100, default="awesome django")
     image = models.ImageField(upload_to="tutorial_images", help_text="just a photo to simplify what you are teaching.",
                               blank=True)
     tutorial_content = models.TextField(help_text="Type tutorial here")

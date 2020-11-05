@@ -47,13 +47,11 @@
 }
 
 .main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other span {
-  font-weight: bold;
   text-transform: capitalize;
 }
 
 .main-home-tutorials-container .tutorial-container .tutorial-list .userimage-name .other a {
-  font-size: 25px;
-  font-weight: bold;
+  font-size: 20px;
 }
 
 .main-home-tutorials-container .tutorial-container .tutorial-list .tutorial-image {
