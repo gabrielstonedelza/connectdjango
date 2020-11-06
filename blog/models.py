@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 from PIL import Image
 from .validator import validate_file_size
 
+
 class Tutorial(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=100, default="awesome django")
-    image = models.ImageField(upload_to="tutorial_images", help_text="just a photo to simplify what you are teaching.",blank=True, validators=[validate_file_size])
+    image = models.ImageField(upload_to="tutorial_images", help_text="just a photo to simplify what you are teaching.",
+                              blank=True, validators=[validate_file_size])
     tutorial_content = models.TextField(help_text="Type tutorial here")
     likes = models.ManyToManyField(User, related_name="likes", blank=True)
     views = models.IntegerField(default=0)
@@ -17,7 +19,6 @@ class Tutorial(models.Model):
 
     def __str__(self):
         return self.title
-        
 
     def likes_count(self):
         return self.likes.count
@@ -42,6 +43,7 @@ class Comments(models.Model):
     comment = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
 
+
 class ImproveTuto(models.Model):
     tuto = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -55,7 +57,7 @@ class ImproveTuto(models.Model):
         return self.tuto.title
 
     def get_absolut_improvement(self):
-        return reverse("improve_tuto_detail",args={self.pk})
+        return reverse("improve_tuto_detail", args={self.pk})
 
 
 class ImproveTutoComments(models.Model):
@@ -66,6 +68,7 @@ class ImproveTutoComments(models.Model):
 
     def __str__(self):
         return self.improvetutocomment.title
+
 
 class FeedBack(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -80,7 +83,8 @@ class BlogPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
-    blog_image = models.ImageField(upload_to="blog_images", help_text="A photo to illustrate your post.", blank=True, validators=[validate_file_size])
+    blog_image = models.ImageField(upload_to="blog_images", help_text="A photo to illustrate your post.", blank=True,
+                                   validators=[validate_file_size])
     likes = models.ManyToManyField(User, related_name="blog_likes", blank=True)
     views = models.IntegerField(default=0)
     date_posted = models.DateTimeField(auto_now_add=True)

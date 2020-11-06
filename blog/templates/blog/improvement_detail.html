@@ -22,10 +22,10 @@
           <h1>{{ improvement.title }}</h1>
           <br>
           <div class="tutorial-author">
-            <img src="{{ improvement.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;margin-bottom:10px">
+            <img class="mr-1" src="{{ improvement.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;margin-bottom:10px">
             <br>
             
-            <div class="other-details">
+            <div class="other-details ml-1">
               {% if improvement.user == request.user %}
                 <a href="{% url 'profile' improvement.user.username %}">{{ improvement.user.username}}</a>
               {% else %}

@@ -7,12 +7,12 @@
 {% block content%}
 <div id="like-helpful-section" >
   <div class="some-button">
-    <div id="likes_section">
+    <div id="likes_section" class="mb-2">
        {% include "blog/like_form.html" %}
      </div>
-   <a title="comments" class="butt" href="#" data-toggle="modal" data-target="#sideModalTR"><i class="fas fa-comment "></i> <span class="text-white">{{ comments.count }}</span></a>
+   <a title="comments" class="butt mb-2" href="#" data-toggle="modal" data-target="#sideModalTR"><i class="fas fa-comment "></i> <span class="text-white">{{ comments.count }}</span></a>
 
-   <a title="suggest improvements for this tutorial" class="butt" href="#" data-toggle="modal" data-target="#improvemntSideModal"><i class="fas fa-edit"></i> <span class="text-white">{{ improvements.count }}</span></a>
+   <a title="suggest improvements for this tutorial" class="butt mb-2" href="#" data-toggle="modal" data-target="#improvemntSideModal"><i class="fas fa-edit"></i> <span class="text-white">{{ improvements.count }}</span></a>
    
   </div>
 </div>
@@ -29,8 +29,8 @@
           <h1>{{ tutorial.title }}</h1>
           <br>
           <div class="tutorial-author">
-            <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;">
-            <div class="other-details">
+            <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="" style="width:60px;height:60px;border-radius:50%;" class="mr-1">
+            <div class="other-details ml-1">
               {% if tutorial.user == request.user %}
                 <a href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username}}</a>
               {% else %}
@@ -52,8 +52,8 @@
             <ul class="">
               {% for improvement in improvements %}
                 <li class="">
-                  <img src="{{ improvement.user.profile.profile_pic.url}}" alt="">
-                  <div>
+                  <img src="{{ improvement.user.profile.profile_pic.url}}" alt="" class="mr-1">
+                  <div class="ml-1">
                     <a  class="text-muted" href="{{ improvement.get_absolut_improvement }}"> {{ improvement.title }}</a>
                     <br>
                     <span class="text-muted"><i class="fas fa-eye"></i> {{ improvement.views }}</span> |

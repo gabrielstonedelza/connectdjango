@@ -69,10 +69,10 @@
                 <div class="defollowing-container">
                     <!-- defollowing image -->
                     <div class="defollowing-image">
-                        <img src="{{ user.profile.profile_pic.url }}">
+                        <img src="{{ user.profile.profile_pic.url }}" class="mr-1" >
                     </div>
                     <!-- other details -->
-                    <div class="defollowing-other-details">
+                    <div class="defollowing-other-details ml-1">
                         <a href="{% url 'userprofilepost' user.username %}">{{ user.profile.name }} <span class="text-muted ml-2">{{ user.username }}</span></a>
                         <br>
                         {% if user.profile.bio %}

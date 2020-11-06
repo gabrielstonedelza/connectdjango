@@ -18,8 +18,8 @@ Blog Posts
         {% for blog in blog_posts %}
             <div class="tutorial-list">
               <div class="userimage-name">
-                <img src="{{ blog.user.profile.profile_pic.url }}" alt="">
-                <div class="other">
+                <img src="{{ blog.user.profile.profile_pic.url }}" alt="" class="mr-1">
+                <div class="other ml-1">
                   {% if blog.user == request.user %}
                     <a style="color:black" href="{% url 'profile' blog.user.username %}">{{ blog.user.username }}</a>
                   {% else %}
@@ -84,8 +84,8 @@ Blog Posts
       {% for user in users %}
         <div class="user-container">
           <!-- user profile photo -->
-          <img src="{{ user.profile.profile_pic.url }}" alt="">
-          <div class="users-other-details">
+          <img src="{{ user.profile.profile_pic.url }}" alt="" class="mr-1">
+          <div class="users-other-details ml-1">
             <a href="{% url 'userprofilepost' user.username %}">
               {{ user.username }}
               <br>

@@ -104,6 +104,26 @@
         }
       }
     }
+    .users_to_follow {
+      columns: 150px 1;
+      flex-wrap: wrap;
+      .user-container {
+        display: flex;
+        gap: 1rem;
+        img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+        .users-other-details {
+          a {
+            color: #000;
+            font-weight: bold;
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
   }
 }
 

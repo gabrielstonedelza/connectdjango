@@ -13,8 +13,8 @@ All Tutorials
         {% for tutorial in tutorials %}
             <div class="tutorial-list">
               <div class="userimage-name">
-                <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="">
-                <div class="other">
+                <img src="{{ tutorial.user.profile.profile_pic.url }}" alt="" class="mr-1">
+                <div class="other ml-1">
                   {% if tutorial.user == request.user %}
                     <a style="text-transform: capitalize;color:black"  href="{% url 'profile' tutorial.user.username %}">{{ tutorial.user.username }}</a>
                   {% else %}
@@ -81,8 +81,8 @@ All Tutorials
       {% for user in users %}
         <div class="user-container">
           <!-- user profile photo -->
-          <img src="{{ user.profile.profile_pic.url }}" alt="">
-          <div class="users-other-details">
+          <img src="{{ user.profile.profile_pic.url }}" alt="" class="mr-1">
+          <div class="users-other-details ml-1">
             <a href="{% url 'userprofilepost' user.username %}">
               {{ user.username }}
               <br>

@@ -129,6 +129,28 @@
   .main-home-tutorials-container .tutorial-container .tutorial-list .tutorial-image img {
     width: 100%;
   }
+  .main-home-tutorials-container .users_to_follow {
+    -webkit-columns: 150px 1;
+            columns: 150px 1;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .main-home-tutorials-container .users_to_follow .user-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 1rem;
+  }
+  .main-home-tutorials-container .users_to_follow .user-container img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  .main-home-tutorials-container .users_to_follow .user-container .users-other-details a {
+    color: #000;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
 }
 
 blockquote {
