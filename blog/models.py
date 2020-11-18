@@ -6,69 +6,51 @@ from PIL import Image
 from .validator import validate_file_size
 
 
-class Tutorial(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    subtitle = models.CharField(max_length=100, default="awesome django")
-    image = models.ImageField(upload_to="tutorial_images", help_text="just a photo to simplify what you are teaching.",
-                              blank=True, validators=[validate_file_size])
-    tutorial_content = models.TextField(help_text="Type tutorial here")
-    likes = models.ManyToManyField(User, related_name="likes", blank=True)
-    views = models.IntegerField(default=0)
-    date_posted = models.DateTimeField(auto_now_add=True)
+class ChatRoom(models.Model):
+    room_name = models.CharField(max_length=150)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    about = models.CharField(max_length=500,blank=True, default="Team work is all we need")
+    room_logo = models.ImageField(upload_to="room_pics",blank=True, default='room.jpg')
+    is_active = models.BooleanField(default=False)
+    allowed_users = models.ManyToManyField(User, related_name="allowed",blank=True)
+    pending_users = models.ManyToManyField(User, related_name="pending",blank=True)
+    key = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, allow_unicode=True, default='')
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.room_name
 
-    def likes_count(self):
-        return self.likes.count
+    def get_absolute_room_url(self):
+        return reverse("room_detail", args={self.room_name})
 
-    def get_absolute_url(self):
-        return reverse("tutorial_detail", args={self.pk})
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.image:
-            img = Image.open(self.image.path)
-
-            if img.height > 600 or img.width > 900:
-                output_size = (680, 400)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
-
-
-class Comments(models.Model):
-    tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.TextField()
+class Message(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
-
-
-class ImproveTuto(models.Model):
-    tuto = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=150, default="")
-    views = models.IntegerField(default=0)
-    can_be_modified = models.TextField(help_text="Which or part of this tutorial can be improved or changed?")
-    improvement_or_change = models.TextField(help_text="What is your modification?")
-    date_posted = models.DateTimeField(auto_now_add=True)
+    like = models.ManyToManyField(User, related_name='likes', blank=True)
+    love = models.ManyToManyField(User, related_name='love', blank=True)
+    funny = models.ManyToManyField(User, related_name="funny", blank=True)
 
     def __str__(self):
-        return self.tuto.title
+        return f"{self.author.username} just sent a message to the group"
 
-    def get_absolut_improvement(self):
-        return reverse("improve_tuto_detail", args={self.pk})
+    def last_10_messages():
+        return Message.objects.order_by('-date_posted')[:10]
 
-
-class ImproveTutoComments(models.Model):
-    improvetutocomment = models.ForeignKey(ImproveTuto, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.TextField()
+class PrivateMessage(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
+    like = models.ManyToManyField(User, related_name='likes', blank=True)
+    love = models.ManyToManyField(User, related_name='love', blank=True)
+    funny = models.ManyToManyField(User, related_name="funny", blank=True)
 
     def __str__(self):
-        return self.improvetutocomment.title
+        return f"{self.author.username} just sent a message to the group"
 
+    def last_10_messages():
+        return Message.objects.order_by('-date_posted')[:10]
 
 class FeedBack(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -78,35 +60,6 @@ class FeedBack(models.Model):
     def __str__(self):
         return f"{self.user.username} gave a feedback"
 
-
-class BlogPost(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    blog_image = models.ImageField(upload_to="blog_images", help_text="A photo to illustrate your post.", blank=True,
-                                   validators=[validate_file_size])
-    likes = models.ManyToManyField(User, related_name="blog_likes", blank=True)
-    views = models.IntegerField(default=0)
-    date_posted = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_blog_post(self):
-        return reverse("blogpost_detail", args={self.pk})
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.blog_image:
-            img = Image.open(self.blog_image.path)
-
-            if img.height > 400 or img.width > 700:
-                output_size = (680, 400)
-                img.thumbnail(output_size)
-                img.save(self.blog_image.path)
-
-    def likes_count(self):
-        return self.likes.count
 
 
 class NotifyMe(models.Model):

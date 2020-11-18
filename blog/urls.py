@@ -15,17 +15,7 @@ urlpatterns = [
     path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('register/', uviews.register, name='register'),
     path('newsletter/', views.news_letter, name='newsletter'),
-    path('tutorial/new/', views.create_tutorial, name="tutorial_new"),
-    path('tutorials/', views.all_tutorial, name='tutorials'),
-    path('tutorial/<int:id>/', views.tutorial_detail, name="tutorial_detail"),
-    path('tutorial/improvement/<int:id>/', views.tutorial_improvements, name="improve_tuto_detail"),
-    path('like-tutorial/<int:id>/', views.like_tutorial, name="tutorial_like"),
-    path('tutorial/<int:id>/update/', views.update_tutorial, name='tutorial_update'),
-    path('blog-posts/', views.blogs, name="all_blogs"),
-    path("blog/new/", views.create_blog, name="create_blog"),
-    path('blog-post/<int:id>/', views.blog_detail, name="blogpost_detail"),
-    path('like-blog/<int:id>/', views.like_blog, name="like_blog"),
-    path('blog/<int:id>/update/', views.update_blog, name='blog_update'),
+    
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('about-us/', views.about_cd, name="about-us"),
