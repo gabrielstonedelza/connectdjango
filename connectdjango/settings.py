@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'crispy_forms',
     'social_django',
+    'channels',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -71,7 +72,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'connectdjango.wsgi.application'
+ASGI_APPLICATION = 'connectdjango.asgi.application'
 
+# channels
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -132,7 +143,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'tutorials'
+LOGIN_REDIRECT_URL = 'connect-home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

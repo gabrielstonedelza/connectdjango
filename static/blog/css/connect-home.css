@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.mynav {
+  background-color: #1b1b1b;
+  position: fixed;
+  width: 100%;
+  padding: 10px 0;
+  z-index: 5;
+}
+
+.mynav .content {
+  max-width: 1250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.mynav .content .logo a {
+  color: #ffff;
+}
+
+.mynav .content ul.menu-list {
+  list-style-type: none;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.mynav .content ul.menu-list .icon {
+  color: #fff;
+  cursor: pointer;
+  display: none;
+}
+
+.mynav .content ul.menu-list .cancel-btn {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+}
+
+.mynav .content ul.menu-list a {
+  color: #fff;
+}
+
+.mynav .content .icon {
+  color: #fff;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 868px) {
+  .mynav .content ul.menu-list {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100vh;
+    width: 100%;
+    max-width: 400px;
+    background-color: #222;
+    display: block;
+    padding: 40px 0;
+    text-align: center;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  .mynav .content ul.menu-list .icon {
+    display: block;
+  }
+  .mynav .content ul.menu-list li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 1rem;
+  }
+  .mynav .content ul.menu-list li a {
+    font-size: 30px;
+  }
+  .mynav .content ul.menu-list .active {
+    left: 0%;
+  }
+  .mynav .content .icon {
+    display: block;
+  }
+}
+/*# sourceMappingURL=connect-home.css.map */

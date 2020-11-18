@@ -15,7 +15,7 @@ urlpatterns = [
     path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('register/', uviews.register, name='register'),
     path('newsletter/', views.news_letter, name='newsletter'),
-    
+    path('connect-home/',views.connect_home,name='connect-home'),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('about-us/', views.about_cd, name="about-us"),

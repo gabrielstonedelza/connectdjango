@@ -19,7 +19,10 @@ from django.conf import settings
 def csrf_failure(request, reason=""):
     return render(request, "blog/403_csrf.html")
 
+def connect_home(request):
+    return render(request,"blog/connect_home.html")
 
+    
 @login_required
 def news_letter(request):
     all_users = User.objects.exclude(id=request.user.id)
