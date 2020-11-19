@@ -1,7 +1,7 @@
 $(function(){
    
     $(".menu-btn").on('click',()=>{
-        $(".menu-list").addClass('active')
+        $("ul").addClass('active')
         console.log('hi')
     })
 })

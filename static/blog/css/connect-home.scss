@@ -54,6 +54,7 @@
   .mynav {
     .content {
       ul.menu-list {
+        
         .icon {
           display: block;
         }
@@ -76,13 +77,14 @@
             font-size: 30px;
           }
         }
+        .active {
+          left: 0%;
+        }
       }
       .icon {
         display: block;
       }
     }
   }
-  .active {
-    left: 0%;
-  }
+  
 }
