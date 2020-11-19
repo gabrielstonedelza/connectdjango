@@ -97,11 +97,11 @@
   .mynav .content ul.menu-list li a {
     font-size: 30px;
   }
-  .mynav .content ul.menu-list .active {
-    left: 0%;
-  }
   .mynav .content .icon {
     display: block;
+  }
+  .active {
+    left: 0%;
   }
 }
 /*# sourceMappingURL=connect-home.css.map */
