@@ -14,7 +14,8 @@ class ChatRoom(models.Model):
     is_active = models.BooleanField(default=False)
     allowed_users = models.ManyToManyField(User, related_name="allowed",blank=True)
     pending_users = models.ManyToManyField(User, related_name="pending",blank=True)
-    key = models.CharField(max_length=100)
+    allow_any = models.BooleanField(default=False,blank=True,help_text="allow any user to enter your room")
+    key = models.CharField(max_length=100, help_text="protect your room with a key")
     slug = models.SlugField(max_length=100, allow_unicode=True, default='')
     date_created = models.DateTimeField(auto_now_add=True)
 
@@ -23,6 +24,18 @@ class ChatRoom(models.Model):
 
     def get_absolute_room_url(self):
         return reverse("room_detail", args={self.room_name})
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.room_logo:
+            img = Image.open(self.room_logo.path)
+
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.room_logo.path)
+                
 
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

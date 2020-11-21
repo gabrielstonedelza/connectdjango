@@ -19,8 +19,34 @@ from django.conf import settings
 def csrf_failure(request, reason=""):
     return render(request, "blog/403_csrf.html")
 
-def connect_home(request):
-    return render(request,"blog/connect_home.html")
+def chatrooms(request):
+    chatrooms = ChatRoom.objects.all().order_by('-date_created')
+
+    context = {
+        "chatrooms": chatrooms
+    }
+
+    return render(request,"blog/chatrooms.html",context)
+
+@login_required
+def room_detail(request, room_name):
+    room = get_object_or_404(ChatRoom, name=room_name)
+    online_users = UsersCheckedIn.objects.filter(check_date=datetime.today()).order_by('-check_date')
+    users = []
+    for i in online_users.all():
+        users.append(i.user)
+        if request.user in users:
+            users.remove(request.user)
+
+    context = {
+        'room_name': mark_safe(json.dumps(room.id)),
+        'username': mark_safe(json.dumps(request.user.username)),
+        "user_has_checked_in": mycheck['user_has_checked_in'],
+        "online_users": online_users,
+        "users": users,
+        "room": room
+    }
+    return render(request, 'blog/room.html', context)
 
 @login_required
 def blogs(request):

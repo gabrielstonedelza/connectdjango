@@ -52,6 +52,11 @@
       </div>
     </div>
       <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item ml-1 mr-1">
+          <a title="chatrooms"  href="{% url 'chatrooms' %}" title="Profile" class="nav-link">
+           <i class="fas fa-users"></i>
+          </a>
+        </li>
         <li class="nav-item dropdown ml-3 mr-3 is_active">
           <a title="view all blogs or post new" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">Blogs</a>
@@ -60,11 +65,7 @@
             <a class="dropdown-item" href="{% url 'create_blog' %}" title="About Connect Django">Add New</a>
           </div>
         </li>
-         <!-- <li class="nav-item ml-1 mr-1">
-          <a title="add new tutorial"  href="#" title="Profile" class="nav-link">
-           <i class="fas fa-plus"></i>
-          </a>
-        </li> -->
+         
         <li class="nav-item ml-1 mr-1" >
           <a href="#" data-toggle="modal" data-target="#notification_listModal" title="Notifications" class="nav-link" >
             <i class="far fa-bell"></i>

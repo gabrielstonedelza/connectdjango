@@ -1,0 +1,118 @@
+{% extends 'blog/base_with_nav.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+<body>
+<div class="main-chat-section">
+    <div class="users_online">
+        <!-- top bar -->
+        <div class="topbar-with-request username">
+
+        </div>
+        <!--   all online users -->
+        <table class="table table-hover">
+            <tbody>
+            {% for user in online_users %}
+            <tr>
+                <td>
+                    <img src="{{ user.profile.profile_pic.url }}" alt="" style="width:30px;height:30px;border-radius:50%">
+                </td>
+                <td>{{ user.username }}</td>
+                <td>online</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mychat-section">
+        <!-- <textarea id="chat-log" cols="100" rows="20"></textarea><br> -->
+        <input id="chat-message-input" type="text" size="100"><br>
+        <input id="chat-message-submit" type="button" value="Send">
+
+        <div id="show-my-messages">
+
+        </div>
+    </div>
+</div>
+{{ room_name|json_script:"room-name" }}
+<script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        var username = {{ username }}
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+
+        chatSocket.onopen = function (e) {
+            fetchMessages()
+        }
+
+        chatSocket.onmessage = function(e) {
+            var data = JSON.parse(e.data)
+            if (data ['command'] === 'messages'){
+                for (let i=0; i < data['messages'].length; i++){
+                    createMessage(data['messages'][i])
+                }
+            }else if (data['command'] === 'new_message'){
+                createMessage(data['message'])
+            }
+        }
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        // document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            var messageInputDom = document.querySelector('#chat-message-input');
+            var message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'command': 'new_message',
+                'message': message,
+                'from': username
+            }));
+            messageInputDom.value = '';
+        };
+
+        function fetchMessages(){
+            chatSocket.send(JSON.stringify({'command':'fetch_messages'}))
+        }
+
+        function createMessage(data){
+            var author = data['author']
+            var msgListTag = document.createElement('li')
+            var imgTag = document.createElement('img')
+            var pTag = document.createElement('p')
+            var nameTag = document.createElement('h5')
+            nameTag.textContent = author
+            pTag.textContent = data.content
+            imgTag.src = ''
+
+            if (author === username ){
+                msgListTag.className = 'sent'
+            }else{
+                msgListTag.className = 'replies'
+            }
+            msgListTag.appendChild(imgTag)
+            msgListTag.appendChild(nameTag)
+            msgListTag.appendChild(pTag)
+            // document.getElementById('chat-log').appendChild(msgListTag)
+            document.getElementById('show-my-messages').appendChild(msgListTag)
+        }
+
+</script>
+</body>
+</html>

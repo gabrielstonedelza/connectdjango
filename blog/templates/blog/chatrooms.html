@@ -1,0 +1,24 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Discover Chatrooms
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <br>
+    <div class="main-chat-container">
+        <div class="chat-container">
+            {% for room in chatrooms %}
+                <div class="room">
+                    {% if room.room_logo %}
+                        <img src="{{ room.room_logo.url }}">
+                    {% endif %}
+                    <div class="room-details">
+                        <a href="{{ room.get_absolute_room_url }}">{{ room.room_name }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
