@@ -9,8 +9,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
-from .forms import (FeedbackForm)
-from .models import (FeedBack, NotifyMe, ChatRoom,Message,PrivateMessage)
+from .forms import (FeedbackForm,BlogForm, CommentsForm)
+from .models import (FeedBack, NotifyMe, ChatRoom,Message,PrivateMessage, Blog, Comments)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
@@ -22,8 +22,69 @@ def csrf_failure(request, reason=""):
 def connect_home(request):
     return render(request,"blog/connect_home.html")
 
-    
 @login_required
+def blogs(request):
+    blogs = Blog.objects.all().order_by('-date_posted')
+    context = {
+        "blogs": blogs
+    }
+
+    return render(request,"blog/blogs.html",context)
+
+
+@login_required
+def create_blog(request):
+    if request.method == "POST":
+        form = BlogForm(request.POST,request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            subtitle = form.cleaned_data.get('subtitle')
+            blogimg = form.cleaned_data.get('blog_pic')
+            blogcontent = form.cleaned_data.get('blog_content')
+            Blog.objects.create(user=request.user,title=title,subtitle=subtitle,blog_pic=blogimg,blog_content=blogcontent)
+            messages.success(request,f"Successfully created {title}")
+            return redirect('blogs')
+
+        else:
+            messages.info(request,"sorry something went wrong")
+    else:
+        form = BlogForm()
+
+    context = {
+        "form": form
+    }
+
+    return render(request,"blog/blog_create_form.html",context)
+
+
+@login_required
+def blog_detail(request,title):
+    blog = get_object_or_404(Blog,title=title)
+
+    if blog:
+        blog.views += 1
+        blog.save()
+
+    comments = Comments.objects.filter(blog=blog).order_by('-date_posted')
+
+    if request.method == "POST":
+        form = CommentsForm(request.POST)
+        if form.is_valid():
+            comment = request.POST.get('comment')
+            comment = Comments.objects.create(user=request.user, blog=blog, comment=comment)
+            comment.save()
+
+        else:
+            form = CommentsForm()
+
+    context = {
+        "blog": blog,
+        "form": form,
+        "comments": comments
+    }
+
+    return render(request,"blog/blog_detail.html",context)
+
 def news_letter(request):
     all_users = User.objects.exclude(id=request.user.id)
 

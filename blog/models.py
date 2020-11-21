@@ -59,6 +59,8 @@ class Blog(models.Model):
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=150)
     blog_pic = models.ImageField(upload_to="blogpics",blank=True,validators=[validate_file_size])
+    blog_content = models.TextField()
+    slug = models.CharField(max_length=100, allow_unicode=True, default='')
     likes = models.ManyToManyField(User,related_name='blog_likes',blank=True)
     views = models.IntegerField(default=0)
     date_posted = models.DateTimeField(auto_now_add=True)
@@ -76,6 +78,19 @@ class Blog(models.Model):
                 output_size = (680, 400)
                 img.thumbnail(output_size)
                 img.save(self.blog_pic.path)
+
+    def get_absolute_blog(self):
+        return reverse("blog_detail",args={self.title})
+
+class Comments(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    comment = models.TextField(default='...')
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} has commented on {self.blog}"
+
 
 class FeedBack(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
