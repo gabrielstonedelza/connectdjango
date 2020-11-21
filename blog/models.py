@@ -59,14 +59,17 @@ class Blog(models.Model):
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=150)
     blog_pic = models.ImageField(upload_to="blogpics",blank=True,validators=[validate_file_size])
-    blog_content = models.TextField()
-    slug = models.CharField(max_length=100, allow_unicode=True, default='')
+    blog_content = models.TextField(default='')
+    slug = models.SlugField(max_length=100, allow_unicode=True, default='')
     likes = models.ManyToManyField(User,related_name='blog_likes',blank=True)
     views = models.IntegerField(default=0)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+    def likes_count(self):
+        return self.likes.count
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -109,7 +112,6 @@ class NotifyMe(models.Model):
     follower_sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="who_started_following")
     read = models.BooleanField(default=False)
     blog_id = models.IntegerField(blank=True, default=0)
-    tuto_id = models.IntegerField(blank=True, default=0)
     improvement_id = models.IntegerField(blank=True, default=0)
     date_notified = models.DateTimeField(auto_now_add=True)
 

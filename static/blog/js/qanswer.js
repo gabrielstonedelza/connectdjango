@@ -28,33 +28,12 @@ $.ajaxSetup({
     xhr.setRequestHeader("X-CSRFTOKEN",  csrftoken)
   }
 })
-  // improvement comments
-   
-  $(document).on('submit', '.improvement-comment-form', function (event) {
-    event.preventDefault();
-    const comment = document.getElementById('comment_form');
-    $.ajax({
-      type:'POST',
-      url:$(this).attr('action'), 
-      data:{
-        "comment": comment.value
-      },
-      dataType:'json',
-      success:function(response){
-        $("#improvement_comments_section").html(response['comments']);
-        $("input").val('');
-        // comment.value = ""
-      },
-      error:function(rs,e){
-        console.log(rs.responseText);
-      }
-    });
-  }); 
+
 
    //comment functions
    $(document).on('submit', '.comment-form', function (event) {
     event.preventDefault();
-    const comment = document.getElementById('main_comment_form');
+    const comment = document.getElementById('commentform');
     $.ajax({
       type:'POST',
       url:$(this).attr('action'), 

@@ -16,6 +16,11 @@ urlpatterns = [
     path('register/', uviews.register, name='register'),
     path('newsletter/', views.news_letter, name='newsletter'),
     path('connect-home/',views.connect_home,name='connect-home'),
+    path('blogs/',views.blogs,name='blogs'),
+    path("blog/new/", views.create_blog, name="create_blog"),
+    path('blog/<str:title>/',views.blog_detail,name='blog_detail'),
+    path('blog/<str:title>/update/',views.blog_update,name='blog_update'),
+    path('like_blog/<str:title>/', views.like_blog,name='like_blog'),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('about-us/', views.about_cd, name="about-us"),

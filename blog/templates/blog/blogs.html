@@ -1,0 +1,40 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Discover DJango Blogs
+{% endblock %}
+{% block content %}
+<div class="container">
+    <br>
+    <div class="myblog-container">
+        <ul class="list-group">
+            {% for blog in blogs %}
+                <li class="list-group-item">
+                        <div class="blog-details">
+                            <div class="d-flex">
+                                <img src="{{ blog.user.profile.profile_pic.url }}" alt="" style="width:30px;height:30px;border-radius: 50%;">
+                                <div>
+                                    {% if blog.user == request.user %}
+                                        <a href="{% url 'profile' blog.user.username %}">{{ blog.user.username }}</a>
+                                    {% else %}
+                                        <a href="{% url 'userprofilepost' blog.user.username %}">{{ blog.user.username }}</a>
+                                    {% endif %}
+                                    <br>
+                                    <a href="{{ blog.get_absolute_blog }}">
+                                        {{ blog.title }} <br>
+                                        <span class="text-muted">{{ blog.subtitle }}</small>
+                                    </a>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        {% if blog.blog_pic %}
+                            <div class="blog-img">
+                                <img src="{{ blog.blog_pic.url }}" alt="">
+                            </div>
+                        {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

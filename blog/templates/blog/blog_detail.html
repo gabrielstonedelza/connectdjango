@@ -1,0 +1,71 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+{{ blog.title }}
+{% endblock %}
+{% block content %}
+
+<div id="comment-trigger-like-section">
+    <a href="" data-toggle="modal" data-target="#commentModal" class="butt" >
+        <i class="fas fa-comment"></i> <span class="text-white">{{ comments.count }}</span>
+    </a>
+    <div id="like_section">
+        {% include "blog/like_section.html" %}
+    </div>
+</div>
+<div class="container">
+    <br>
+    <div class="blog-detail-container">
+        <div class="de-blog">
+            <div class="blog-detail-img">
+                {% if blog.blog_pic %}
+                    <img src="{{ blog.blog_pic.url }}" alt="">
+                {% endif %}
+                <h5>{{ blog.title }}</h5>
+                <small class="text-muted">{{ blog.subtitle }}</small>
+                <br>
+                <small class="text-muted">{{ blog.date_posted|date:"M d Y" }}</small>
+            </div>
+            <hr class="my-4">
+            <div class="blog-other-details">
+                <div class="blog-detail-user">
+                    <img src="{{ blog.user.profile.profile_pic.url }}" alt="">
+                    <div class="blogger_details">
+                        {% if blog.user == request.user %}
+                            <a href="{% url 'profile' blog.user.username %}"> {{ blog.user.username }}</a>
+                        {% else %}
+                            <a href="{% url 'userprofilepost' blog.user.username %}"> {{ blog.user.username }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="blog-detail-content">
+                    {{ blog.blog_content }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Full Height Modal Right -->
+  <div class="modal fade right" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+  
+    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-full-height modal-right" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title w-100" id="myModalLabel">Comments</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="comments_section">
+          {% include "blog/comment_form.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Full Height Modal Right -->
+{% endblock %}
+
+
+

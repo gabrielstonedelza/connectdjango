@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
-from .forms import (FeedbackForm,BlogForm, CommentsForm)
+from .forms import (FeedbackForm,BlogForm, CommentsForm,BlogUpdateForm)
 from .models import (FeedBack, NotifyMe, ChatRoom,Message,PrivateMessage, Blog, Comments)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
@@ -60,13 +60,12 @@ def create_blog(request):
 @login_required
 def blog_detail(request,title):
     blog = get_object_or_404(Blog,title=title)
-
-    if blog:
-        blog.views += 1
-        blog.save()
+    is_liked = False
 
     comments = Comments.objects.filter(blog=blog).order_by('-date_posted')
+    comments_count = comments.count()
 
+    form = CommentsForm()
     if request.method == "POST":
         form = CommentsForm(request.POST)
         if form.is_valid():
@@ -77,13 +76,70 @@ def blog_detail(request,title):
         else:
             form = CommentsForm()
 
+    if blog.likes.filter(id=request.user.id).exists():
+        is_liked = True
+
+    if blog:
+        blog.views += 1
+        blog.save()
+
     context = {
-        "blog": blog,
         "form": form,
-        "comments": comments
+        "blog": blog,
+        "comments": comments,
+        "is_liked": is_liked,
+        "likes_count": blog.likes_count(),
+        "comments_count": comments_count,
     }
 
+    if request.is_ajax():
+        comment = render_to_string("blog/comment_form.html",context,request=request)
+        return JsonResponse({"comments": comment})
+
     return render(request,"blog/blog_detail.html",context)
+
+@login_required
+def blog_update(request,title):
+    blog = get_object_or_404(Blog, title=title)
+
+    if request.method == "POST":
+        form = BlogUpdateForm(request.POST,request.FILES,instance=blog)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Blog updated")
+            return redirect('blog_detail',blog.title)
+    else:
+        form = BlogUpdateForm(instance=blog)
+
+    context = {
+        "blog": blog,
+        "form": form
+    }
+
+    return render(request,"blog/blog_update.html",context)
+
+
+def like_blog(request,title):
+    blog = get_object_or_404(Blog,title=title)
+    is_liked = False
+
+    if not blog.likes.filter(id=request.user.id).exists():
+        blog.likes.add(request.user)
+        is_liked = True
+    else:
+        blog.likes.remove(request.user)
+        is_liked = False
+
+    context = {
+        "blog": blog,
+        "is_liked": is_liked,
+        "likes_count": blog.likes_count()
+    }
+
+    if request.is_ajax():
+        likeblog = render_to_string("blog/like_section.html", context,request=request)
+        return JsonResponse({ "like": likeblog })
+
 
 def news_letter(request):
     all_users = User.objects.exclude(id=request.user.id)
@@ -135,14 +191,8 @@ def user_profile(request, username):
     df_count = deuser.profile.following.all().count
     dfs_count = deuser.profile.followers.all().count
 
-    tutorials = Tutorial.objects.filter(user=deuser.id).order_by('-date_posted')
-    blogs = BlogPost.objects.filter(user=deuser.id).order_by('-date_posted')
-    tuto_count = tutorials.count()
+    blogs = Blog.objects.filter(user=deuser.id).order_by('-date_posted')
     blog_count = blogs.count()
-
-    paginator = Paginator(tutorials, 15)
-    page = request.GET.get('page')
-    tutorials = paginator.get_page(page)
 
     paginator = Paginator(blogs, 15)
     page = request.GET.get('page')
@@ -161,11 +211,9 @@ def user_profile(request, username):
         "defollowing": deuser_following,
         "defollowers": deuser_followers,
         "deuser": deuser,
-        "tutorials": tutorials,
         "blogs": blogs,
         "df_count": df_count,
         "dfs_count": dfs_count,
-        'tuto_count': tuto_count,
         'blog_count': blog_count
     }
 

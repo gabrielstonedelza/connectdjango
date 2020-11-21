@@ -12,7 +12,7 @@ from blog.models import NotifyMe
 from django.core.paginator import Paginator
 from blog.notifications import mynotifications
 from blog.process_mail import send_my_mail
-from blog.models import ChatRoom
+from blog.models import ChatRoom,Blog
 
 def register(request):
     username = ''
@@ -46,6 +46,12 @@ def profile(request, username):
     my_notify = mynotifications(request.user)
 
     myprofile = get_object_or_404(Profile, user=request.user)
+    blogs = Blog.objects.filter(user=request.user).order_by('-date_posted')
+    blog_count = blogs.count()
+
+    paginator = Paginator(blogs, 15)
+    page = request.GET.get('page')
+    blogs = paginator.get_page(page)
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
@@ -60,6 +66,8 @@ def profile(request, username):
         "followers": followers,
         "following_count": myprofile.my_following_count(),
         "followers_count": myprofile.my_followers_count(),
+        "blogs": blogs,
+        "blog_count": blog_count
     }
     return render(request, "users/profile.html", context)
 

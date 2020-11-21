@@ -8,6 +8,7 @@ admin.site.register(NotifyMe)
 admin.site.register(FeedBack)
 admin.site.register(Comments)
 
+
 @admin.register(Blog)
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('title', 'id','slug')

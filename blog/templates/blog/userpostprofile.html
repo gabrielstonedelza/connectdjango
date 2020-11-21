@@ -22,9 +22,10 @@
                 <br>
                 <span class="text-muted">{{ deuser.profile.bio|slice:"100" }}..... </span>
                 <br>
-                <span class="ml-2" id="connection_section">
-                    {% include "users/user_connection.html" %}
-                </span>
+                  <a href="#" class="butt">message</a>
+                  <span class="ml-2" id="connection_section">
+                      {% include "users/user_connection.html" %}
+                  </span>
                 <br>
                 <div class="user-social">
                     {% if deuser.profile.your_facebook %}
@@ -74,72 +75,15 @@
             </div>
             <br>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
+               
                 <li class="nav-item">
-                  <a class="nav-link active text-muted" id="tutorials-tab" data-toggle="tab" href="#tutorials" role="tab" aria-controls="tutorials"
-                    aria-selected="true">Tutorials <span class="badge badge-info ml-1">{{ tuto_count }}</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-muted" id="blogs-tab" data-toggle="tab" href="#blogs" role="tab" aria-controls="blogs"
+                  <a class="nav-link active text-muted" id="blogs-tab" data-toggle="tab" href="#blogs" role="tab" aria-controls="blogs"
                     aria-selected="false">Blogs <span class="badge badge-info ml-1">{{ blog_count }}</span></a>
                 </li>
               </ul>
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="tutorials" role="tabpanel" aria-labelledby="tutorials-tab">
-                  <br>
-                   <div class="deusers-tutorials">
-                       {% for tutorial in tutorials %}
-                            <div class="deuser-tutos-container">
-                                <a href="{{ tutorial.get_absolute_url }}">{{ tutorial.title }}</a>
-                                <br>
-                                <div>
-
-                                  <span class="text-muted mr-1"><i class="fas fa-thumbs-up mr-1"></i>{{ tutorial.likes.count }}</span> |
-                                  <span class="text-muted mr-1"><i class="fas fa-eye"></i> {{ tutorial.views }}</span> |
-                                  <span class="text-muted ml-1">last update {{ tutorial.date_posted|date:"M D Y"}}</span>
-                                </div>
-                            </div>
-                            <br>
-                            <hr class="my-4">
-                       {% endfor %}
-                   </div>
-                   <br>
-                   <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-circle pg-blue pt-3">
-                      {% if tutorials.has_previous %}
-                        <li class="page-item "><a href="?page=1" class="page-link">First</a></li>
-                        <li class="page-item ">
-                          <a class="page-link" href="?page={{ page_range.previous_page_number }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                          </a>
-                        </li>
-                      {% endif %}
-      
-                      {% for c in tutorials.paginator.page_range %}
-                        {% if tutorials.number == c %}
-                          <li class="page-item active">
-                            <a href="?page={{ c }}" class="page-link">{{ c }}</a>
-                          </li>
-                        {% elif c > tutorials.number|add:"-3" and c < tutorials.number|add:"-3" %}
-                          {{ c }}
-                        {% else %}
-                          <li class="page-item"><a a href="?page={{ c }}" class="page-link">{{c }}</a></li>
-                      {% endif %}
-                    {% endfor %}
-      
-                    {% if tutorials.has_next %}
-                      <li class="page-item">
-                          <a href="?page={{ tutorials.next_page_number }}" class="page-link" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                          </a>
-                        </li>
-                        <li class="page-item"><a href="?page={{ tutorials.paginator.num_pages }}" class="page-link">Last</a></li>
-                    {% endif %}
-                    </ul>
-                  </nav>
-                </div>
-                <div class="tab-pane fade" id="blogs" role="tabpanel" aria-labelledby="blogs-tab">
+              
+                <div class="tab-pane fade show active" id="blogs" role="tabpanel" aria-labelledby="blogs-tab">
                   <br>
                   <div class="deusers-blog-container">
                     {% for blog in blogs %}

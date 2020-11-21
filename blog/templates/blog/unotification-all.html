@@ -14,7 +14,7 @@
                 <ul class="notification_list_items" style="list-style-type: none">
                     {% for u in notification|slice:"1" %}
                     {% if not u.read %}
-                    {% if u.notify_title == "New Post" %}
+                    {% if u.notify_title == "New Blog Post" %}
                     <a  href="{% url 'notifications' %}">
                         <li >
                             <div class="my-notifier-user d-flex">
@@ -30,7 +30,7 @@
                             <br>
                         </li>
                     </a>
-                    {% elif u.notify_title == "New Comment" %}
+                    {% elif u.notify_title == "New Blog comment" %}
                     <a href="{% url 'notifications' %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
@@ -47,22 +47,6 @@
                         </li>
                     </a>
                     <hr class="my-4">
-                    {% elif u.notify_title == "New Tutorial" %}
-                    <a href="{% url 'notifications' %}">
-                        <li class="">
-                            <div class="my-notifier-user d-flex">
-                                <img alt="" class="mr-3"
-                                     src="{{ u.follower_sender.profile.profile_pic.url }}"
-                                     style="width:30px;height:30px;border-radius:50%;">
-                                     <div>
-                                        <span class="font-bold text-muted">{{ u.notify_alert }} <sup class="badge badge-info ml-2 animated rubberBand infinite"><small>Recent</small></sup></span>
-                                        <br>
-                                        <small class="text-muted">{{ u.date_notified }}</small>
-                                    </div>
-                            </div>
-                            <br>
-                        </li>
-                    </a>
 
                     {% elif u.notify_title == "Follow Notice" %}
                     <a href="{% url 'notifications' %}">
@@ -81,54 +65,6 @@
                         </li>
                     </a>
                     {% elif u.notify_title == "Follow Request Notice" %}
-                    <a href="{% url 'notifications' %}">
-                        <li class="">
-                            <div class="my-notifier-user d-flex">
-                                <img alt="" class="mr-3"
-                                     src="{{ u.follower_sender.profile.profile_pic.url }}"
-                                     style="width:30px;height:30px;border-radius:50%;">
-                                     <div>
-                                        <span class="font-bold text-muted">{{ u.notify_alert }} <sup class="badge badge-info ml-2 animated rubberBand infinite"><small>Recent</small></sup></span>
-                                        <br>
-                                        <small class="text-muted">{{ u.date_notified }}</small>
-                                    </div>
-                            </div>
-                            <br>
-                        </li>
-                    </a>
-                    {% elif u.notify_title == "New suggested improvement" %}
-                    <a href="{% url 'notifications' %}">
-                        <li class="">
-                            <div class="my-notifier-user d-flex">
-                                <img alt="" class="mr-3"
-                                     src="{{ u.follower_sender.profile.profile_pic.url }}"
-                                     style="width:30px;height:30px;border-radius:50%;">
-                                     <div>
-                                        <span class="font-bold text-muted">{{ u.notify_alert }} <sup class="badge badge-info ml-2 animated rubberBand infinite"><small>Recent</small></sup></span>
-                                        <br>
-                                        <small class="text-muted">{{ u.date_notified }}</small>
-                                    </div>
-                            </div>
-                            <br>
-                        </li>
-                    </a>
-                    {% elif u.notify_title == "New tutorial comment" %}
-                    <a href="{% url 'notifications' %}">
-                        <li class="">
-                            <div class="my-notifier-user d-flex">
-                                <img alt="" class="mr-3"
-                                     src="{{ u.follower_sender.profile.profile_pic.url }}"
-                                     style="width:30px;height:30px;border-radius:50%;">
-                                     <div>
-                                        <span class="font-bold text-muted">{{ u.notify_alert }} <sup class="badge badge-info ml-2 animated rubberBand infinite"><small>Recent</small></sup></span>
-                                        <br>
-                                        <small class="text-muted">{{ u.date_notified }}</small>
-                                    </div>
-                            </div>
-                            <br>
-                        </li>
-                    </a>
-                    {% elif u.notify_title == "New comment on your improvement " %}
                     <a href="{% url 'notifications' %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">

@@ -2,7 +2,7 @@
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #0C4B33;">
     <!-- Navbar brand -->
-    <a id="mynav_bar_container" title="Go to tutorials" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="#">
+    <a id="mynav_bar_container" title="Go to tutorials" style="font-style: italic;font-weight: bold;" class="navbar-brand " href="{% url 'blogs' %}">
       <svg width="150" height="25" viewBox="0 0 891 185" fill="none" xmlns="http://www.w3.org/2000/svg" id="svg_logo">
       <mask id="path-1-outside-1" maskUnits="userSpaceOnUse" x="0.791992" y="0.76799" width="890" height="184" fill="black">
       <rect fill="white" x="0.791992" y="0.76799" width="890" height="184"/>
@@ -52,10 +52,13 @@
       </div>
     </div>
       <ul class="navbar-nav ml-auto nav-flex-icons">
-          <li class="nav-item ml-3 mr-3">
-          <a title="blogs about django"  href="#" title="Profile" class="nav-link">
-           Blog
-          </a>
+        <li class="nav-item dropdown ml-3 mr-3 is_active">
+          <a title="view all blogs or post new" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Blogs</a>
+          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'blogs' %}">All</a>
+            <a class="dropdown-item" href="{% url 'create_blog' %}" title="About Connect Django">Add New</a>
+          </div>
         </li>
          <!-- <li class="nav-item ml-1 mr-1">
           <a title="add new tutorial"  href="#" title="Profile" class="nav-link">

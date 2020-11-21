@@ -1,0 +1,12 @@
+{% load crispy_forms_tags %}
+<div class="d-flex">
+
+    <form action="{% url 'like_blog' blog.title %}" method="POST" id="like_blog_form">
+        {% csrf_token %}
+        {% if is_liked %}
+            <button type="submit" class="butt" id="like_blog_button" value="{{ blog.title }}"><i class="fas fa-thumbs-up"></i> <span class="ml-2 ">{{ likes_count }}</span></button>
+        {% else %}
+            <button type="submit" class="butt" id="like_blog_button" value="{{ blog.title }}"><i class="far fa-thumbs-up"></i> <span class="ml-2 ">{{ likes_count }}</span></button>
+        {% endif %}
+    </form>
+</div>

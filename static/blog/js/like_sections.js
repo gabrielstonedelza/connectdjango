@@ -1,37 +1,18 @@
 $(function () {
-  // tutorial like button
-  $(document).on("click", "#like_button", (event) => {
-    event.preventDefault();
-    var formData = $("#like_tutorial_form").serialize();
-    var pk = $("#like_button").attr("value");
-
-    $.ajax({
-      type: "POST",
-      url: `/like-tutorial/${pk}/`,
-      data: formData,
-      dataType: "json",
-      success: (response) => {
-        $("#likes_section").html(response["likes"]);
-      },
-      error: (rs, e) => {
-        console.log(rs.responseText);
-      },
-    });
-  });
-
+  
   // blog like button
   $(document).on("click", "#like_blog_button", (event) => {
     event.preventDefault();
     var formData = $("#like_blog_form").serialize();
-    var pk = $("#like_blog_button").attr("value");
+    var title = $("#like_blog_button").attr("value");
 
     $.ajax({
       type: "POST",
-      url: `/like-blog/${pk}/`,
+      url: `/like_blog/${title}/`,
       data: formData,
       dataType: "json",
       success: (response) => {
-        $("#like_blog_section").html(response["likes"]);
+        $("#like_section").html(response["like"]);
       },
       error: (rs, e) => {
         console.log(rs.responseText);
@@ -48,10 +29,10 @@ $(window).scroll(function() {
     
     if (scrollTop < lastScrollTop) {
         
-        $('#like-helpful-section').hide();
+        $('#comment-trigger-like-section').hide();
     } else {
      
-        $('#like-helpful-section').show();
+        $('#comment-trigger-like-section').show();
     }
     
     lastScrollTop = scrollTop;
