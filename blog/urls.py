@@ -3,7 +3,9 @@ from . import views
 from django.contrib.auth import views as auth_views
 from users import views as uviews
 urlpatterns = [
-    path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('login/', views.login_request, name='login'),
+    path('logout/', views.logout_request, name='logout'),
+    # path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('password-reset/', auth_views.PasswordResetView.as_view(
         template_name='users/password_reset.html'), name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
@@ -12,7 +14,7 @@ urlpatterns = [
         template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name='users/password_reset_complete.html'), name='password_reset_complete'),
-    path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
+    # path('', auth_views.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('register/', uviews.register, name='register'),
     path('newsletter/', views.news_letter, name='newsletter'),
     path('blogs/',views.blogs,name='blogs'),

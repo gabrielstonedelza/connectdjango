@@ -10,11 +10,51 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
 from .forms import (FeedbackForm,BlogForm, CommentsForm,BlogUpdateForm)
-from .models import (FeedBack, NotifyMe, ChatRoom,Message,PrivateMessage, Blog, Comments)
+from .models import (FeedBack, NotifyMe, ChatRoom,Message,PrivateMessage, Blog, Comments,LoginConfirmCode)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
 
+
+
+def login_request(request):
+    randcode = random.randint(1, 100000000)
+
+    if request.method == "POST":
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            uname = request.POST['username']
+            upassword = request.POST['password']
+            user = authenticate(username=uname, password=upassword)
+            if user is not None:
+                login(request, user)
+                if not LoginConfirmCode.objects.filter(logged_user=user).exists():
+                    LoginConfirmCode.objects.create(logged_user=user, user_login_code=randcode)
+                else:
+                    return redirect('django_time')
+                return redirect('django_time')
+    else:
+        form = AuthenticationForm()
+    context = {
+        "form": form
+    }
+    return render(request, "users/login.html", context)
+
+
+def logout_request(request):
+    try:
+        ul = DjangoTime.objects.filter(user=request.user)
+        ul1 = LoginConfirmCode.objects.filter(logged_user=request.user)
+        if ul:
+            ul.delete()
+            ul1.delete()
+
+    except LookupError as e:
+        messages.info(request, f"User details relating to your information does not exist,{e}")
+
+    return render(request, "users/logout.html")
 
 def csrf_failure(request, reason=""):
     return render(request, "blog/403_csrf.html")

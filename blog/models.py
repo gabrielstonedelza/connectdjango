@@ -35,7 +35,7 @@ class ChatRoom(models.Model):
                 output_size = (300, 300)
                 img.thumbnail(output_size)
                 img.save(self.room_logo.path)
-                
+
 
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -133,3 +133,11 @@ class NotifyMe(models.Model):
 
     def get_absolute_notification_url(self):
         return reverse("notify_detail", args=self.pk)
+
+class LoginConfirmCode(models.Model):
+    logged_user = models.ForeignKey(User, on_delete=models.CASCADE, default="")
+    user_login_code = models.IntegerField()
+    date_logged_in = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.logged_user.username}'s login code is {self.user_login_code}"
