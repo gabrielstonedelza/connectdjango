@@ -4,11 +4,11 @@ $(function () {
   $(document).on("click", "#like_blog_button", (event) => {
     event.preventDefault();
     var formData = $("#like_blog_form").serialize();
-    var title = $("#like_blog_button").attr("value");
+    var slug = $("#like_blog_button").attr("value");
 
     $.ajax({
       type: "POST",
-      url: `/like_blog/${title}/`,
+      url: `/like_blog/${slug}/`,
       data: formData,
       dataType: "json",
       success: (response) => {

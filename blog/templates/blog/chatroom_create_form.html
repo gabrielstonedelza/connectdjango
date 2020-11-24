@@ -1,0 +1,23 @@
+{% extends "blog/base_with_nav.html"%}
+{% load crispy_forms_tags %}
+{% block title %}
+Add a new room
+{% endblock %}
+{% block content%}
+<div class="blog-form-container">
+    
+    <div class="container">
+        <h3 class="text-center">Create your room</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form|crispy }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="butt">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

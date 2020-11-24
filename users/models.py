@@ -2,11 +2,13 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from PIL import Image
+import random
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=500, blank=True, default="I am a django developer")
+    chat_id = models.IntegerField()
     name = models.CharField(max_length=150, default="New User")
     profile_pic = models.ImageField(upload_to="profile_pics", blank=True, default='default.jpg')
     following = models.ManyToManyField(User, blank=True, related_name='following')
@@ -25,6 +27,9 @@ class Profile(models.Model):
         return f"{self.user.username}"
 
     def save(self, *args, **kwargs):
+        my_rand_chat_id = random.randint(3, 100000000)
+        self.chat_id = my_rand_chat_id
+
         super().save(*args, **kwargs)
 
         img = Image.open(self.profile_pic.path)

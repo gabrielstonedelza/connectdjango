@@ -13,7 +13,7 @@ Notifications
             <ul class="">
                 {% for u in notification %}
                 {% if u.notify_title == "New Blog Post" %}
-                <a href="{% url 'blogpost_detail' u.blog_id %}">
+                <a href="{% url 'blogpost_detail' u.slug %}">
                     <li class="">
                         <div class="d-flex justify-between">
                             <img alt="" class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}"
@@ -25,7 +25,7 @@ Notifications
                 </a>
                 <hr class="my-4">
                 {% elif u.notify_title == "Follow Request Notice" %}
-                <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                <a href="{% url 'userprofilepost' u.follower_sender.username %}">
                     <li class="">
                         <div class="d-flex justify-between">
                             <img alt="" class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}"
@@ -52,7 +52,7 @@ Notifications
                     <hr class="my-4">
                   
                     {% elif u.notify_title == "New Blog comment" %}
-                        <a href="{% url 'tutorial_detail' u.tuto_id %}">
+                        <a href="{% url 'blog_detail' u.blog_slug %}">
                             <li class="">
                                 <div class="d-flex justify-between">
                                     <img class="mr-3" src="{{ u.follower_sender.profile.profile_pic.url }}" alt=""

@@ -1,0 +1,14 @@
+{% extends "blog/base_with_nav.html"%} 
+{% block content %} 
+{% load crispy_forms_tags %}
+<div class="container mt-3">
+    <br>
+    <div class="row mb-3 text-center">
+        <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto mb-3">
+            <h5>You were logged out</h5>
+            <a href="{% url 'login' %}" class="butt">Login Again</a>
+            <a href="{% url 'home' %}" class="butt">Go Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

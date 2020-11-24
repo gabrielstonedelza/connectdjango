@@ -1,5 +1,5 @@
 from django import forms
-from .models import  FeedBack, Blog, Comments
+from .models import  FeedBack, Blog, Comments, ChatRoom
 
 
 class FeedbackForm(forms.ModelForm):
@@ -34,3 +34,14 @@ class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['comment']
+
+class ChatRoomCreateForm(forms.ModelForm):
+    class Meta:
+        model = ChatRoom
+        fields = ['room_name','about','room_logo','is_active','allow_any','key']
+
+
+class ChatRoomUpdateForm(forms.ModelForm):
+    class Meta:
+        model = ChatRoom
+        fields = ['room_name','about','room_logo','is_active','allowed_users','allow_any','key']

@@ -16,7 +16,7 @@ def create_blog(sender, created, instance, **kwargs):
 
     if created:
         for i in followers:
-            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, follower_sender=instance.user, blog_id=instance.id)
+            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, follower_sender=instance.user, blog_slug=instance.slug)
 
 
 @receiver(post_save, sender=Comments)
@@ -27,4 +27,4 @@ def alert_tutorial_comment(sender,created,instance,**kwargs):
 
     if created:
         if not instance.user == instance.blog.user:
-            NotifyMe.objects.create(user=blog_user, notify_title=title, notify_alert=message, follower_sender=instance.user, blog_id=instance.blog.id)
+            NotifyMe.objects.create(user=blog_user, notify_title=title, notify_alert=message, follower_sender=instance.user, blog_slug=instance.blog.slug)

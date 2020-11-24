@@ -4,28 +4,36 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from PIL import Image
 from .validator import validate_file_size
+from django.utils.text import slugify
 
 
 class ChatRoom(models.Model):
-    room_name = models.CharField(max_length=150)
+    room_name = models.CharField(max_length=150, unique=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    about = models.CharField(max_length=500,blank=True, default="Team work is all we need")
-    room_logo = models.ImageField(upload_to="room_pics",blank=True, default='room.jpg',validators=[validate_file_size])
+    about = models.CharField(max_length=500, blank=True, default="Team work is all we need")
+    room_logo = models.ImageField(upload_to="room_pics", blank=True, default='room.jpg',
+                                  validators=[validate_file_size])
     is_active = models.BooleanField(default=False)
-    allowed_users = models.ManyToManyField(User, related_name="allowed",blank=True)
-    pending_users = models.ManyToManyField(User, related_name="pending",blank=True)
-    allow_any = models.BooleanField(default=False,blank=True,help_text="allow any user to enter your room")
+    allowed_users = models.ManyToManyField(User, related_name="allowed", blank=True)
+    pending_users = models.ManyToManyField(User, related_name="pending", blank=True)
+    allow_any = models.BooleanField(default=False, blank=True, help_text="allow any user to enter your room")
     key = models.CharField(max_length=100, help_text="protect your room with a key")
-    slug = models.SlugField(max_length=100, allow_unicode=True, default='')
+    slug = models.SlugField(max_length=100, default='')
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.room_name
 
     def get_absolute_room_url(self):
-        return reverse("room_detail", args={self.room_name})
+        kwargs = {
+            # 'pk': self.id,
+            'slug': self.slug
+        }
+        return reverse('room_detail', kwargs=kwargs)
 
     def save(self, *args, **kwargs):
+        value = self.room_name
+        self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
 
         if self.room_logo:
@@ -41,7 +49,7 @@ class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
-    msg_file = models.FileField(upload_to='message_files',blank=True,validators=[validate_file_size])
+    msg_file = models.FileField(upload_to='message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='likes', blank=True)
     love = models.ManyToManyField(User, related_name='love', blank=True)
     funny = models.ManyToManyField(User, related_name="funny", blank=True)
@@ -52,11 +60,12 @@ class Message(models.Model):
     def last_10_messages():
         return Message.objects.order_by('-date_posted')[:10]
 
+
 class PrivateMessage(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
-    pmsg_file = models.FileField(upload_to='private_message_files',blank=True,validators=[validate_file_size])
+    pmsg_file = models.FileField(upload_to='private_message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='plikes', blank=True)
     love = models.ManyToManyField(User, related_name='plove', blank=True)
     funny = models.ManyToManyField(User, related_name="pfunny", blank=True)
@@ -65,16 +74,17 @@ class PrivateMessage(models.Model):
         return f"{self.author.username} just sent a message to the group"
 
     def last_10_messages():
-        return Message.objects.order_by('-date_posted')[:10]
+        return PrivateMessage.objects.order_by('-date_posted')[:10]
+
 
 class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=150)
-    blog_pic = models.ImageField(upload_to="blogpics",blank=True,validators=[validate_file_size])
+    blog_pic = models.ImageField(upload_to="blogpics", blank=True, validators=[validate_file_size])
     blog_content = models.TextField(default='')
     slug = models.SlugField(max_length=100, allow_unicode=True, default='')
-    likes = models.ManyToManyField(User,related_name='blog_likes',blank=True)
+    likes = models.ManyToManyField(User, related_name='blog_likes', blank=True)
     views = models.IntegerField(default=0)
     date_posted = models.DateTimeField(auto_now_add=True)
 
@@ -84,7 +94,16 @@ class Blog(models.Model):
     def likes_count(self):
         return self.likes.count
 
+    def get_absolute_blog(self):
+        kwargs = {
+            # 'pk': self.id,
+            'slug': self.slug
+        }
+        return reverse('blog_detail', kwargs=kwargs)
+
     def save(self, *args, **kwargs):
+        value = self.title
+        self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
 
         if self.blog_pic:
@@ -95,8 +114,6 @@ class Blog(models.Model):
                 img.thumbnail(output_size)
                 img.save(self.blog_pic.path)
 
-    def get_absolute_blog(self):
-        return reverse("blog_detail",args={self.title})
 
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -117,15 +134,13 @@ class FeedBack(models.Model):
         return f"{self.user.username} gave a feedback"
 
 
-
 class NotifyMe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     notify_title = models.CharField(max_length=100, default="New Notification")
     notify_alert = models.CharField(max_length=200)
     follower_sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="who_started_following")
     read = models.BooleanField(default=False)
-    blog_id = models.IntegerField(blank=True, default=0)
-    improvement_id = models.IntegerField(blank=True, default=0)
+    blog_slug = models.CharField(max_length=100, blank=True)
     date_notified = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -133,6 +148,7 @@ class NotifyMe(models.Model):
 
     def get_absolute_notification_url(self):
         return reverse("notify_detail", args=self.pk)
+
 
 class LoginConfirmCode(models.Model):
     logged_user = models.ForeignKey(User, on_delete=models.CASCADE, default="")
