@@ -8,7 +8,7 @@ import random
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=500, blank=True, default="I am a django developer")
-    chat_id = models.IntegerField()
+    chat_id = models.IntegerField(default=123456789)
     name = models.CharField(max_length=150, default="New User")
     profile_pic = models.ImageField(upload_to="profile_pics", blank=True, default='default.jpg')
     following = models.ManyToManyField(User, blank=True, related_name='following')

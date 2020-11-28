@@ -5,6 +5,8 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from .models import Message, PrivateMessage
 
+import random
+
 
 class PrivateConsumer(WebsocketConsumer):
 
@@ -17,9 +19,13 @@ class PrivateConsumer(WebsocketConsumer):
         self.send_message(content)
 
     def new_message(self, data):
+        chat_id = random.randint(2, 100000000000)
         author = self.scope['user'].username
         author_user = get_object_or_404(User, username=author)
-        message = PrivateMessage.objects.create(author=author_user, content=data['message'])
+        if not PrivateMessage.objects.filter(chat_id=self.chat_id):
+            message = PrivateMessage.objects.create(author=author_user, content=data['message'], chat_id=chat_id, sender=author_user, receiver=author_user)
+        else:
+            message = PrivateMessage.objects.create(author=author_user, content=data['message'], chat_id=chat_id, sender=author_user, receiver=author_user)
         content = {
             'command': 'new_message',
             'message': self.message_to_json(message)
@@ -45,8 +51,8 @@ class PrivateConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.chat_id = self.scope['url_route']['kwargs']['chat_id']
+        self.room_group_name = 'direct_%s' % self.chat_id
         self.user = self.scope['user'].username
 
         # Join room group

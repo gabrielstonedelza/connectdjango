@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from .validator import validate_file_size
 from django.utils.text import slugify
+import random
 
 
 class ChatRoom(models.Model):
@@ -64,6 +65,9 @@ class Message(models.Model):
 class PrivateMessage(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    chat_id = models.IntegerField()
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_sender', default=1)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_receiver', default=1)
     date_posted = models.DateTimeField(auto_now_add=True)
     pmsg_file = models.FileField(upload_to='private_message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='plikes', blank=True)
@@ -71,11 +75,14 @@ class PrivateMessage(models.Model):
     funny = models.ManyToManyField(User, related_name="pfunny", blank=True)
 
     def __str__(self):
-        return f"{self.author.username} just sent a message to the group"
+        return f"{self.sender.username} just sent a message to {self.receiver.username}"
 
     def last_10_messages():
         return PrivateMessage.objects.order_by('-date_posted')[:10]
 
+
+class Chatters(models.Model):
+     
 
 class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -148,12 +155,3 @@ class NotifyMe(models.Model):
 
     def get_absolute_notification_url(self):
         return reverse("notify_detail", args=self.pk)
-
-
-class LoginConfirmCode(models.Model):
-    logged_user = models.ForeignKey(User, on_delete=models.CASCADE, default="")
-    user_login_code = models.IntegerField()
-    date_logged_in = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.logged_user.username}'s login code is {self.user_login_code}"

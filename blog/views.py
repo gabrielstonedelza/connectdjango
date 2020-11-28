@@ -10,12 +10,13 @@ from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
 from .forms import (FeedbackForm, BlogForm, CommentsForm, BlogUpdateForm, ChatRoomCreateForm, ChatRoomUpdateForm)
-from .models import (FeedBack, NotifyMe, ChatRoom, Message, PrivateMessage, Blog, Comments, LoginConfirmCode)
+from .models import (FeedBack, NotifyMe, ChatRoom, Message, PrivateMessage, Blog, Comments)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
 from django.conf import settings
 from django.utils.safestring import mark_safe
 import json
+import random
 
 
 def csrf_failure(request, reason=""):
@@ -35,6 +36,23 @@ def chatrooms(request):
     }
 
     return render(request, "blog/chatrooms.html", context)
+
+
+@login_required
+def private_chat(request, chat_id):
+    my_notify = mynotifications(request.user)
+    chatid = get_object_or_404(PrivateMessage, chat_id=chat_id)
+
+    context = {
+        'chat_id': mark_safe(json.dumps(chatid)),
+        'username': mark_safe(json.dumps(request.user.username)),
+        # "chat": chat,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
+    }
+    return render(request, 'blog/private_chat.html', context)
 
 
 @login_required
@@ -104,6 +122,7 @@ def update_room(request, slug):
 
         if form.is_valid():
             form.save()
+            messages.success(request, f"Your room was updated")
 
     else:
         form = ChatRoomUpdateForm(instance=room)
@@ -307,6 +326,7 @@ def user_profile(request, username):
     deuser = get_object_or_404(User, username=username)
     df_count = deuser.profile.following.all().count
     dfs_count = deuser.profile.followers.all().count
+    deuserchat_id = deuser.profile.chat_id
 
     user_blogs = Blog.objects.filter(user=deuser.id).order_by('-date_posted')
     blog_count = user_blogs.count()
@@ -331,7 +351,8 @@ def user_profile(request, username):
         "blogs": user_blogs,
         "df_count": df_count,
         "dfs_count": dfs_count,
-        'blog_count': blog_count
+        'blog_count': blog_count,
+        'deuserchat_id': deuserchat_id,
     }
 
     return render(request, "blog/userpostprofile.html", context)

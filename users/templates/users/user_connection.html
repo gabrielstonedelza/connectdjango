@@ -1,5 +1,6 @@
 {% load crispy_forms_tags %}
-<form action="{% url 'connection' id=deuser.id %}" method="POST" id="connection_form">
+<div class="d-flex">
+    <form action="{% url 'connection' id=deuser.id %}" method="POST" id="connection_form">
     {% csrf_token %}
     {% if deuser in following.all %}
         <button title="Unfollow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Following</button>
@@ -9,6 +10,9 @@
         <button title="Follow {{ deuser }}" type="submit" class="butt" id="connection_butt" value="{{ deuser.id }}">Follow</button>
     {% endif %}
 </form>
+    <a href="{% url 'private_chat' deuserchat_id request.user.profile.chat_id  %}" class="butt ml-2">Message</a>
+</div>
+
 <br>
 <div class="span d-flex">
     <a class="text-muted mr-2" href="{% url 'deuser_followers' deuser.username %}"><i class="fas fa-users"></i> {{ dfs_count }} followers</a> |
