@@ -8,7 +8,8 @@ import random
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=500, blank=True, default="I am a django developer")
-    chat_id = models.IntegerField(default=123456789)
+    # u_id = models.BigIntegerField(default=12345678910)
+    chat_with = models.ManyToManyField(User, related_name="chat_before")
     name = models.CharField(max_length=150, default="New User")
     profile_pic = models.ImageField(upload_to="profile_pics", blank=True, default='default.jpg')
     following = models.ManyToManyField(User, blank=True, related_name='following')
@@ -27,8 +28,8 @@ class Profile(models.Model):
         return f"{self.user.username}"
 
     def save(self, *args, **kwargs):
-        my_rand_chat_id = random.randint(3, 100000000)
-        self.chat_id = my_rand_chat_id
+        # my_rand_u_id = random.randint(3, 999999999)
+        # self.u_id = my_rand_u_id
 
         super().save(*args, **kwargs)
 

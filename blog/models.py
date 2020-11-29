@@ -82,7 +82,14 @@ class PrivateMessage(models.Model):
 
 
 class Chatters(models.Model):
-     
+    chatter1_user = models.CharField(max_length=200)
+    chatter2_user = models.CharField(max_length=200)
+    private_chat_id = models.BigIntegerField()
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.chatter1_user} and {self.chatter2_user} has been assigned a private chat id of {self.private_chat_id}"
+
 
 class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
