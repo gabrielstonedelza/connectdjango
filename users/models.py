@@ -9,7 +9,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=500, blank=True, default="I am a django developer")
     # u_id = models.BigIntegerField(default=12345678910)
-    chat_with = models.ManyToManyField(User, related_name="chat_before")
+    chat_with = models.ManyToManyField(User, related_name="chat_before", blank=True)
     name = models.CharField(max_length=150, default="New User")
     profile_pic = models.ImageField(upload_to="profile_pics", blank=True, default='default.jpg')
     following = models.ManyToManyField(User, blank=True, related_name='following')

@@ -326,22 +326,22 @@ def user_profile(request, username):
 
     # user's username
     deuser = get_object_or_404(User, username=username)
-    if request.user.username + deuser.username or deuser.username + request.user.username in all_chatters.all():
-        are_chatters = True
-        print("yes these two are chatters")
-    else:
-        are_chatters = False
-        print("no these two are not chatters")
-
     c_id = random.randint(3, 999999999)
-    if not Chatters.objects.filter(chatter1_user=request.user.profile.u_id or deuser.profile.u_id) or not Chatters.objects.filter(chatter2_user=deuser.profile.u_id or request.user.profile.u_id).exists():
 
-        Chatters.objects.create(chatter1_user=request.user, chatter2_user=deuser, chatter1_id=request.user.profile.u_id, chatter2_id=deuser.profile.u_id,
-    private_chat_id=request.user.profile.u_id + deuser.profile.u_id)
+    u_name1 = request.user.username
+    u_name2 = deuser.username
+    chat_names1 = f"{u_name1}{u_name2}"
+    chat_names2 = f"{u_name2}{u_name1}"
 
-    chatters = get_object_or_404(Chatters, private_chat_id=request.user.profile.u_id)
+    if not deuser.profile.chat_with.filter(id=request.user.id).exists() and not request.user.profile.chat_with.filter(
+            id=deuser.id).exists():
+        deuser.profile.chat_with.add(request.user)
+        request.user.profile.chat_with.add(deuser)
+        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=c_id)
+
+    chatters = get_object_or_404(Chatters, chatter_users=chat_names2)
     chatters_id = chatters.private_chat_id
-
+    print(chatters)
     df_count = deuser.profile.following.all().count
     dfs_count = deuser.profile.followers.all().count
 
@@ -369,6 +369,7 @@ def user_profile(request, username):
         "df_count": df_count,
         "dfs_count": dfs_count,
         'blog_count': blog_count,
+        "all_chatters": all_chatters,
         'chatters_id': chatters_id,
     }
 

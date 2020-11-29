@@ -12,7 +12,8 @@ from blog.models import NotifyMe
 from django.core.paginator import Paginator
 from blog.notifications import mynotifications
 from blog.process_mail import send_my_mail
-from blog.models import ChatRoom,Blog
+from blog.models import ChatRoom, Blog, Chatters
+
 
 def register(request):
     username = ''
@@ -26,7 +27,8 @@ def register(request):
             else:
                 form.save()
                 username = form.cleaned_data.get('username')
-                send_my_mail(f"Welcome to ConnectDjango {username}", settings.EMAIL_HOST_USER, useremail, {"name":username}, "email_templates/success.html")
+                send_my_mail(f"Welcome to ConnectDjango {username}", settings.EMAIL_HOST_USER, useremail,
+                             {"name": username}, "email_templates/success.html")
                 messages.success(request, f'Your account is created {username},login now')
                 return redirect('login')
     else:
@@ -36,7 +38,6 @@ def register(request):
         'form': form,
         "name": username
     }
-    
 
     return render(request, "users/register.html", context)
 
@@ -55,7 +56,6 @@ def profile(request, username):
 
     following = myprofile.following.all()
     followers = myprofile.followers.all()
-
 
     context = {
         "notification": my_notify['notification'],
@@ -153,6 +153,7 @@ def user_connection(request, id):
     myprofile = get_object_or_404(Profile, user=request.user)
     following = myprofile.following.all()
     followers = myprofile.followers.all()
+    all_chatters = Chatters.objects.all()
 
     deuser = get_object_or_404(User, id=id)
     message = f"{request.user} started following you"
@@ -165,7 +166,8 @@ def user_connection(request, id):
 
     if not myprofile.following.filter(id=deuser.id).exists():
         myprofile.following.add(deuser)
-        NotifyMe.objects.create(user=deuser, notify_title="Follow Request Notice", notify_alert=message, follower_sender=request.user)
+        NotifyMe.objects.create(user=deuser, notify_title="Follow Request Notice", notify_alert=message,
+                                follower_sender=request.user)
 
     else:
         myprofile.following.remove(deuser)
@@ -183,6 +185,7 @@ def user_connection(request, id):
         "defollowers": deuser_followers,
         "df_count": df_count,
         "dfs_count": dfs_count,
+        "all_chatters": all_chatters,
     }
 
     if request.is_ajax():
@@ -190,5 +193,3 @@ def user_connection(request, id):
         return JsonResponse({
             "results": connection
         })
-
-
