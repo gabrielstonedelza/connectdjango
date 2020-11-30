@@ -41,29 +41,28 @@
       aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  <!-- Search form -->
-<input class="form-control" type="text" placeholder="Search" aria-label="Search">
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="basicExampleNav">
       <!-- Links -->
       <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item">
+          <a title="view all blogs or post new"  href="{% url 'blogs' %}" title="Profile" class="nav-link">
+            <i class="fas fa-home"></i>
+           </a>
+        </li>
         <li class="nav-item ml-1 mr-1">
           <a title="chatrooms"  href="{% url 'chatrooms' %}" title="Profile" class="nav-link">
            <i class="fas fa-users"></i>
           </a>
         </li>
-        <li class="nav-item dropdown ml-3 mr-3 is_active">
-          <a title="view all blogs or post new" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">Blogs</a>
-          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'blogs' %}">All</a>
-            <a class="dropdown-item" href="{% url 'create_blog' %}" title="About Connect Django">Add New</a>
-          </div>
-        </li>
-         
+        
+  
+         <li class="nav-item">
+           <a title="messages and new" href="{% url 'messages' %}" class="nav-link"><i class="fas fa-paper-plane"></i></a>
+         </li>
         <li class="nav-item ml-1 mr-1" >
           <a href="#" data-toggle="modal" data-target="#notification_listModal" title="Notifications" class="nav-link" >
-            <i class="far fa-bell"></i>
+            <i class="fas fa-bell"></i>
             {% if has_new_notification %}
               <sup class="badge badge-danger animated jello infinite">{{ u_notify_count }}</sup>
             {% endif %}
@@ -73,15 +72,6 @@
           <a title="Search" class="nav-link" href="#" data-toggle="modal" data-target="#basicExampleModal"><i class="fas fa-search"></i></a>
         </li>
 
-        <li class="nav-item dropdown ml-3 mr-3 is_active">
-          <a title="Post a question or tutorial" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false"><i class="fas fa-info-circle"></i></a>
-          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'feedbacks' %}">Feedbacks</a>
-            <a class="dropdown-item" href="{% url 'about-us' %}" title="About Connect Django">About CD</a>
-          </div>
-        </li>
-        
         {% if request.user.username == "gabrielstone" %}
           <li class="nav-item ml-1 mr-1">
             <a title="send newsletter"  href="{% url 'newsletter' %}" title="Profile" class="nav-link">

@@ -66,8 +66,6 @@ class PrivateMessage(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     chat_id = models.IntegerField()
-    # sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_sender', default=1)
-    # receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_receiver', default=1)
     date_posted = models.DateTimeField(auto_now_add=True)
     pmsg_file = models.FileField(upload_to='private_message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='plikes', blank=True)
@@ -83,6 +81,8 @@ class PrivateMessage(models.Model):
 
 class Chatters(models.Model):
     chatter_users = models.CharField(max_length=200)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name="chatter2")
     private_chat_id = models.BigIntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
 

@@ -3,6 +3,10 @@
 Discover DJango Blogs
 {% endblock %}
 {% block content %}
+
+<div id="add_new_blog">
+    <a href="{% url 'create_blog' %}" class='butt'><i class="fas fa-plus"></i></a>
+</div>
 <div class="container">
     <br>
     <div class="myblog-container">

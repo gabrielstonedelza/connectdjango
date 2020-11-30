@@ -37,5 +37,6 @@ urlpatterns = [
     path('<str:username>/followers/', views.user_profile_followers, name="deuser_followers"),
     path('<str:username>/', views.user_profile, name="userprofilepost"),
     path('direct/<int:chat_id>/', views.private_chat, name='private_chat'),
+    path('direct/inbox/',views.messages,name="messages"),
 
 ]

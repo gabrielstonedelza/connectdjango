@@ -54,6 +54,30 @@ def private_chat(request, chat_id):
     }
     return render(request, 'blog/private_chat.html', context)
 
+@login_required
+def messages(request):
+    all_chats = Chatters.objects.all()
+
+    mychatters = []
+    mysenders = []
+
+    for i in all_chats.all():
+        if request.user.username in i.chatter_users:
+            if not i.chatter_users in mychatters:
+                mychatters.append(i.chatter_users)
+                mysenders.append(i.receiver)
+
+    print(mychatters)
+    print(mysenders)
+
+
+    context = {
+        "chats": mychatters,
+        "all_chats": all_chats,
+    }
+    return render(request,"blog/my_messages_inbox.html", context)
+
+
 
 @login_required
 def room_detail(request, slug):
@@ -166,7 +190,6 @@ def create_blog(request):
             blogcontent = form.cleaned_data.get('blog_content')
             Blog.objects.create(user=request.user, title=title, subtitle=subtitle, blog_pic=blogimg,
                                 blog_content=blogcontent)
-            messages.success(request, f"Successfully created {title}")
             return redirect('blogs')
 
         else:
@@ -338,7 +361,7 @@ def user_profile(request, username):
             id=deuser.id).exists():
         deuser.profile.chat_with.add(request.user)
         request.user.profile.chat_with.add(deuser)
-        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=c_id)
+        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=c_id,sender=request.user,receiver=deuser)
 
     for i in all_chatters.all():
         if request.user.username + deuser.username == i.chatter_users or deuser.username + request.user.username == i.chatter_users:
