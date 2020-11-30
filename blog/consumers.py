@@ -12,7 +12,7 @@ class PrivateConsumer(WebsocketConsumer):
 
     def fetch_messages(self, data):
         chat_id = self.scope['url_route']['kwargs']['chat_id']
-        messages = PrivateMessage.objects.filter(chat_id=chat_id).order_by('-date_posted')[:10]
+        messages = PrivateMessage.objects.filter(chat_id=chat_id).order_by('date_posted')[:10]
         content = {
             "command": 'messages',
             "messages": self.messages_to_json(messages)
@@ -31,7 +31,6 @@ class PrivateConsumer(WebsocketConsumer):
             'command': 'new_message',
             'message': self.message_to_json(message)
         }
-        print(chat_id)
         return self.send_chat_message(content)
 
     def messages_to_json(self, messages):

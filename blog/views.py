@@ -41,7 +41,8 @@ def chatrooms(request):
 @login_required
 def private_chat(request, chat_id):
     my_notify = mynotifications(request.user)
-    chatid = get_object_or_404(PrivateMessage, chat_id=chat_id)
+    # chatid = get_object_or_404(PrivateMessage, chat_id=chat_id)
+    chatid = get_object_or_404(Chatters,private_chat_id=chat_id)
 
     context = {
         'chat_id': mark_safe(json.dumps(chatid.id)),
