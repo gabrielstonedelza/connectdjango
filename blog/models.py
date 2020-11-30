@@ -66,8 +66,8 @@ class PrivateMessage(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     chat_id = models.IntegerField()
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_sender', default=1)
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_receiver', default=1)
+    # sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_sender', default=1)
+    # receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_receiver', default=1)
     date_posted = models.DateTimeField(auto_now_add=True)
     pmsg_file = models.FileField(upload_to='private_message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='plikes', blank=True)
@@ -75,7 +75,7 @@ class PrivateMessage(models.Model):
     funny = models.ManyToManyField(User, related_name="pfunny", blank=True)
 
     def __str__(self):
-        return f"{self.sender.username} just sent a message to {self.receiver.username}"
+        return f"{self.author.username} just sent a message "
 
     def last_10_messages():
         return PrivateMessage.objects.order_by('-date_posted')[:10]

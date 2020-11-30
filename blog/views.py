@@ -44,9 +44,8 @@ def private_chat(request, chat_id):
     chatid = get_object_or_404(PrivateMessage, chat_id=chat_id)
 
     context = {
-        'chat_id': mark_safe(json.dumps(chatid)),
+        'chat_id': mark_safe(json.dumps(chatid.id)),
         'username': mark_safe(json.dumps(request.user.username)),
-        # "chat": chat,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -318,6 +317,7 @@ def user_profile(request, username):
     my_notify = mynotifications(request.user)
     are_chatters = False
     all_chatters = Chatters.objects.all()
+    chatters_id = ''
 
     myprofile = get_object_or_404(Profile, user=request.user)
 
@@ -339,9 +339,11 @@ def user_profile(request, username):
         request.user.profile.chat_with.add(deuser)
         Chatters.objects.create(chatter_users=chat_names1, private_chat_id=c_id)
 
-    chatters = get_object_or_404(Chatters, chatter_users=chat_names2)
-    chatters_id = chatters.private_chat_id
-    print(chatters)
+    for i in all_chatters.all():
+        if request.user.username + deuser.username == i.chatter_users or deuser.username + request.user.username == i.chatter_users:
+            are_chatters = True
+            chatters_id = i.private_chat_id
+
     df_count = deuser.profile.following.all().count
     dfs_count = deuser.profile.followers.all().count
 

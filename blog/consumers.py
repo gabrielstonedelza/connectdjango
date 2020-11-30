@@ -11,7 +11,8 @@ import random
 class PrivateConsumer(WebsocketConsumer):
 
     def fetch_messages(self, data):
-        messages = PrivateMessage.last_10_messages()
+        chat_id = self.scope['url_route']['kwargs']['chat_id']
+        messages = PrivateMessage.objects.filter(chat_id=chat_id).order_by('-date_posted')[:10]
         content = {
             "command": 'messages',
             "messages": self.messages_to_json(messages)
@@ -19,17 +20,18 @@ class PrivateConsumer(WebsocketConsumer):
         self.send_message(content)
 
     def new_message(self, data):
-        chat_id = random.randint(2, 100000000000)
+        chat_id = self.scope['url_route']['kwargs']['chat_id']
         author = self.scope['user'].username
         author_user = get_object_or_404(User, username=author)
-        if not PrivateMessage.objects.filter(chat_id=self.chat_id):
-            message = PrivateMessage.objects.create(author=author_user, content=data['message'], chat_id=chat_id, sender=author_user, receiver=author_user)
+        if not PrivateMessage.objects.filter(chat_id=chat_id):
+            message = PrivateMessage.objects.create(author=author_user, content=data['message'], chat_id=chat_id)
         else:
-            message = PrivateMessage.objects.create(author=author_user, content=data['message'], chat_id=chat_id, sender=author_user, receiver=author_user)
+            message = PrivateMessage.objects.create(author=author_user, content=data['message'], chat_id=chat_id)
         content = {
             'command': 'new_message',
             'message': self.message_to_json(message)
         }
+        print(chat_id)
         return self.send_chat_message(content)
 
     def messages_to_json(self, messages):
