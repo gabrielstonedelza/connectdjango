@@ -42,7 +42,7 @@ def chatrooms(request):
 def private_chat(request, chat_id):
     my_notify = mynotifications(request.user)
     # chatid = get_object_or_404(PrivateMessage, chat_id=chat_id)
-    chatid = get_object_or_404(Chatters,private_chat_id=chat_id)
+    chatid = get_object_or_404(Chatters, private_chat_id=chat_id)
 
     context = {
         'chat_id': mark_safe(json.dumps(chatid.id)),
@@ -53,6 +53,7 @@ def private_chat(request, chat_id):
         "has_new_notification": my_notify['has_new_notification'],
     }
     return render(request, 'blog/private_chat.html', context)
+
 
 @login_required
 def messages(request):
@@ -70,13 +71,11 @@ def messages(request):
     print(mychatters)
     print(mysenders)
 
-
     context = {
         "chats": mychatters,
         "all_chats": all_chats,
     }
-    return render(request,"blog/my_messages_inbox.html", context)
-
+    return render(request, "blog/my_messages_inbox.html", context)
 
 
 @login_required
@@ -361,7 +360,7 @@ def user_profile(request, username):
             id=deuser.id).exists():
         deuser.profile.chat_with.add(request.user)
         request.user.profile.chat_with.add(deuser)
-        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=c_id,sender=request.user,receiver=deuser)
+        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=c_id, sender=request.user, receiver=deuser)
 
     for i in all_chatters.all():
         if request.user.username + deuser.username == i.chatter_users or deuser.username + request.user.username == i.chatter_users:
