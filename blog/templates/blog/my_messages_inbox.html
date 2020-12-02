@@ -6,7 +6,7 @@ My inbox
 <div class="container">
     <h4>This is the messages section</h4>
     {% for chat in chats %}
-    <a>{{ chat }}</a>
+        <a href="{% url 'private_chat' chatters_id %}">{{ chat }}</a>
     {% endfor %}
 </div>
 

@@ -58,22 +58,32 @@ def private_chat(request, chat_id):
 @login_required
 def messages(request):
     all_chats = Chatters.objects.all()
-
+    chat_before = False
+    chatters_id = ''
     mychatters = []
     mysenders = []
+
+    for i in all_chatters.all():
+        if request.user.username + deuser.username == i.chatter_users or deuser.username + request.user.username == i.chatter_users:
+            are_chatters = True
+            chatters_id = i.private_chat_id
 
     for i in all_chats.all():
         if request.user.username in i.chatter_users:
             if not i.chatter_users in mychatters:
                 mychatters.append(i.chatter_users)
                 mysenders.append(i.receiver)
+                chat_before = True
+                chatters_id = i.private_chat_id
 
     print(mychatters)
     print(mysenders)
+    print(chatters_id)
 
     context = {
-        "chats": mychatters,
+        "chats": mysenders,
         "all_chats": all_chats,
+        "chatters_id": chatters_id,
     }
     return render(request, "blog/my_messages_inbox.html", context)
 
