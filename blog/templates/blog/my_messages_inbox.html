@@ -3,11 +3,35 @@
 My inbox
 {% endblock %}
 {% block content %}
+<a href="" class="butt" data-toggle="modal" data-target="#new_chat_button"><i class="fas fa-edit"></i></a>
 <div class="container">
     <h4>This is the messages section</h4>
-    {% for chat in chats %}
-        <a href="{% url 'private_chat' chatters_id %}">{{ chat }}</a>
-    {% endfor %}
+    <ul class="list-group">
+        {% for c_users,private_key in users.items %}
+            <li class="list-group-item">
+                <a href="{% url 'private_chat' private_key %}">{{ c_users }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="new_chat_button" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Start new conversation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+            
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

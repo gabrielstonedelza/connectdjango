@@ -57,33 +57,33 @@ def private_chat(request, chat_id):
 
 @login_required
 def messages(request):
+    my_notify = mynotifications(request.user)
     all_chats = Chatters.objects.all()
-    chat_before = False
     chatters_id = ''
-    mychatters = []
-    mysenders = []
+    chat_before = False
+    my_new_chat_users = []
+    my_chatters = []
+    users = {}
 
-    for i in all_chatters.all():
-        if request.user.username + deuser.username == i.chatter_users or deuser.username + request.user.username == i.chatter_users:
-            are_chatters = True
-            chatters_id = i.private_chat_id
-
-    for i in all_chats.all():
+    for i in all_chats:
         if request.user.username in i.chatter_users:
-            if not i.chatter_users in mychatters:
-                mychatters.append(i.chatter_users)
-                mysenders.append(i.receiver)
+            if PrivateMessage.objects.filter(chat_id=i.chatter_users).exists():
                 chat_before = True
-                chatters_id = i.private_chat_id
-
-    print(mychatters)
-    print(mysenders)
-    print(chatters_id)
-
+                users[i.chatter_users.replace(request.user.username, '')] = i.private_chat_id
+                if not i.chatter_users.replace(request.user.username, '') in my_chatters:
+                    my_chatters.append(i.chatter_users.replace(request.user.username, ''))
+                print(my_chatters)
+    print(all_chats)
     context = {
-        "chats": mysenders,
         "all_chats": all_chats,
-        "chatters_id": chatters_id,
+        "users": users,
+        "my_new_chat_users": my_new_chat_users,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
+        # "chatters_id": chatters_id,
+        "my_chatters": my_chatters,
     }
     return render(request, "blog/my_messages_inbox.html", context)
 
@@ -174,10 +174,10 @@ def update_room(request, slug):
 
 @login_required
 def blogs(request):
-    blogs = Blog.objects.all().order_by('-date_posted')
+    all_blogs = Blog.objects.all().order_by('-date_posted')
     my_notify = mynotifications(request.user)
     context = {
-        "blogs": blogs,
+        "blogs": all_blogs,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -359,18 +359,17 @@ def user_profile(request, username):
 
     # user's username
     deuser = get_object_or_404(User, username=username)
-    c_id = random.randint(3, 999999999)
+    c_id = random.randint(1, 999999999)
 
     u_name1 = request.user.username
     u_name2 = deuser.username
     chat_names1 = f"{u_name1}{u_name2}"
-    chat_names2 = f"{u_name2}{u_name1}"
 
     if not deuser.profile.chat_with.filter(id=request.user.id).exists() and not request.user.profile.chat_with.filter(
             id=deuser.id).exists():
         deuser.profile.chat_with.add(request.user)
         request.user.profile.chat_with.add(deuser)
-        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=c_id, sender=request.user, receiver=deuser)
+        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=f"{chat_names1}", sender=request.user, receiver=deuser)
 
     for i in all_chatters.all():
         if request.user.username + deuser.username == i.chatter_users or deuser.username + request.user.username == i.chatter_users:

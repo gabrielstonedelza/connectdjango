@@ -3,9 +3,7 @@ from django.shortcuts import get_object_or_404
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .models import Message, PrivateMessage
-
-import random
+from .models import Message, PrivateMessage, Chatters
 
 
 class PrivateConsumer(WebsocketConsumer):
@@ -17,6 +15,7 @@ class PrivateConsumer(WebsocketConsumer):
             "command": 'messages',
             "messages": self.messages_to_json(messages)
         }
+
         self.send_message(content)
 
     def new_message(self, data):
@@ -55,7 +54,6 @@ class PrivateConsumer(WebsocketConsumer):
         self.chat_id = self.scope['url_route']['kwargs']['chat_id']
         self.room_group_name = 'direct_%s' % self.chat_id
         self.user = self.scope['user'].username
-
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,

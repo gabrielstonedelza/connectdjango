@@ -65,7 +65,7 @@ class Message(models.Model):
 class PrivateMessage(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-    chat_id = models.IntegerField()
+    chat_id = models.CharField(max_length=400)
     date_posted = models.DateTimeField(auto_now_add=True)
     pmsg_file = models.FileField(upload_to='private_message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='plikes', blank=True)
@@ -73,7 +73,7 @@ class PrivateMessage(models.Model):
     funny = models.ManyToManyField(User, related_name="pfunny", blank=True)
 
     def __str__(self):
-        return f"{self.author.username} just sent a message "
+        return self.author.username
 
     def last_10_messages():
         return PrivateMessage.objects.order_by('-date_posted')[:10]
@@ -82,12 +82,12 @@ class PrivateMessage(models.Model):
 class Chatters(models.Model):
     chatter_users = models.CharField(max_length=200)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name="chatter2")
-    private_chat_id = models.BigIntegerField()
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chatter2")
+    private_chat_id = models.CharField(max_length=400)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.chatter_users} has been assigned a private chat id of {self.private_chat_id}"
+        return self.private_chat_id
 
 
 class Blog(models.Model):
