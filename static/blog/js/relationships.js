@@ -19,4 +19,46 @@ $(function(){
       });
     });
 
+     // add pending members
+     $(document).on('click','#add_pending_member_button',(event)=>{
+      event.preventDefault()
+
+      var formData = $("#add_pending_members_form").serialize()
+      var id = event.currentTarget.value;
+
+      $.ajax({
+          type: 'POST',
+          url: '/add_pending_members/'+id+'/',
+          data: formData,
+          dataType: 'json',
+          success:(response)=>{
+              $("#add_pending_members_section").html(response['pending'])
+          },
+          error: (rs,e)=>{
+              console.log(rs.responseText);
+          }
+      })
+  })
+
+   // add new members
+   $(document).on('click','#add_new_member_button',(event)=>{
+    event.preventDefault()
+
+    var formData = $("#add_new_members_form").serialize()
+    var id = event.currentTarget.value;
+
+    $.ajax({
+        type: 'POST',
+        url: '/add_members/'+id+'/',
+        data: formData,
+        dataType: 'json',
+        success:(response)=>{
+            $("#add_new_members_section").html(response['can_chat'])
+            $("#my-members").html(response['can_chat'])
+        },
+        error: (rs,e)=>{
+            console.log(rs.responseText);
+        }
+    })
+})
 })

@@ -1,16 +1,25 @@
 {% extends 'blog/base_with_nav.html' %}
 {% load static %}
 {% block title %}
-{{ room.room_name }}
+Room-{{ room.room_name }}
 {% endblock %}
 {% block content %}
 <script type="text/javascript" src="{% static 'blog/js/reconnecting-websocket.min.js'%}"></script>
 <br>
 {% if room.creator == request.user %}
     <a href="{% url 'update_chatroom' room.slug %}" class="butt">Edit Room</a>
+    <a href="" data-toggle="modal" data-target="#addnewmembersModal" class="butt">Add members</a>
     <small class="text-muted">You can only see this.</small>
 {% endif %}
 
+<div id="my-members">
+
+    <ul class="list-group">
+        {% for member in my_room_members %}
+            <li class="list-group-item">{{ member }}</li>
+        {% endfor %}
+    </ul>
+</div>
 <div class="main-chat-sections">
     <div class="users_online">
         <!-- top bar -->
@@ -119,5 +128,22 @@
         }
 
 </script>
-
+<!-- Modal -->
+<div class="modal fade" id="addnewmembersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new members</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="add_new_members_section">
+        {% include "blog/add_members.html" %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
+

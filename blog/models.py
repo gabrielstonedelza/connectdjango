@@ -14,10 +14,10 @@ class ChatRoom(models.Model):
     about = models.CharField(max_length=500, blank=True, default="Team work is all we need")
     room_logo = models.ImageField(upload_to="room_pics", blank=True, default='room.jpg',
                                   validators=[validate_file_size])
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False, help_text="Make your room active for communication or inactive for users")
     allowed_users = models.ManyToManyField(User, related_name="allowed", blank=True)
     pending_users = models.ManyToManyField(User, related_name="pending", blank=True)
-    allow_any = models.BooleanField(default=False, blank=True, help_text="allow any user to enter your room")
+    allow_any = models.BooleanField(default=False, blank=True, help_text="allow any user to enter your room without you adding them or using your room key")
     key = models.CharField(max_length=100, help_text="protect your room with a key")
     slug = models.SlugField(max_length=100, default='')
     date_created = models.DateTimeField(auto_now_add=True)
@@ -49,6 +49,7 @@ class ChatRoom(models.Model):
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    chat_id = models.CharField(max_length=400)
     date_posted = models.DateTimeField(auto_now_add=True)
     msg_file = models.FileField(upload_to='message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='likes', blank=True)
@@ -153,6 +154,7 @@ class NotifyMe(models.Model):
     notify_alert = models.CharField(max_length=200)
     follower_sender = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="who_started_following")
     read = models.BooleanField(default=False)
+    room_slug = models.CharField(max_length=200)
     blog_slug = models.CharField(max_length=100, blank=True)
     date_notified = models.DateTimeField(auto_now_add=True)
 

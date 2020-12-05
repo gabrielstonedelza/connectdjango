@@ -94,7 +94,8 @@ class PrivateConsumer(WebsocketConsumer):
 class ChatConsumer(WebsocketConsumer):
 
     def fetch_messages(self, data):
-        messages = Message.last_10_messages()
+        chat_id = self.scope['url_route']['kwargs']['room_name']
+        messages = Message.objects.filter(chat_id=chat_id).order_by('date_posted')[:10]
         content = {
             "command": 'messages',
             "messages": self.messages_to_json(messages)
@@ -102,9 +103,18 @@ class ChatConsumer(WebsocketConsumer):
         self.send_message(content)
 
     def new_message(self, data):
+        # author = self.scope['user'].username
+        # author_user = get_object_or_404(User, username=author)
+        # message = Message.objects.create(author=author_user, content=data['message'])
+
+        chat_id = self.scope['url_route']['kwargs']['room_name']
         author = self.scope['user'].username
         author_user = get_object_or_404(User, username=author)
-        message = Message.objects.create(author=author_user, content=data['message'])
+
+        if not Message.objects.filter(chat_id=chat_id):
+            message = Message.objects.create(author=author_user, content=data['message'], chat_id=chat_id)
+        else:
+            message = Message.objects.create(author=author_user, content=data['message'], chat_id=chat_id)
         content = {
             'command': 'new_message',
             'message': self.message_to_json(message)

@@ -23,12 +23,14 @@ def csrf_failure(request, reason=""):
     return render(request, "blog/403_csrf.html")
 
 
-def chatrooms(request):
-    chatrooms = ChatRoom.objects.all().order_by('-date_created')
+def chat_rooms(request):
+    all_rooms = ChatRoom.objects.all().order_by('-date_created')
     my_notify = mynotifications(request.user)
+    is_in_room = False
+    need_room_key = False
 
     context = {
-        "chatrooms": chatrooms,
+        "chatrooms": all_rooms,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -92,6 +94,14 @@ def messages(request):
 def room_detail(request, slug):
     room = get_object_or_404(ChatRoom, slug=slug)
     my_notify = mynotifications(request.user)
+    is_creator = False
+
+    my_room_members = room.allowed_users.all()
+    users = User.objects.exclude(id=request.user.id)
+    if room.creator == request.user:
+        is_creator = True
+
+    is_member = False
 
     context = {
         'room_name': mark_safe(json.dumps(room.id)),
@@ -101,6 +111,9 @@ def room_detail(request, slug):
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
+        "my_room_members": my_room_members,
+        "users": users,
+        "is_creator": is_creator
     }
     return render(request, 'blog/room.html', context)
 
@@ -125,12 +138,9 @@ def create_chatroom(request):
                 allow_any = True
             key = form.cleaned_data.get('key')
 
-            ChatRoom.objects.create(room_name=room_name, creator=request.user, about=about, room_logo=room_logo,
-                                    is_active=is_active, allow_any=allow_any, key=key)
-            messages.success(request, f"your room was created")
+            ChatRoom.objects.create(room_name=room_name, creator=request.user, about=about, room_logo=room_logo, is_active=is_active, allow_any=allow_any, key=key)
             return redirect('chatrooms')
-        else:
-            messages.info(request, "something went wrong")
+
     else:
         form = ChatRoomCreateForm()
 
@@ -152,11 +162,9 @@ def update_room(request, slug):
 
     if request.method == "POST":
         form = ChatRoomUpdateForm(request.POST, request.FILES, instance=room)
-
         if form.is_valid():
             form.save()
             messages.success(request, f"Your room was updated")
-
     else:
         form = ChatRoomUpdateForm(instance=room)
 
@@ -173,6 +181,114 @@ def update_room(request, slug):
 
 
 @login_required
+def add_to_room(request, id):
+    room = get_object_or_404(ChatRoom, creator=request.user)
+    user = get_object_or_404(User, id=id)
+    my_room_members = room.allowed_users.all()
+    pending_list = room.pending_users.all()
+    users = User.objects.exclude(id=request.user.id)
+    is_creator = False
+    is_member = False
+    if user in my_room_members:
+        is_member = True
+    else:
+        is_member = False
+
+    if not room.allowed_users.filter(id=user.id).exists():
+        room.allowed_users.add(user)
+        notify_message = f"Hi {user.username}, {room.creator} added you to his room."
+        NotifyMe.objects.create(user=user, notify_title=f"Added to room", notify_alert=notify_message, follower_sender=request.user, room_slug=room.slug)
+
+    if room.creator == request.user:
+        is_creator = True
+
+    context = {
+        "room": room,
+        "my_room_members": my_room_members,
+        "users": users,
+        "is_creator": is_creator,
+        "is_member": is_member,
+        "pending_list": pending_list,
+    }
+
+    if request.is_ajax():
+        can_communicate = render_to_string("blog/add_members.html", context, request=request)
+        return JsonResponse({
+            "can_chat": can_communicate
+        })
+
+
+@login_required
+def add_pending_members(request, id):
+    room = get_object_or_404(ChatRoom, creator=request.user)
+    user = get_object_or_404(User, id=id)
+    my_room_members = room.allowed_users.all()
+    pending_list = room.pending_users.all()
+    users = User.objects.exclude(id=request.user.id)
+    is_creator = False
+    is_member = False
+    if user in my_room_members:
+        is_member = True
+    else:
+        is_member = False
+
+    if not room.allowed_users.filter(id=user.id).exists():
+        room.allowed_users.add(user)
+        room.pending_users.remove(user)
+        notify_message = f"Hi {user.username}, {room.creator} accepted your request and added you to his room."
+        NotifyMe.objects.create(user=user, notify_title=f"Request Accepted", notify_alert=notify_message,
+                                follower_sender=request.user, room_slug=room.slug)
+
+    context = {
+        "room": room,
+        "my_room_members": my_room_members,
+        "users": users,
+        "is_creator": is_creator,
+        "is_member": is_member,
+        "pending_list": pending_list,
+    }
+    if request.is_ajax():
+        add_pending_member = render_to_string("blog/add_pending_members.html", context, request=request)
+        return JsonResponse({
+            "pending": add_pending_member
+        })
+
+
+@login_required
+def join_room(request, slug):
+    room = get_object_or_404(ChatRoom, slug=slug)
+    room_members = room.allowed_users.all()
+    pending_list = room.pending_users.all()
+
+    if not room.allowed_users.filter(id=request.user.id).exists() and not room.pending_users.filter(id=request.user.id).exists():
+        room.pending_users.add(request.user)
+        notify_message = f"hi {room.creator}, {request.user.username} wants to join your room"
+        NotifyMe.objects.create(user=room.creator, notify_title=f"Wants to join", notify_alert=notify_message,
+                                follower_sender=request.user, room_slug=room.slug)
+    else:
+        room.allowed_users.remove(request.user)
+
+    context = {
+        'room': room,
+        'room_members': room_members,
+        'pending_list': pending_list,
+    }
+
+    if request.is_ajax():
+        room = render_to_string("blog/join_room.html", context, request=request)
+        return JsonResponse({
+            "joinroom": room
+        })
+
+
+@login_required
+def need_access(request, slug):
+    room = get_object_or_404(ChatRoom, slug=slug)
+    room_members = room.allowed_users.all()
+    pending_list = room.pending_users.all()
+
+    
+@login_required
 def blogs(request):
     all_blogs = Blog.objects.all().order_by('-date_posted')
     my_notify = mynotifications(request.user)
@@ -182,6 +298,7 @@ def blogs(request):
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
         "has_new_notification": my_notify['has_new_notification'],
+
     }
 
     return render(request, "blog/blogs.html", context)

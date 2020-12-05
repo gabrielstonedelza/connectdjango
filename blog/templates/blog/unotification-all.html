@@ -80,6 +80,38 @@
                             <br>
                         </li>
                     </a>
+                    {% elif u.notify_title == "Added to room" %}
+                    <a href="{% url 'notifications' %}">
+                        <li class="">
+                            <div class="my-notifier-user d-flex">
+                                <img alt="" class="mr-3"
+                                     src="{{ u.follower_sender.profile.profile_pic.url }}"
+                                     style="width:30px;height:30px;border-radius:50%;">
+                                     <div>
+                                        <span class="font-bold text-muted">{{ u.notify_alert }} <sup class="badge badge-info ml-2 animated rubberBand infinite"><small>Recent</small></sup></span>
+                                        <br>
+                                        <small class="text-muted">{{ u.date_notified }}</small>
+                                    </div>
+                            </div>
+                            <br>
+                        </li>
+                    </a>
+                    {% elif u.notify_title == "Request Accepted" %}
+                    <a href="{% url 'notifications' %}">
+                        <li class="">
+                            <div class="my-notifier-user d-flex">
+                                <img alt="" class="mr-3"
+                                     src="{{ u.follower_sender.profile.profile_pic.url }}"
+                                     style="width:30px;height:30px;border-radius:50%;">
+                                     <div>
+                                        <span class="font-bold text-muted">{{ u.notify_alert }} <sup class="badge badge-info ml-2 animated rubberBand infinite"><small>Recent</small></sup></span>
+                                        <br>
+                                        <small class="text-muted">{{ u.date_notified }}</small>
+                                    </div>
+                            </div>
+                            <br>
+                        </li>
+                    </a>
                     {% endif %}
                     {% else %}
                     <li>No new notifications</li>
