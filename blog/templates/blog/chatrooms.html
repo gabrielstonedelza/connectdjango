@@ -16,9 +16,20 @@ Discover Chatrooms
                     {% if room.room_logo %}
                         <img src="{{ room.room_logo.url }}">
                     {% endif %}
-                    <div class="room-details">
-                        <a href="{{ room.get_absolute_room_url }}">{{ room.room_name }}</a>
-                    </div>
+                    {% if request.user in room.allowed_users.all %}
+                        <div class="room-details">
+                            <a href="{{ room.get_absolute_room_url }}">{{ room.room_name }}</a>
+                        </div>
+                    {% elif request.user == room.creator %}
+                        <div class="room-details">
+                            <a href="{{ room.get_absolute_room_url }}">{{ room.room_name }}</a>
+                        </div>
+                    {% else %}
+                        <div class="room-details">
+                            <a href="{% url 'need-access' room.slug %}">{{ room.room_name }}</a>
+                        </div>
+                    {% endif %}
+
                 </div>
             {% endfor %}
         </div>

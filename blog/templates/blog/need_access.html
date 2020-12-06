@@ -1,0 +1,20 @@
+{% extends "blog/base_with_nav.html"%}
+{% block title %}
+Need access to {{ room.room_name }}
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+<div class="container">
+    <br>
+    <h4 class="text-center">It seems you don't have access to this room</h4>
+    <br>
+    <div id="join_room_section">
+
+        {% include 'blog/join_room.html' %}
+    </div>
+    <br>
+
+</div>
+
+{% endblock %}

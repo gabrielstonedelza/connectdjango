@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DeleteView, UpdateView
@@ -9,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
-from .forms import (FeedbackForm, BlogForm, CommentsForm, BlogUpdateForm, ChatRoomCreateForm, ChatRoomUpdateForm)
+from .forms import (FeedbackForm, BlogForm, CommentsForm, BlogUpdateForm, ChatRoomCreateForm, ChatRoomUpdateForm,)
 from .models import (FeedBack, NotifyMe, ChatRoom, Message, PrivateMessage, Blog, Comments, Chatters)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
@@ -17,6 +16,7 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 import json
 import random
+from django.contrib import messages
 
 
 def csrf_failure(request, reason=""):
@@ -97,6 +97,8 @@ def room_detail(request, slug):
     is_creator = False
 
     my_room_members = room.allowed_users.all()
+    pending_list = room.pending_users.all()
+    pending_count = pending_list.count
     users = User.objects.exclude(id=request.user.id)
     if room.creator == request.user:
         is_creator = True
@@ -113,7 +115,9 @@ def room_detail(request, slug):
         "has_new_notification": my_notify['has_new_notification'],
         "my_room_members": my_room_members,
         "users": users,
-        "is_creator": is_creator
+        "is_creator": is_creator,
+        "pending_list": pending_list,
+        "pending_count": pending_count,
     }
     return render(request, 'blog/room.html', context)
 
@@ -138,7 +142,8 @@ def create_chatroom(request):
                 allow_any = True
             key = form.cleaned_data.get('key')
 
-            ChatRoom.objects.create(room_name=room_name, creator=request.user, about=about, room_logo=room_logo, is_active=is_active, allow_any=allow_any, key=key)
+            ChatRoom.objects.create(room_name=room_name, creator=request.user, about=about, room_logo=room_logo,
+                                    is_active=is_active, allow_any=allow_any, key=key)
             return redirect('chatrooms')
 
     else:
@@ -197,7 +202,8 @@ def add_to_room(request, id):
     if not room.allowed_users.filter(id=user.id).exists():
         room.allowed_users.add(user)
         notify_message = f"Hi {user.username}, {room.creator} added you to his room."
-        NotifyMe.objects.create(user=user, notify_title=f"Added to room", notify_alert=notify_message, follower_sender=request.user, room_slug=room.slug)
+        NotifyMe.objects.create(user=user, notify_title=f"Added to room", notify_alert=notify_message,
+                                follower_sender=request.user, room_slug=room.slug)
 
     if room.creator == request.user:
         is_creator = True
@@ -225,17 +231,12 @@ def add_pending_members(request, id):
     my_room_members = room.allowed_users.all()
     pending_list = room.pending_users.all()
     users = User.objects.exclude(id=request.user.id)
-    is_creator = False
-    is_member = False
-    if user in my_room_members:
-        is_member = True
-    else:
-        is_member = False
+
 
     if not room.allowed_users.filter(id=user.id).exists():
         room.allowed_users.add(user)
         room.pending_users.remove(user)
-        notify_message = f"Hi {user.username}, {room.creator} accepted your request and added you to his room."
+        notify_message = f"Hi {user.username}, {room.creator} accepted your request and added you to {room.room_name}."
         NotifyMe.objects.create(user=user, notify_title=f"Request Accepted", notify_alert=notify_message,
                                 follower_sender=request.user, room_slug=room.slug)
 
@@ -260,13 +261,12 @@ def join_room(request, slug):
     room_members = room.allowed_users.all()
     pending_list = room.pending_users.all()
 
-    if not room.allowed_users.filter(id=request.user.id).exists() and not room.pending_users.filter(id=request.user.id).exists():
+    if not room.allowed_users.filter(id=request.user.id).exists() and not room.pending_users.filter(
+            id=request.user.id).exists():
         room.pending_users.add(request.user)
         notify_message = f"hi {room.creator}, {request.user.username} wants to join your room"
         NotifyMe.objects.create(user=room.creator, notify_title=f"Wants to join", notify_alert=notify_message,
                                 follower_sender=request.user, room_slug=room.slug)
-    else:
-        room.allowed_users.remove(request.user)
 
     context = {
         'room': room,
@@ -283,11 +283,26 @@ def join_room(request, slug):
 
 @login_required
 def need_access(request, slug):
+    my_notify = mynotifications(request.user)
+    form = ''
+    critical = 20
     room = get_object_or_404(ChatRoom, slug=slug)
     room_members = room.allowed_users.all()
     pending_list = room.pending_users.all()
 
-    
+    context = {
+        "room": room,
+        "room_members": room_members,
+        "pending_list": pending_list,
+        "notification": my_notify['notification'],
+        "unread_notification": my_notify['unread_notification'],
+        "u_notify_count": my_notify['u_notify_count'],
+        "has_new_notification": my_notify['has_new_notification'],
+    }
+
+    return render(request, "blog/need_access.html", context)
+
+
 @login_required
 def blogs(request):
     all_blogs = Blog.objects.all().order_by('-date_posted')
@@ -486,7 +501,8 @@ def user_profile(request, username):
             id=deuser.id).exists():
         deuser.profile.chat_with.add(request.user)
         request.user.profile.chat_with.add(deuser)
-        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=f"{chat_names1}", sender=request.user, receiver=deuser)
+        Chatters.objects.create(chatter_users=chat_names1, private_chat_id=f"{chat_names1}", sender=request.user,
+                                receiver=deuser)
 
     for i in all_chatters.all():
         if request.user.username + deuser.username == i.chatter_users or deuser.username + request.user.username == i.chatter_users:

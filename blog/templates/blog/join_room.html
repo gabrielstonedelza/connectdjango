@@ -1,13 +1,13 @@
 {% load crispy_forms_tags %}
-<form action="{% url 'join_room' id=group.id %}" method="POST" id="join_room_form">
+<form action="{% url 'join_room' slug=room.slug %}" method="POST" id="join_room_form">
     {% csrf_token %}
     <div class="form-group">
-        {% if user in group.members.all %}
-            <button type="submit" class="butt" id="join_group_button" value="{{ group.id }}">Exit</button>
-        {% elif user in group.pending_list.all %}
+        {% if user in pending_list %}
             <button class="butt" disabled>Pending</button>
+        {% elif user in room.allowed_users.all %}
+            <a href="{% url 'room_detail' room.slug %}">You are now added.Join room now</a>
         {% else %}
-            <button type="submit" class="butt" id="join_group_button" value="{{ group.id }}">Join</button>
+            <button type="submit" class="butt" id="join_room_button" value="{{ room.slug }}">Request key from {{ room.creator }}</button>
         {% endif %}
     </div>
 </form>

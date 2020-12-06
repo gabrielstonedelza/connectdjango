@@ -3,7 +3,7 @@
         {% if user in pending_list %}
             <li class="list-group-item d-flex d-flex justify-content-between">
                 <a  href="{% url 'userprofilepost' user.username %}">
-                <img style="width:30px;height:30px;border-radius:50%;" class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="">
+                <img style="width:40px;height:40px;border-radius:50%;" class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="">
                 <span class="mt-2 text-muted">
                     {{ user.username }}
                 </span>

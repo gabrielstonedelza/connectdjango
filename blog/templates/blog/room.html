@@ -9,6 +9,7 @@ Room-{{ room.room_name }}
 {% if room.creator == request.user %}
     <a href="{% url 'update_chatroom' room.slug %}" class="butt">Edit Room</a>
     <a href="" data-toggle="modal" data-target="#addnewmembersModal" class="butt">Add members</a>
+    <a href="" data-toggle="modal" data-target="#pending_members_modal" class="butt">Pending Users<span class='badge badge-danger ml-2'>{{ pending_count }}</span></a>
     <small class="text-muted">You can only see this.</small>
 {% endif %}
 
@@ -141,6 +142,25 @@ Room-{{ room.room_name }}
       </div>
       <div class="modal-body" id="add_new_members_section">
         {% include "blog/add_members.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- pending users -->
+<!-- Modal -->
+<div class="modal fade" id="pending_members_modal" tabindex="-1" role="dialog" aria-labelledby="pending_members_modal"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pending_members_modal">Add new members</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="add_new_members_section">
+        {% include "blog/add_pending_members.html" %}
       </div>
     </div>
   </div>

@@ -28,7 +28,8 @@ urlpatterns = [
     path('chatroom/<str:slug>/update/', views.update_room, name='update_chatroom'),
     path('add_pending_members/<int:id>/', views.add_pending_members, name='add_pending_members'),
     path('add_members/<int:id>/', views.add_to_room, name='add_members'),
-    path('join_room/<int:id>/',views.join_room, name='join_room'),
+    path('join_room/<str:slug>/', views.join_room, name='join_room'),
+    path('chat/<str:slug>/need-access/', views.need_access, name="need-access"),
 
     path('feedbacks/', views.feed_backs, name="feedbacks"),
     path('about-us/', views.about_cd, name="about-us"),
