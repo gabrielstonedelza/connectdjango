@@ -27,19 +27,16 @@ def chat_rooms(request):
     all_rooms = ChatRoom.objects.all().order_by('-date_created')
     my_notify = mynotifications(request.user)
     your_room_count = 1
-    can_create_room = False
+    # can_create_room = False
 
     my_rooms = ChatRoom.objects.filter(creator=request.user)
     print(my_rooms)
-    if my_rooms.count() < your_room_count:
-        can_create_room = True
-    else:
-        can_create_room = False
+  
 
     context = {
         "chatrooms": all_rooms,
         "my_rooms": my_rooms,
-        "can_create_room": can_create_room,
+        # "can_create_room": can_create_room,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],

@@ -66,14 +66,12 @@ Discover Chatrooms
     </div>
     <div class="show-room-messages-section">
         <div class="container">
+            <a title="create new room" href="{% url 'create_chatroom' %}" class="butt"><i class="fas fa-plus-circle 2x"></i></a>
             <h3 class="text-center">To enter an active room you need to send a request to the room creator and get accepted first.</h3>
-
-            {% if can_create_room %}
-            <h4 class="text-center">Dont' have a room of your own?</h4>
-                <a href="{% url 'create_chatroom' %}" class="butt">Create One</a>
-                {% else %}
-                <h4 class="text-center">You created {{ my_rooms }}</h4>
-            {% endif %}
+            <p>You created </p>
+            {% for myroom in my_rooms %}
+                <a href="{{ myroom.get_absolute_room_url }}">{{ myroom.room_name }}</a>
+            {% endfor %}
         </div>
     </div>
 </div>
