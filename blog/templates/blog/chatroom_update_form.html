@@ -5,7 +5,16 @@ Edit your room
 {% endblock %}
 {% block content%}
 <div class="blog-form-container">
-    
+    <div class="row text-center">
+        <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto">
+            {% if success_msg %}
+                <div class="animated bounce alert alert-success" style="font-weight: bold; padding: 20px;">
+                  {{ success_msg }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
     <div class="container">
         <h3 class="text-center">Edit room</h3>
         <form method="post" enctype="multipart/form-data">

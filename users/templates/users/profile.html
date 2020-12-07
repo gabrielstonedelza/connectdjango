@@ -85,7 +85,7 @@
                         <small class="text-muted mr-1"><i class="fas fa-eye"></i> {{ blog.views }}</small>
                         <small class="text-muted">last update {{ blog.date_posted|date:"M D Y"}}</small>
                         <div class="update-delete">
-                          <a href="{% url 'blog_update' blog.title %}" class="butt ml-3" style="color:white;">Update</a>
+                          <a href="{% url 'blog_update' blog.slug %}" class="butt ml-3" style="color:white;">Update</a>
                           
                         </div>
                     </div>

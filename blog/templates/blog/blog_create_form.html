@@ -6,6 +6,15 @@ Add a blog post
 {% block content%}
 <div class="blog-form-container">
     <br>
+    <div class="row text-center">
+        <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto">
+            {% if error_message %}
+                <div class="animated bounce alert alert-danger" style="font-weight: bold; padding: 20px;">
+                  {{ error_message }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
     <div class="container">
         <h3 class="text-center">Add new blog post</h3>
         <form method="post" enctype="multipart/form-data">

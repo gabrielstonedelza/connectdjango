@@ -6,6 +6,15 @@ Update {{ blog.title }}
 {% block content%}
 <div class="blog-form-container">
     <br>
+    <div class="row text-center">
+        <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto">
+            {% if success %}
+                <div class="animated bounce alert alert-success" style="font-weight: bold; padding: 20px;">
+                  {{ success }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
     <h3 class="text-center">Update {{ blog.title }}</h3>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

@@ -55,13 +55,9 @@
            <i class="fas fa-users"></i>
           </a>
         </li>
-        
-  
-         <li class="nav-item">
-           <a title="messages and new" href="{% url 'messages' %}" class="nav-link"><i class="fas fa-paper-plane"></i></a>
-         </li>
+
         <li class="nav-item ml-1 mr-1" >
-          <a href="#" data-toggle="modal" data-target="#notification_listModal" title="Notifications" class="nav-link" >
+          <a href="{% url 'notifications' %}"  title="Notifications" class="nav-link" >
             <i class="fas fa-bell"></i>
             {% if has_new_notification %}
               <sup class="badge badge-danger animated jello infinite">{{ u_notify_count }}</sup>
@@ -117,18 +113,3 @@
       </div>
     </div>
   </div>
-
-<!-- Full Height Modal Right -->
-<script>
-  document.querySelector('body').addEventListener('mousemove',eyeball)
-  function eyeball(){
-    var eye = document.querySelectorAll('.eye')
-    eye.forEach(function(eye){
-      let x = (eye.getBoundingClientRect().left) + (eye.clientWidth / 2)
-      let y = (eye.getBoundingClientRect().top) + (eye.clientHeight / 2)
-      let radian = Math.atan2(event.pageX - x,event.pageY - y)
-      let rot = (radian * (180 / Math.PI) * -1) + 50
-      eye.style.transform = "rotate("+ rot +"deg)"
-    })
-  }
-</script>

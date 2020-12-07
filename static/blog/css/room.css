@@ -1,0 +1,65 @@
+.rooms {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: minmax(150px, 25%) 1fr;
+      grid-template-columns: minmax(150px, 25%) 1fr;
+}
+
+.rooms .display-all-rooms {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background: seagreen;
+  height: 90vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #fff;
+}
+
+.rooms .display-all-rooms .room .room-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+  padding: 10px;
+}
+
+.rooms .display-all-rooms .room .room-details:hover {
+  background: #11c25e;
+}
+
+.rooms .display-all-rooms .room .room-details .room-logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.rooms .display-all-rooms .room .room-details a {
+  color: #fff;
+}
+
+.rooms .show-room-messages-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 20px;
+}
+/*# sourceMappingURL=room.css.map */

@@ -49,12 +49,12 @@ class CommentsForm(forms.ModelForm):
 class ChatRoomCreateForm(forms.ModelForm):
     class Meta:
         model = ChatRoom
-        fields = ['room_name', 'about', 'room_logo', 'is_active', 'allow_any', 'key']
+        fields = ['room_name', 'about', 'room_logo', 'is_active']
 
 
 class ChatRoomUpdateForm(forms.ModelForm):
     class Meta:
         model = ChatRoom
-        fields = ['room_name', 'about', 'room_logo', 'is_active', 'allowed_users', 'allow_any', 'key']
+        fields = ['room_name', 'about', 'room_logo', 'is_active', 'allowed_users']
 
 

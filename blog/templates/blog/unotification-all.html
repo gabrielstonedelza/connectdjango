@@ -15,7 +15,7 @@
                     {% for u in notification|slice:"1" %}
                     {% if not u.read %}
                     {% if u.notify_title == "New Blog Post" %}
-                    <a  href="{% url 'notifications' %}">
+                    <a  href="{% url 'blogpost_detail' u.slug %}">
                         <li >
                             <div class="my-notifier-user d-flex">
                                 <img alt="" class="mr-3"
@@ -31,7 +31,7 @@
                         </li>
                     </a>
                     {% elif u.notify_title == "New Blog comment" %}
-                    <a href="{% url 'notifications' %}">
+                    <a href="{% url 'blog_detail' u.blog_slug %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
                                 <img alt="" class="mr-3"
@@ -49,7 +49,7 @@
                     <hr class="my-4">
 
                     {% elif u.notify_title == "Follow Notice" %}
-                    <a href="{% url 'notifications' %}">
+                    <a href="{% url 'userprofilepost' u.follower_sender.username %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
                                 <img alt="" class="mr-3"
@@ -65,7 +65,7 @@
                         </li>
                     </a>
                     {% elif u.notify_title == "Follow Request Notice" %}
-                    <a href="{% url 'notifications' %}">
+                    <a href="{% url 'userprofilepost' u.follower_sender.username %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
                                 <img alt="" class="mr-3"
@@ -81,7 +81,7 @@
                         </li>
                     </a>
                     {% elif u.notify_title == "Added to room" %}
-                    <a href="{% url 'notifications' %}">
+                    <a href="{% url 'room_detail' u.room_slug %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
                                 <img alt="" class="mr-3"
@@ -97,7 +97,7 @@
                         </li>
                     </a>
                     {% elif u.notify_title == "Request Accepted" %}
-                    <a href="{% url 'notifications' %}">
+                    <a href="{% url 'room_detail' u.room_slug %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
                                 <img alt="" class="mr-3"
@@ -113,7 +113,7 @@
                         </li>
                     </a>
                     {% elif u.notify_title == "Wants to join" %}
-                    <a href="{% url 'notifications' %}">
+                    <a href="{% url 'room_detail' u.room_slug %}">
                         <li class="">
                             <div class="my-notifier-user d-flex">
                                 <img alt="" class="mr-3"

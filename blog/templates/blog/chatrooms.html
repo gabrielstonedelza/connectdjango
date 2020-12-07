@@ -4,35 +4,78 @@ Discover Chatrooms
 {% endblock %}
 {% block content %}
 
-<br>
-<a href="{% url 'create_chatroom' %}" class="butt">Create Room</a>
-<br>
-<div class="container">
-    <br>
-    <div class="main-chat-container">
-        <div class="chat-container">
-            {% for room in chatrooms %}
+
+
+<div class="rooms">
+    <div class="display-all-rooms">
+        {% for room in chatrooms %}
+            {% if room.is_active %}
                 <div class="room">
-                    {% if room.room_logo %}
-                        <img src="{{ room.room_logo.url }}">
-                    {% endif %}
                     {% if request.user in room.allowed_users.all %}
                         <div class="room-details">
-                            <a href="{{ room.get_absolute_room_url }}">{{ room.room_name }}</a>
+                            <div class="room-logo">
+                                {% if room.room_logo %}
+                                    <img src="{{ room.room_logo.url }}">
+                                {% endif %}
+                            </div>
+                            <a href="{{ room.get_absolute_room_url }}">
+                                {{ room.room_name }}
+                                | <span class="text-muted badge badge-success">Active</span>
+                            </a>
                         </div>
                     {% elif request.user == room.creator %}
                         <div class="room-details">
-                            <a href="{{ room.get_absolute_room_url }}">{{ room.room_name }}</a>
+                            <div class="room-logo">
+                                {% if room.room_logo %}
+                                    <img src="{{ room.room_logo.url }}">
+                                {% endif %}
+                            </div>
+                            <a href="{{ room.get_absolute_room_url }}">
+                                {{ room.room_name }}
+                                | <span class="text-muted badge badge-success">Active</span>
+                            </a>
                         </div>
                     {% else %}
                         <div class="room-details">
-                            <a href="{% url 'need-access' room.slug %}">{{ room.room_name }}</a>
+                            <div class="room-logo">
+                                {% if room.room_logo %}
+                                    <img src="{{ room.room_logo.url }}">
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'need-access' room.slug %}">
+                                {{ room.room_name }}
+                                | <span class="text-muted badge badge-success animated jello infinite">Active</span>
+                            </a>
                         </div>
                     {% endif %}
-
                 </div>
-            {% endfor %}
+            {% else %}
+            <div class="room">
+                <div class="room-details">
+                    <div class="room-logo">
+                        {% if room.room_logo %}
+                            <img src="{{ room.room_logo.url }}">
+                        {% endif %}
+                    </div>
+                    <a title="Room is not active at the moment">{{ room.room_name }}
+                        | <span class="text-muted badge badge-danger">Not Active</span> </a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="show-room-messages-section">
+        <div class="container">
+            <h3 class="text-center">To enter an active room you need to send a request to the room creator and get accepted first.</h3>
+
+            {% if can_create_room %}
+            <h4 class="text-center">Dont' have a room of your own?</h4>
+                <a href="{% url 'create_chatroom' %}" class="butt">Create One</a>
+                {% else %}
+                <h4 class="text-center">You created {{ my_rooms }}</h4>
+            {% endif %}
         </div>
     </div>
 </div>
+
 {% endblock content %}

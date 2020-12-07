@@ -1,18 +1,18 @@
 <ul class="list-group">
-      {% for user in users.all %}
-        {% if not user in pending_members and not user in my_room_members.all %}
-          <li class="list-group-item">
-            <a  href="{% url 'userprofilepost' user.username %}">
-              <img class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="" style="widows: 40px;height:40px;border-radius:50%;">
-              {{ user.username }}
-            </a>
-            <form action="{% url 'add_members' id=user.id %}" method="post" id="add_new_members_form">
-                {% csrf_token %}
-                <div class="form-group">
-                    <button type="submit" class="butt mt-3" id="add_new_member_button" value="{{ user.id }}">Add</button>
-                </div>
-            </form>
-          </li>
-          {% endif %}
-        {% endfor %}
-    </ul>
+  {% for user in users.all %}
+    {% if not user in pending_members and not user in my_room_members.all %}
+      <li class="list-group-item">
+        <a  href="{% url 'userprofilepost' user.username %}">
+          <img class="mr-2 z-depth-1-half" src="{{ user.profile.profile_pic.url }}" alt="" style="widows: 40px;height:40px;border-radius:50%;">
+          {{ user.username }}
+        </a>
+        <form action="{% url 'add_members' id=user.id %}" method="post" id="add_new_members_form">
+            {% csrf_token %}
+            <div class="form-group">
+                <button type="submit" class="butt mt-3" id="add_new_member_button" value="{{ user.id }}">Add</button>
+            </div>
+        </form>
+      </li>
+      {% endif %}
+    {% endfor %}
+</ul>

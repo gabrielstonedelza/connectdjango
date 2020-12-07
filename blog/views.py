@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.db.models import Q
 from users.models import Profile
-from .forms import (FeedbackForm, BlogForm, CommentsForm, BlogUpdateForm, ChatRoomCreateForm, ChatRoomUpdateForm,)
+from .forms import (FeedbackForm, BlogForm, CommentsForm, BlogUpdateForm, ChatRoomCreateForm, ChatRoomUpdateForm, )
 from .models import (FeedBack, NotifyMe, ChatRoom, Message, PrivateMessage, Blog, Comments, Chatters)
 from .notifications import mynotifications
 from .process_mail import send_my_mail
@@ -26,11 +26,20 @@ def csrf_failure(request, reason=""):
 def chat_rooms(request):
     all_rooms = ChatRoom.objects.all().order_by('-date_created')
     my_notify = mynotifications(request.user)
-    is_in_room = False
-    need_room_key = False
+    your_room_count = 1
+    can_create_room = False
+
+    my_rooms = ChatRoom.objects.filter(creator=request.user)
+    print(my_rooms)
+    if my_rooms.count() < your_room_count:
+        can_create_room = True
+    else:
+        can_create_room = False
 
     context = {
         "chatrooms": all_rooms,
+        "my_rooms": my_rooms,
+        "can_create_room": can_create_room,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -103,8 +112,6 @@ def room_detail(request, slug):
     if room.creator == request.user:
         is_creator = True
 
-    is_member = False
-
     context = {
         'room_name': mark_safe(json.dumps(room.id)),
         'username': mark_safe(json.dumps(request.user.username)),
@@ -127,6 +134,8 @@ def create_chatroom(request):
     my_notify = mynotifications(request.user)
     is_active = False
     allow_any = False
+    success_message = ''
+    error_message = ''
 
     if request.method == "POST":
         form = ChatRoomCreateForm(request.POST, request.FILES)
@@ -137,20 +146,19 @@ def create_chatroom(request):
             room_logo = form.cleaned_data.get('room_logo')
             if form.cleaned_data.get('is_active'):
                 is_active = True
-
-            if form.cleaned_data.get('allow_any'):
-                allow_any = True
-            key = form.cleaned_data.get('key')
-
-            ChatRoom.objects.create(room_name=room_name, creator=request.user, about=about, room_logo=room_logo,
-                                    is_active=is_active, allow_any=allow_any, key=key)
+            ChatRoom.objects.create(room_name=room_name, creator=request.user, about=about, room_logo=room_logo, is_active=is_active)
+            success_message = 'room created'
             return redirect('chatrooms')
+        else:
+            error_message = "sorry something went wrong"
 
     else:
         form = ChatRoomCreateForm()
 
     context = {
         "form": form,
+        "success_message": success_message,
+        "error_message": error_message,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -164,18 +172,20 @@ def create_chatroom(request):
 def update_room(request, slug):
     room = get_object_or_404(ChatRoom, slug=slug)
     my_notify = mynotifications(request.user)
+    success_msg = ''
 
     if request.method == "POST":
         form = ChatRoomUpdateForm(request.POST, request.FILES, instance=room)
         if form.is_valid():
             form.save()
-            messages.success(request, f"Your room was updated")
+            success_msg = "your room was updated"
     else:
         form = ChatRoomUpdateForm(instance=room)
 
     context = {
         "form": form,
         "room": room,
+        "success_msg": success_msg,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -232,7 +242,6 @@ def add_pending_members(request, id):
     pending_list = room.pending_users.all()
     users = User.objects.exclude(id=request.user.id)
 
-
     if not room.allowed_users.filter(id=user.id).exists():
         room.allowed_users.add(user)
         room.pending_users.remove(user)
@@ -244,10 +253,9 @@ def add_pending_members(request, id):
         "room": room,
         "my_room_members": my_room_members,
         "users": users,
-        "is_creator": is_creator,
-        "is_member": is_member,
         "pending_list": pending_list,
     }
+
     if request.is_ajax():
         add_pending_member = render_to_string("blog/add_pending_members.html", context, request=request)
         return JsonResponse({
@@ -260,6 +268,7 @@ def join_room(request, slug):
     room = get_object_or_404(ChatRoom, slug=slug)
     room_members = room.allowed_users.all()
     pending_list = room.pending_users.all()
+    success_message = ''
 
     if not room.allowed_users.filter(id=request.user.id).exists() and not room.pending_users.filter(
             id=request.user.id).exists():
@@ -285,7 +294,7 @@ def join_room(request, slug):
 def need_access(request, slug):
     my_notify = mynotifications(request.user)
     form = ''
-    critical = 20
+
     room = get_object_or_404(ChatRoom, slug=slug)
     room_members = room.allowed_users.all()
     pending_list = room.pending_users.all()
@@ -322,6 +331,9 @@ def blogs(request):
 @login_required
 def create_blog(request):
     my_notify = mynotifications(request.user)
+    success_message = ""
+    error_message = ""
+
     if request.method == "POST":
         form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
@@ -334,12 +346,13 @@ def create_blog(request):
             return redirect('blogs')
 
         else:
-            messages.info(request, "sorry something went wrong")
+            error_message = "sorry something went wrong"
     else:
         form = BlogForm()
 
     context = {
         "form": form,
+        "error_message": error_message,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -400,12 +413,13 @@ def blog_detail(request, slug):
 def blog_update(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     my_notify = mynotifications(request.user)
+    success = ''
 
     if request.method == "POST":
         form = BlogUpdateForm(request.POST, request.FILES, instance=blog)
         if form.is_valid():
             form.save()
-            messages.success(request, "Blog updated")
+            success = "Blog updated"
             return redirect('blog_detail', blog.slug)
     else:
         form = BlogUpdateForm(instance=blog)
@@ -413,6 +427,7 @@ def blog_update(request, slug):
     context = {
         "blog": blog,
         "form": form,
+        "success": success,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -458,7 +473,7 @@ def news_letter(request):
 
 @login_required
 def search_queries(request):
-    global search_blogs
+    global search_blogs, rooms
     query = request.GET.get('q', None)
     if query is not None:
         search_blogs = Blog.objects.filter(
@@ -466,9 +481,14 @@ def search_queries(request):
             Q(user__username__icontains=query) |
             Q(subtitle__icontains=query)
         )
+        rooms = ChatRoom.objects.filter(
+            Q(room_name__icontains=query) |
+            Q(creator__username__icontains=query)
+        )
 
     context = {
         'blogs': search_blogs,
+        'rooms': rooms,
     }
     if request.is_ajax():
         html = render_to_string("blog/search_list.html", context, request=request)

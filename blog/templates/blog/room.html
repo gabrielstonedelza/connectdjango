@@ -9,7 +9,7 @@ Room-{{ room.room_name }}
 {% if room.creator == request.user %}
     <a href="{% url 'update_chatroom' room.slug %}" class="butt">Edit Room</a>
     <a href="" data-toggle="modal" data-target="#addnewmembersModal" class="butt">Add members</a>
-    <a href="" data-toggle="modal" data-target="#pending_members_modal" class="butt">Pending Users<span class='badge badge-danger ml-2'>{{ pending_count }}</span></a>
+    <a href="" data-toggle="modal" data-target="#pending_members_modal" class="butt">Pending Users<span class='badge badge-danger ml-2 animated jello infinite' id="pending_member_count">{{ pending_count }}</span></a>
     <small class="text-muted">You can only see this.</small>
 {% endif %}
 
@@ -159,7 +159,7 @@ Room-{{ room.room_name }}
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="add_new_members_section">
+      <div class="modal-body" id="add_pending_members_section">
         {% include "blog/add_pending_members.html" %}
       </div>
     </div>

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css'%}" type="text/css">
   <link rel="stylesheet" href="{% static 'blog/css/mdb.min.css'%}" type="text/css">
   <link rel="stylesheet" href="{% static 'blog/css/feedback_contact.css'%}" type="text/css">
-  
+  <link rel="stylesheet" href="{% static 'blog/css/room.css'%}" type="text/css">
   <link rel="stylesheet" href="{% static 'blog/css/profile.css'%}" type="text/css">
   <link rel="stylesheet" href="{% static 'blog/css/forsvg.css'%}" type="text/css">
   <link rel="stylesheet" href="{% static 'blog/css/userpostprofile.css'%}" type="text/css">
@@ -17,8 +17,7 @@
 
   <link rel="stylesheet" href="{% static 'blog/css/animate.css'%}" type="text/css">
   <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
-  <!-- <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script> -->
+
   
   <title>
     {% block title %}  {% endblock %}
@@ -26,17 +25,14 @@
 </head>
 <body>
 {% include "blog/navbar.html" %}
-{% include "blog/unotification-all.html" %}
 
 <div class="container">
   <div class="row text-center">
     <div class="col-xs-6 col-sm-6 col-md-6 ml-auto mr-auto">
-      {% if messages %}
-      {% for message in messages %}
-      <div class="animated bounce alert alert-{{ message.tags }}" style="font-weight: bold; padding: 20px;">
-        {{ message }}
-      </div>
-      {% endfor %}
+      {% if message %}
+        <div class="animated bounce alert alert-{{ message.tags }}" style="font-weight: bold; padding: 20px;">
+          {{ message }}
+        </div>
       {% endif %}
     </div>
   </div>

@@ -54,7 +54,6 @@ $(function () {
       dataType: "json",
       success: (response) => {
         $("#add_new_members_section").html(response["can_chat"]);
-        $("#my-members").html(response["can_chat"]);
       },
       error: (rs, e) => {
         console.log(rs.responseText);

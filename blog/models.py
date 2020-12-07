@@ -12,13 +12,10 @@ class ChatRoom(models.Model):
     room_name = models.CharField(max_length=150, unique=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     about = models.CharField(max_length=500, blank=True, default="Team work is all we need")
-    room_logo = models.ImageField(upload_to="room_pics", blank=True, default='room.jpg',
-                                  validators=[validate_file_size])
+    room_logo = models.ImageField(upload_to="room_pics", validators=[validate_file_size])
     is_active = models.BooleanField(default=False, help_text="Make your room active for communication or inactive for users")
     allowed_users = models.ManyToManyField(User, related_name="allowed", blank=True)
     pending_users = models.ManyToManyField(User, related_name="pending", blank=True)
-    allow_any = models.BooleanField(default=False, blank=True, help_text="allow any user to enter your room without you adding them or using your room key")
-    key = models.CharField(max_length=100, help_text="protect your room with a key")
     slug = models.SlugField(max_length=100, default='')
     date_created = models.DateTimeField(auto_now_add=True)
 
@@ -59,9 +56,6 @@ class Message(models.Model):
     def __str__(self):
         return f"{self.author.username} just sent a message to the group"
 
-    def last_10_messages():
-        return Message.objects.order_by('-date_posted')[:10]
-
 
 class PrivateMessage(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -75,9 +69,6 @@ class PrivateMessage(models.Model):
 
     def __str__(self):
         return self.author.username
-
-    def last_10_messages():
-        return PrivateMessage.objects.order_by('-date_posted')[:10]
 
 
 class Chatters(models.Model):

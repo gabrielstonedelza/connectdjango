@@ -29,7 +29,6 @@ def register(request):
                 username = form.cleaned_data.get('username')
                 send_my_mail(f"Welcome to ConnectDjango {username}", settings.EMAIL_HOST_USER, useremail,
                              {"name": username}, "email_templates/success.html")
-                messages.success(request, f'Your account is created {username},login now')
                 return redirect('login')
     else:
         form = UserRegistrationForm()
