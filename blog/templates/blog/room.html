@@ -5,53 +5,96 @@ Room-{{ room.room_name }}
 {% endblock %}
 {% block content %}
 <script type="text/javascript" src="{% static 'blog/js/reconnecting-websocket.min.js'%}"></script>
-<br>
-{% if room.creator == request.user %}
-    <a href="{% url 'update_chatroom' room.slug %}" class="butt">Edit Room</a>
-    <a href="" data-toggle="modal" data-target="#addnewmembersModal" class="butt">Add members</a>
-    <a href="" data-toggle="modal" data-target="#pending_members_modal" class="butt">Pending Users<span class='badge badge-danger ml-2 animated jello infinite' id="pending_member_count">{{ pending_count }}</span></a>
-    <small class="text-muted">You can only see this.</small>
-{% endif %}
-
-<div id="my-members">
-
-    <ul class="list-group">
-        {% for member in my_room_members %}
-            <li class="list-group-item">{{ member }}</li>
+<div class="rooms">
+    <div class="display-all-rooms">
+        <br>
+        <span class="text-center font-weight-bold">Other Rooms</span>
+        <hr class="my-4">
+        {% for room in chatrooms %}
+            {% if room.is_active %}
+                <div class="room">
+                    {% if request.user in room.allowed_users.all %}
+                        <div class="room-details">
+                            <div class="room-logo">
+                                {% if room.room_logo %}
+                                    <img src="{{ room.room_logo.url }}">
+                                {% endif %}
+                            </div>
+                            <a href="{{ room.get_absolute_room_url }}">
+                                {{ room.room_name }}
+                                | <span class="text-muted badge badge-success">Active</span>
+                            </a>
+                        </div>
+                    {% elif request.user == room.creator %}
+                        <div class="room-details">
+                            <div class="room-logo">
+                                {% if room.room_logo %}
+                                    <img src="{{ room.room_logo.url }}">
+                                {% endif %}
+                            </div>
+                            <a href="{{ room.get_absolute_room_url }}">
+                                {{ room.room_name }}
+                                | <span class="text-muted badge badge-success">Active</span>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="room-details">
+                            <div class="room-logo">
+                                {% if room.room_logo %}
+                                    <img src="{{ room.room_logo.url }}">
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'need-access' room.slug %}">
+                                {{ room.room_name }}
+                                | <span class="text-muted badge badge-success">Active</span>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+            <div class="room">
+                <div class="room-details">
+                    <div class="room-logo">
+                        {% if room.room_logo %}
+                            <img src="{{ room.room_logo.url }}">
+                        {% endif %}
+                    </div>
+                    <a title="Room is not active at the moment">{{ room.room_name }}
+                        | <span class="text-muted badge badge-danger">Not Active</span> </a>
+                </div>
+            </div>
+            {% endif %}
         {% endfor %}
-    </ul>
-</div>
-<div class="main-chat-sections">
-    <div class="users_online">
-        <!-- top bar -->
-        <div class="topbar-with-request username">
-
-        </div>
-        <!--   all online users -->
-        <table class="table table-hover">
-            <tbody>
-            {% for user in online_users %}
-            <tr>
-                <td>
-                    <img src="{{ user.profile.profile_pic.url }}" alt="" style="width:30px;height:30px;border-radius:50%">
-                </td>
-                <td>{{ user.username }}</td>
-                <td>online</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
     </div>
-    <div class="mychat-section">
-        <!-- <textarea id="chat-log" cols="100" rows="20"></textarea><br> -->
-        <input id="chat-message-input" type="text" size="100"><br>
-        <input id="chat-message-submit" type="button" value="Send">
+    <div class="show-room-messages-section">
+        <div class="for-creator">
+            {% if room.creator == request.user %}
+                <a href="{% url 'update_chatroom' room.slug %}" class="butt">Edit Room</a>
+                <a href="" data-toggle="modal" data-target="#addnewmembersModal" class="butt">Add members</a>
+                <a href="" data-toggle="modal" data-target="#pending_members_modal" class="butt">Pending Users<span class='badge badge-danger ml-2 animated jello infinite' id="pending_member_count">{{ pending_count }}</span></a>
+                <small class="text-muted">You can only see this.</small>
+            {% endif %}
+            {% if room.creator == request.user %}
+                <a href="" data-toggle="modal" data-target="#members_in_room" class="butt" style="float:right;">Members in room</a>
+            {% else %}
+                <a href="" data-toggle="modal" data-target="#members_in_room" class="butt">Members in room</a>
+            {% endif %}
+        </div>
 
+<div class="main-chat-section">
+    <div class="mychat-section">
         <div id="show-my-messages">
 
         </div>
+        <div class="input-holder">
+            <input id="chat-message-input" type="text" >
+        </div>
+        <input id="chat-message-submit" type="button" value="Send">
     </div>
 </div>
+    </div>
+</div>
+
 {{ room_name|json_script:"room-name" }}
 <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
@@ -86,6 +129,11 @@ Room-{{ room.room_name }}
         // document.querySelector('#chat-message-input').focus();
         document.querySelector('#chat-message-input').onkeyup = function(e) {
             
+            // if(!document.getElementById('chat-message-input').onkeyup || document.getElementById('chat-message-input').value ==''){
+            // document.getElementById('show-my-messages').innerHTML = ''
+            // }else{
+            // document.getElementById('show-my-messages').innerHTML = 'typing'
+            // }
             if (e.keyCode === 13) {  // enter, return
                 document.querySelector('#chat-message-submit').click();
             }
@@ -109,23 +157,21 @@ Room-{{ room.room_name }}
         function createMessage(data){
             var author = data['author']
             var msgListTag = document.createElement('li')
-            var imgTag = document.createElement('img')
             var pTag = document.createElement('p')
             var nameTag = document.createElement('h5')
             nameTag.textContent = author
             pTag.textContent = data.content
-            imgTag.src = ''
 
             if (author === username ){
                 msgListTag.className = 'sent'
             }else{
                 msgListTag.className = 'replies'
             }
-            msgListTag.appendChild(imgTag)
+
             msgListTag.appendChild(nameTag)
             msgListTag.appendChild(pTag)
-            // document.getElementById('chat-log').appendChild(msgListTag)
             document.getElementById('show-my-messages').appendChild(msgListTag)
+            $("#show-my-messages").animate({ scrollTop: $('#show-my-messages').prop("scrollHeight")}, 1000);
         }
 
 </script>
@@ -161,6 +207,35 @@ Room-{{ room.room_name }}
       </div>
       <div class="modal-body" id="add_pending_members_section">
         {% include "blog/add_pending_members.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal your members-->
+<div class="modal fade" id="members_in_room" tabindex="-1" role="dialog" aria-labelledby="members_in_room"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="members_in_room">Add new members</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="add_pending_members_section">
+          <ul class="list-group">
+            {% for member in my_room_members %}
+                <li class="list-group-item">
+                    <img src="{{ member.profile.profile_pic.url }}" alt="" style="width:40px;height:40px;border-radius:50%;">
+                    {% if member == request.user %}
+                        <a class="ml-2 text-muted" href="{% url 'profile' member.username %}">{{ member.username }}</a>
+                    {% else %}
+                        <a class="ml-2 text-muted" href="{% url 'userprofilepost' member.username %}">{{ member.username }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+          </ul>
+        
       </div>
     </div>
   </div>

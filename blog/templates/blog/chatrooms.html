@@ -4,10 +4,11 @@ Discover Chatrooms
 {% endblock %}
 {% block content %}
 
-
-
 <div class="rooms">
     <div class="display-all-rooms">
+        <br>
+        <span class="text-center font-weight-bold">All Rooms</span>
+        <hr class="my-4">
         {% for room in chatrooms %}
             {% if room.is_active %}
                 <div class="room">
@@ -44,7 +45,7 @@ Discover Chatrooms
                             </div>
                             <a href="{% url 'need-access' room.slug %}">
                                 {{ room.room_name }}
-                                | <span class="text-muted badge badge-success animated jello infinite">Active</span>
+                                | <span class="text-muted badge badge-success">Active</span>
                             </a>
                         </div>
                     {% endif %}
@@ -65,13 +66,25 @@ Discover Chatrooms
         {% endfor %}
     </div>
     <div class="show-room-messages-section">
+        <br>
         <div class="container">
-            <a title="create new room" href="{% url 'create_chatroom' %}" class="butt"><i class="fas fa-plus-circle 2x"></i></a>
-            <h3 class="text-center">To enter an active room you need to send a request to the room creator and get accepted first.</h3>
-            <p>You created </p>
-            {% for myroom in my_rooms %}
-                <a href="{{ myroom.get_absolute_room_url }}">{{ myroom.room_name }}</a>
-            {% endfor %}
+            <div class="jumbotron">
+                {% if can_create_room %}
+                <a title="create new room" href="{% url 'create_chatroom' %}" class="butt mb-3"><i class="fas fa-plus-circle fa-2x"></i></a>
+                {% endif %}
+                <br>
+                <h4>To enter an active room you need to send a request to the room creator and get accepted first.</h4>
+                <p>You created </p>
+                <ul class="list-group">
+                    {% for myroom in my_rooms %}
+                        <li class="list-group-item">
+                            <a class="text-muted font-weight-bold" href="{{ myroom.get_absolute_room_url }}">{{ myroom.room_name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul> 
+                <br>
+                <span class="text-muted animated bounce">NOTE: You can only create up to 4 rooms.</span>
+            </div>
         </div>
     </div>
 </div>

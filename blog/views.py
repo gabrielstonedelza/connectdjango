@@ -26,17 +26,21 @@ def csrf_failure(request, reason=""):
 def chat_rooms(request):
     all_rooms = ChatRoom.objects.all().order_by('-date_created')
     my_notify = mynotifications(request.user)
-    your_room_count = 1
-    # can_create_room = False
+    your_room_count = 5
+    can_create_room = False
 
     my_rooms = ChatRoom.objects.filter(creator=request.user)
-    print(my_rooms)
+
+    if my_rooms.count() < your_room_count:
+        can_create_room = True
+    else:
+        can_create_room = False
   
 
     context = {
         "chatrooms": all_rooms,
         "my_rooms": my_rooms,
-        # "can_create_room": can_create_room,
+        "can_create_room": can_create_room,
         "notification": my_notify['notification'],
         "unread_notification": my_notify['unread_notification'],
         "u_notify_count": my_notify['u_notify_count'],
@@ -98,6 +102,7 @@ def messages(request):
 
 @login_required
 def room_detail(request, slug):
+    all_rooms = ChatRoom.objects.all().order_by('-date_created')
     room = get_object_or_404(ChatRoom, slug=slug)
     my_notify = mynotifications(request.user)
     is_creator = False
@@ -122,6 +127,7 @@ def room_detail(request, slug):
         "is_creator": is_creator,
         "pending_list": pending_list,
         "pending_count": pending_count,
+        "chatrooms": all_rooms,
     }
     return render(request, 'blog/room.html', context)
 
@@ -208,7 +214,7 @@ def add_to_room(request, id):
 
     if not room.allowed_users.filter(id=user.id).exists():
         room.allowed_users.add(user)
-        notify_message = f"Hi {user.username}, {room.creator} added you to his room."
+        notify_message = f"Hi {user.username}, {room.creator} added you to {room.room_name}."
         NotifyMe.objects.create(user=user, notify_title=f"Added to room", notify_alert=notify_message,
                                 follower_sender=request.user, room_slug=room.slug)
 

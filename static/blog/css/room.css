@@ -21,6 +21,18 @@
   color: #fff;
 }
 
+.rooms .display-all-rooms h4 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .rooms .display-all-rooms .room .room-details {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -34,6 +46,8 @@
 
 .rooms .display-all-rooms .room .room-details:hover {
   background: #11c25e;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
 }
 
 .rooms .display-all-rooms .room .room-details .room-logo img {
@@ -46,7 +60,66 @@
   color: #fff;
 }
 
-.rooms .show-room-messages-section {
-  padding: 20px;
+.rooms .show-room-messages-section .container .jumbotron a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 2rem;
+}
+
+.rooms .show-room-messages-section .for-creator {
+  padding: 10px;
+}
+
+.rooms .show-room-messages-section .main-chat-section .mychat-section {
+  height: 83.5vh;
+}
+
+.rooms .show-room-messages-section .main-chat-section .mychat-section #show-my-messages {
+  height: 73vh;
+  padding-left: 30px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.rooms .show-room-messages-section .main-chat-section .mychat-section #show-my-messages li {
+  list-style-type: none;
+}
+
+.rooms .show-room-messages-section .main-chat-section .mychat-section #chat-message-input {
+  width: 100%;
+}
+
+.rooms .show-room-messages-section .main-chat-section .mychat-section #chat-message-submit {
+  display: none;
+}
+
+.rooms .show-room-messages-section .main-chat-section .mychat-section .input-holder {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.rooms .show-room-messages-section .main-chat-section .mychat-section .input-holder input {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-color: rgba(var(--b6a, 219, 219, 219), 1);
+  border-radius: 22px;
+  border-width: 1px;
+  border: solid 1px silver;
+  outline: none;
+  min-width: 44px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding: 10px;
 }
 /*# sourceMappingURL=room.css.map */

@@ -95,7 +95,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def fetch_messages(self, data):
         chat_id = self.scope['url_route']['kwargs']['room_name']
-        messages = Message.objects.filter(chat_id=chat_id).order_by('date_posted')[:10]
+        messages = Message.objects.filter(chat_id=chat_id).order_by('-date_posted')[:10]
         content = {
             "command": 'messages',
             "messages": self.messages_to_json(messages)

@@ -6,6 +6,7 @@ from PIL import Image
 from .validator import validate_file_size
 from django.utils.text import slugify
 import random
+from django.utils import timezone
 
 
 class ChatRoom(models.Model):
