@@ -48,6 +48,7 @@ class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     chat_id = models.CharField(max_length=400)
+    roomid = models.IntegerField()
     date_posted = models.DateTimeField(auto_now_add=True)
     msg_file = models.FileField(upload_to='message_files', blank=True, validators=[validate_file_size])
     like = models.ManyToManyField(User, related_name='likes', blank=True)
@@ -55,7 +56,7 @@ class Message(models.Model):
     funny = models.ManyToManyField(User, related_name="funny", blank=True)
 
     def __str__(self):
-        return f"{self.author.username} just sent a message to the group"
+        return f"{self.author.username} just sent a message to group {self.roomid}"
 
 
 class PrivateMessage(models.Model):

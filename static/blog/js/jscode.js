@@ -4,11 +4,10 @@ $(function () {
   }, 5000);
   
   $("#show-my-messages").animate({ scrollTop: $('#show-my-messages').prop("scrollHeight")}, 1000);
-  $("#chat-message-input").keyup(function(e){
-    if (e.keyCode === 13) {  // enter, return
-      $("#show-my-messages").animate({ scrollTop: $('#show-my-messages').prop("scrollHeight")}, 1000);
-  }
-  })
+  
+  // if($("#chat-message-input").on('focus',()=>{
+  //   console.log('i am dreaming of a white christmas')
+  // }))
   
   // like section for tutorial
   $(document).on("click", "#like", function (event) {

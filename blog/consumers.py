@@ -108,9 +108,9 @@ class ChatConsumer(WebsocketConsumer):
         author_user = get_object_or_404(User, username=author)
 
         if not Message.objects.filter(chat_id=chat_id):
-            message = Message.objects.create(author=author_user, content=data['message'], chat_id=chat_id)
+            message = Message.objects.create(author=author_user, content=data['message'], chat_id=chat_id,roomid=chat_id)
         else:
-            message = Message.objects.create(author=author_user, content=data['message'], chat_id=chat_id)
+            message = Message.objects.create(author=author_user, content=data['message'], chat_id=chat_id,roomid=chat_id)
         content = {
             'command': 'new_message',
             'message': self.message_to_json(message)
