@@ -59,6 +59,15 @@ class Message(models.Model):
         return f"{self.author.username} just sent a message to group {self.roomid}"
 
 
+class Online(models.Model):
+    online_user = models.ManyToManyField(User, related_name="online", blank=True)
+    roomid = models.IntegerField()
+    last_seen = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.roomid}"
+
+
 class PrivateMessage(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()

@@ -106,7 +106,6 @@ def room_detail(request, slug):
     room = get_object_or_404(ChatRoom, slug=slug)
     my_notify = mynotifications(request.user)
     is_creator = False
-    print(request.session)
 
     my_room_members = room.allowed_users.all()
     pending_list = room.pending_users.all()
