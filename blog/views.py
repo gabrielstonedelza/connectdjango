@@ -215,7 +215,7 @@ def add_to_room(request, id):
     if not room.allowed_users.filter(id=user.id).exists():
         room.allowed_users.add(user)
         notify_message = f"Hi {user.username}, {room.creator} added you to {room.room_name}."
-        NotifyMe.objects.create(user=user, notify_title=f"Added to room", notify_alert=notify_message,
+        NotifyMe.objects.create(user=user, notify_title="Added to room", notify_alert=notify_message,
                                 follower_sender=request.user, room_slug=room.slug)
 
     if room.creator == request.user:
@@ -249,7 +249,7 @@ def add_pending_members(request, id):
         room.allowed_users.add(user)
         room.pending_users.remove(user)
         notify_message = f"Hi {user.username}, {room.creator} accepted your request and added you to {room.room_name}."
-        NotifyMe.objects.create(user=user, notify_title=f"Request Accepted", notify_alert=notify_message,
+        NotifyMe.objects.create(user=user, notify_title="Request Accepted", notify_alert=notify_message,
                                 follower_sender=request.user, room_slug=room.slug)
 
     context = {
@@ -277,7 +277,7 @@ def join_room(request, slug):
             id=request.user.id).exists():
         room.pending_users.add(request.user)
         notify_message = f"hi {room.creator}, {request.user.username} wants to join your room"
-        NotifyMe.objects.create(user=room.creator, notify_title=f"Wants to join", notify_alert=notify_message,
+        NotifyMe.objects.create(user=room.creator, notify_title="Wants to join", notify_alert=notify_message,
                                 follower_sender=request.user, room_slug=room.slug)
 
     context = {
@@ -467,7 +467,7 @@ def news_letter(request):
 
     for i in all_users:
         if i.email:
-            send_my_mail(f"Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name": i.username},
+            send_my_mail("Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name": i.username},
                          "email_templates/success.html")
     messages.success(request, "Newsletter sent")
 
