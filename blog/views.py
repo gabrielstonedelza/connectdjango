@@ -15,8 +15,8 @@ from .process_mail import send_my_mail
 from django.conf import settings
 from django.utils.safestring import mark_safe
 import json
-import random
 from django.contrib import messages
+import secrets
 
 
 def csrf_failure(request, reason=""):
@@ -514,7 +514,7 @@ def user_profile(request, username):
 
     # user's username
     deuser = get_object_or_404(User, username=username)
-    c_id = random.randint(1, 999999999)
+    c_id = secrets.SystemRandom().randint(1, 999999999)
 
     u_name1 = request.user.username
     u_name2 = deuser.username
