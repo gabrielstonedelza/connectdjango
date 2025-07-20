@@ -160,3 +160,4 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
 
 CSRF_FAILURE_VIEW = 'blog.views.csrf_failure'
+SESSION_COOKIE_SECURE = True
